@@ -1,4 +1,5 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO);
+var text;
 
 // Main State ==================================================
 var Menu = function(game){};
@@ -12,6 +13,10 @@ Menu.prototype = {
 	// place assets ==================================
 	create: function(){
 		console.log("Menu: create");
+		game.stage.backgroundColor = "#b373c6";
+		text = game.add.text(game.width/2, game.height/2, "Infiltrator\n"+
+			"Press ENTER to start the Tutorial or SPACE to Play");
+		text.anchor.set(0.5);
 	},
 
 	// update, run game loop =========================
@@ -19,6 +24,9 @@ Menu.prototype = {
 		// load 'Tutorial' state when user pressed ENTER key
 		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
 			game.state.start('Tutorial');
+		}
+		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+			game.state.start('GamePlay');
 		}
 	}
 }
@@ -34,6 +42,23 @@ Tutorial.prototype = {
 	// place assets ==================================
 	create: function(){
 		console.log("Tutorial: create");
+		game.stage.backgroundColor = "#39aeb2";
+		text = game.add.text(game.width/2, game.height/2, "Tutorial state");
+		text.anchor.set(0.5);
+
+		var tutButtonRed = game.add.button(game.width/4, game.width/2, "button", onChange, 1, 0, 2);
+		tutButtonRed.anchor.set(0.5);
+		text = game.add.text(0, 0, "Decline");
+		text.anchor.set(0.5);
+		text.x = tutButtonRed.x;
+		text.y = tutButtonRed.y;
+
+		var tutButtonGreen = game.add.button(game.width-200, game.width/2, "button", onChange, 4, 3, 5);
+		tutButtonGreen.anchor.set(0.5);
+		text = game.add.text(0, 0, "Accept");
+		text.anchor.set(0.5);
+		text.x = tutButtonGreen.x;
+		text.y = tutButtonGreen.y;
 	},
 
 	// update, run the game loop =====================
@@ -56,6 +81,9 @@ GamePlay.prototype = {
 	// place assets ==================================
 	create: function(){
 		console.log("GamePlay: create");
+		game.stage.backgroundColor = "#ba2500";
+		text = game.add.text(game.width/2, game.height/2, "GamePlay state");
+		text.anchor.set(0.5);
 	},
 
 	// update, run the game loop =====================
@@ -81,6 +109,9 @@ GameOver.prototype = {
 	// place assets ==================================
 	create: function(){
 		console.log("GameOver: create");
+		game.stage.backgroundColor = "#707070";
+		text = game.add.text(game.width/2, game.height/2, "GameOver state");
+		text.anchor.set(0.5);
 	},
 
 	// update, run the game loop =====================
@@ -100,5 +131,7 @@ game.state.add("GameOver", GameOver);
 game.state.start("Menu");
 
 // Helper functions ============================================
-
+function onChange(){
+	game.state.start("GamePlay");
+}
 
