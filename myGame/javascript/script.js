@@ -1,5 +1,5 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO);
-var text;
+var text, moneyPoints, armyPoints, comPoints, noblePoints;
 
 // Main State ==================================================
 var Menu = function(game){};
@@ -8,6 +8,7 @@ Menu.prototype = {
 	preload: function(){
 		console.log("Menu: preload");
 		game.load.atlas("button", "assets/img/buttons.png", "assets/img/buttons.json");
+		game.load.image("GamePlayUI", "assets/img/GamePlay_UI.png");
 	},
 
 	// place assets ==================================
@@ -81,21 +82,57 @@ GamePlay.prototype = {
 	// place assets ==================================
 	create: function(){
 		console.log("GamePlay: create");
-		game.stage.backgroundColor = "#ba2500";
+		game.add.sprite(0, 0, "GamePlayUI");
+		game.stage.backgroundColor = "#808080";
+
+		// UI score
+		var com = game.add.text(100, 50, "Commoners: ");
+		var noble = game.add.text(70, 100, "Nobles: ");
+		com.anchor.set(0.5);
+		noble.anchor.set(0.5);
 		text = game.add.text(game.width/2, game.height/2, "GamePlay state");
 		text.anchor.set(0.5);
+
+		// Player UI
+		var money = game.add.text(650, 50, "Gold: ");
+		var army = game.add.text(650, 100, "Amry: ");
 	},
 
 	// update, run the game loop =====================
 	update: function(){
 		// load 'GamePlay' state when user pressed ENTER key
 		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-			game.state.start('GameOver');
+			game.state.start('Read');
 		}
 	},
 
 	// debuging method ===============================
 	render: function(){}
+}
+
+// Read State ==============================================
+var Read = function(game){};
+Read.prototype = {
+	// preload assets ================================
+	preload: function(){
+		console.log("Read: preload");
+	},
+
+	// place assets ==================================
+	create: function(){
+		console.log("Read: create");
+		text = game.add.text(game.width/2, game.height/2, "Read state\n"+
+			"Press DELETE/BACKSPACE to go back");
+		text.anchor.set(0.5);
+	},
+
+	// update, run the game loop =====================
+	update: function(){
+		// load 'GamePlay' state when user pressed DELETE key
+		if(game.input.keyboard.isDown(Phaser.Keyboard.BACKSPACE)) {
+			game.state.start('GamePlay');
+		}
+	}
 }
 
 // GameOver State ==============================================
@@ -127,6 +164,7 @@ GameOver.prototype = {
 game.state.add("Menu", Menu);
 game.state.add("Tutorial", Tutorial);
 game.state.add("GamePlay", GamePlay);
+game.state.add("Read", Read);
 game.state.add("GameOver", GameOver);
 game.state.start("Menu");
 
