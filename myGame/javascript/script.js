@@ -77,6 +77,7 @@ GamePlay.prototype = {
 	// preload assets ================================
 	preload: function(){
 		console.log("GamePlay: preload");
+		game.load.atlas("Items", "assets/img/Items.png", "assets/img/Items.json");
 	},
 
 	// place assets ==================================
@@ -84,6 +85,11 @@ GamePlay.prototype = {
 		console.log("GamePlay: create");
 		game.add.sprite(0, 0, "GamePlayUI");
 		game.stage.backgroundColor = "#808080";
+
+		// item assets
+		game.add.sprite(650, 350, 'Items', 'Knife');
+		game.add.sprite(650, 425, 'Items', 'BagOfMoney');
+		game.add.sprite(650, 500, 'Items', 'Stamp');
 
 		// UI score
 		var com = game.add.text(100, 50, "Commoners: ");
@@ -116,14 +122,20 @@ Read.prototype = {
 	// preload assets ================================
 	preload: function(){
 		console.log("Read: preload");
+		game.load.atlas("Items", "assets/img/Items.png", "assets/img/Items.json");
 	},
 
 	// place assets ==================================
 	create: function(){
 		console.log("Read: create");
+
+		//	Place ReadScroll
+		game.add.sprite(0, 0, 'Items', 'ReadScroll');
+
 		text = game.add.text(game.width/2, game.height/2, "Read state\n"+
 			"Press DELETE/BACKSPACE to go back");
 		text.anchor.set(0.5);
+
 	},
 
 	// update, run the game loop =====================
