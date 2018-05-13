@@ -133,7 +133,7 @@ GamePlay.prototype = {
 
 
 		//create npc
-		this.commoner = game.add.sprite(300, 100,  'commoner');
+		this.commoner = game.add.sprite(0, 0,  'commoner');
 		this.physics.enable(this.commoner, Phaser.Physics.ARCADE);
 		//this.commoner.enableBody();
 		this.commoner.body.immovable = true;
