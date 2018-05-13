@@ -13,8 +13,8 @@ Menu.prototype = {
 		game.load.path = "../assets/img/";
 		game.load.atlas("button", "buttons.png", "buttons.json");
 		game.load.atlas("bg", "bgSprites.png", "bgSprites.json");
-		game.load.atlas("obj", "objSprites.png", "objSprites.json");
-		game.load.atlas("char", "charSprites.png", "charSprites.json");
+		game.load.atlas("obj", "Items.png", "Items.json");
+		//game.load.atlas("char", "charSprites.png", "charSprites.json");
 		game.load.image("GamePlayUI", "GamePlay_UI.png");
 	},
 
@@ -83,7 +83,7 @@ var GamePlay = function(game){};
 GamePlay.prototype = {
 	// preload assets ================================
 	preload: function(){
-		game.load.atlas("Items", "assets/img/Items.png", "assets/img/Items.json");
+		game.load.image("npc", "assets/img/commoner.png");
 		game.load.path = 'assets/audio/';
 		game.load.audio('bgMusic', ['bgmusic.wav']);
 	},
@@ -104,22 +104,26 @@ GamePlay.prototype = {
 		this.knife = new Item(game, 650, 500, 'obj', 'knife');
 		game.add.existing(knife);	
 		this.knife.input.enableDrag(); //enable click and drag
+		this.knife.alpha = 0.5; //set to be darkened
 
 		this.stamp = new Item(game, 680, 530, 'obj', 'stamp');
 		game.add.existing(stamp);	
 		this.stamp.input.enableDrag();
+		this.stamp.alpha = 0.5;
 
 		this.candle = new Item(game, 710, 560, 'obj', 'candle');
 		game.add.existing(candle);
 		this.candle.input.enableDrag();
+		this.candle.alpha = 0.5;
 
 		//scroll obj is also quest obj, it acts as a double
 		this.scroll = new Scroll(game, 500, 500, 'obj', 'scroll', 5, 20, 5, 2, 10, quest1);
 		game.add.existing(scroll);
 		this.scroll.body.immovable = true; //scroll cannot be moved, scroll is a rock
 
+
 		//create npc
-		this.commoner = game.add.sprite(game, 300, 100, 'char', 'commoner');
+		this.commoner = game.add.sprite(game, 300, 100, 'npc');
 		this.physics.enable(this.commoner, Phaser.Physics.ARCADE);
 		this.commoner.enableBody();
 		this.commoner.body.immovable = true;
@@ -128,31 +132,74 @@ GamePlay.prototype = {
 		game.stage.backgroundColor = "#808080";
 
 		// UI score
-		var com = game.add.text(100, 50, "Commoners: " + comPoints);
-		var noble = game.add.text(70, 100, "Nobles: " + noblePoints);
-		com.anchor.set(0.5);
-		noble.anchor.set(0.5);
+		this.com = game.add.text(100, 50, "Commoners: " + comPoints);
+		this.noble = game.add.text(70, 100, "Nobles: " + noblePoints);
+		this.com.anchor.set(0.5);
+		this.noble.anchor.set(0.5);
 		// Player UI
-		var money = game.add.text(650, 50, "Gold: ");
-		var army = game.add.text(650, 100, "Soldiers: ");
+		this.money = game.add.text(650, 50, "Gold: " + money);
+		this.army = game.add.text(650, 100, "Soldiers: " + men);
+		this.susp = game.add.text(650, 150, "Suspiciousness: " + suspicion);
+
+		game.input.mouse.capture = true;
+		this.scroll.input.mouse.capture = true;
 	},
 
 	//player choice functions
 	acceptQuest: function(){
-		
+		comPoints += 10;
+		money += 20;
+		men -= 5;
+		this.com.text = "Commoners: " + comPoints;
+		this.noble.text = "Nobles: " + noblePoints;
+		this.money.text = "Gold: " + money;
+		this.army.text = "Soldiers: " + men;
 	},
 
 	declineQuest: function(){
-
+		comPoints -= 3;
+		this.com.text = "Commoners: " + comPoints;
 	},
 
 	killMessenger: function(){
 		suspicion += 10;
+		this.susp.text = "Suspiciousness: " + suspicion;
 	},
 	// update, run the game loop =====================
 	update: function(){
 		// load 'GamePlay' state when user pressed ENTER key
 		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+			game.state.start('Read');
+		}
+
+		game.physics.arcade.collide(this.knife, this.commoner, this.killMessenger, null, this);
+		game.physics.arcade.collide(this.stamp, this.scroll, this.acceptQuest, null, this);
+		game.physics.arcade.collide(this.candle, this.scroll, this.declineQuest, null, this);
+
+		//dimmed color if mouse isn't over it
+		if(this.knife.input.pointerOver()){
+			this.knife.alpha = 1;
+		}
+		else{
+			this.knife.alpha = 0.5;
+		}
+
+		if(this.stamp.input.pointerOver()){
+			this.stamp.alpha = 1;
+		}
+		else{
+			this.stamp.alpha = 0.5;
+		}
+
+		if(this.candle.input.pointerOver()){
+			this.candle.alpha = 1;
+		}
+		else{
+			this.candle.alpha = 0.5;
+		}
+
+		//if moused over scroll and click left button, go to READ state
+		if(this.scroll.input.activePointer.leftButton.isDown){
 			game.state.start('Read');
 		}
 
@@ -168,7 +215,6 @@ Read.prototype = {
 	// preload assets ================================
 	preload: function(){
 		console.log("Read: preload");
-		game.load.atlas("Items", "assets/img/Items.png", "assets/img/Items.json");
 	},
 
 	// place assets ==================================
@@ -176,7 +222,7 @@ Read.prototype = {
 		console.log("Read: create");
 
 		//	Place ReadScroll
-		game.add.sprite(0, 0, 'Items', 'ReadScroll');
+		game.add.sprite(0, 0, 'obj', 'ReadScroll');
 
 		text = game.add.text(game.width/2, game.height/2, "Read state\n"+
 			"Press DELETE/BACKSPACE to go back");
