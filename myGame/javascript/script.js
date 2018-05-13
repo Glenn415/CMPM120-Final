@@ -1,6 +1,6 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO);
 
-var text, men = 10, money = 50, suspicion = 0, comPoints, noblePoints;
+var text, men = 10, money = 50, suspicion = 0, comPoints = 0, noblePoints = 0;
 
 
 // Main State ==================================================
@@ -83,6 +83,7 @@ var GamePlay = function(game){};
 GamePlay.prototype = {
 	// preload assets ================================
 	preload: function(){
+		game.load.image("commoner", "commoner.png");
 		game.load.path = 'assets/audio/';
 		game.load.audio('bgMusic', ['bgmusic.wav']);
 	},
@@ -93,7 +94,8 @@ GamePlay.prototype = {
 
 		//spin up physics
 		this.physics.startSystem(Phaser.Physics.ARCADE);
-
+		game.add.sprite(0, 0, "GamePlayUI");
+		game.stage.backgroundColor = "#808080";
 		//add sound
 		this.bgMusic = game.add.audio('bgMusic');
 		this.bgMusic.play('', 0, 1, true); //loops
@@ -101,34 +103,34 @@ GamePlay.prototype = {
 
 		//create objects
 		this.knife = new Item(game, 650, 500, 'obj', 'Knife');
-		game.add.existing(knife);	
+		game.add.existing(this.knife);	
 		this.knife.input.enableDrag(); //enable click and drag
 		this.knife.alpha = 0.5; //set to be darkened
 
-		this.stamp = new Item(game, 680, 530, 'obj', 'stamp');
-		game.add.existing(stamp);	
+		this.stamp = new Item(game, 680, 530, 'obj', 'Stamp');
+		game.add.existing(this.stamp);	
 		this.stamp.input.enableDrag();
 		this.stamp.alpha = 0.5;
 
-		this.candle = new Item(game, 710, 560, 'obj', 'candle');
+		/*this.candle = new Item(game, 710, 560, 'obj', 'Candle');
 		game.add.existing(candle);
 		this.candle.input.enableDrag();
-		this.candle.alpha = 0.5;
+		this.candle.alpha = 0.5;*/
 
 		//scroll obj is also quest obj, it acts as a double
-		this.scroll = new Scroll(game, 500, 500, 'obj', 'scroll', 5, 20, 5, 2, 10, quest1);
-		game.add.existing(scroll);
+		this.scroll = new Item(game, 500, 500, 'obj', 'ReadScroll');
+		game.add.existing(this.scroll);
+		this.scroll.scale.set( .1, .1);
 		this.scroll.body.immovable = true; //scroll cannot be moved, scroll is a rock
 
 
 		//create npc
-		this.commoner = game.add.sprite(game, 300, 100, 'obj', 'commoner');
+		this.commoner = game.add.sprite(game, 300, 100,  'commoner');
 		this.physics.enable(this.commoner, Phaser.Physics.ARCADE);
-		this.commoner.enableBody();
+		//this.commoner.enableBody();
 		this.commoner.body.immovable = true;
 
-		game.add.sprite(0, 0, "GamePlayUI");
-		game.stage.backgroundColor = "#808080";
+		
 
 		// UI score
 		this.com = game.add.text(100, 50, "Commoners: " + comPoints);
@@ -141,7 +143,7 @@ GamePlay.prototype = {
 		this.susp = game.add.text(650, 150, "Suspiciousness: " + suspicion);
 
 		game.input.mouse.capture = true;
-		this.scroll.input.mouse.capture = true;
+		//this.scroll.input.mouse.capture = true;
 	},
 
 	//player choice functions
@@ -165,7 +167,7 @@ GamePlay.prototype = {
 	killMessenger: function(){
 		suspicion += 10;
 		this.susp.text = "Suspiciousness: " + suspicion;
-		this.response = game.add.text(50, game.world.height - 100, "I should’ve just stayed home…. ");
+		this.response = game.add.text(50, game.world.height - 100, "I should’ve just stayed home… ");
 	},
 	// update, run the game loop =====================
 	update: function(){
@@ -193,15 +195,15 @@ GamePlay.prototype = {
 			this.stamp.alpha = 0.5;
 		}
 
-		if(this.candle.input.pointerOver()){
+		/*if(this.candle.input.pointerOver()){
 			this.candle.alpha = 1;
 		}
 		else{
 			this.candle.alpha = 0.5;
-		}
+		}*/
 
 		//if moused over scroll and click left button, go to READ state
-		if(this.scroll.input.activePointer.leftButton.isDown){
+		if(game.input.activePointer.leftButton.isDown && this.scroll.input.pointerOver()){
 			game.state.start('Read');
 		}
 
@@ -242,6 +244,7 @@ Read.prototype = {
 
 		text = game.add.text(32, 32, '', {font: "15px Arial", fill: "#19de65"});
 		nextLine();
+
 	},
 
 	nextLine: function(){
