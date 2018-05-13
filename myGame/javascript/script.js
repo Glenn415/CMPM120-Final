@@ -10,9 +10,9 @@ Menu.prototype = {
 	preload: function(){
 		console.log("Menu: preload");
 
-		game.load.path = "../assets/img/";
+		game.load.path = "../myGame/assets/img/";
 		game.load.atlas("button", "buttons.png", "buttons.json");
-		game.load.atlas("bg", "bgSprites.png", "bgSprites.json");
+		//game.load.atlas("bg", "bgSprites.png", "bgSprites.json");
 		game.load.atlas("obj", "Items.png", "Items.json");
 		//game.load.atlas("char", "charSprites.png", "charSprites.json");
 		game.load.image("GamePlayUI", "GamePlay_UI.png");
@@ -83,7 +83,6 @@ var GamePlay = function(game){};
 GamePlay.prototype = {
 	// preload assets ================================
 	preload: function(){
-		game.load.image("npc", "assets/img/commoner.png");
 		game.load.path = 'assets/audio/';
 		game.load.audio('bgMusic', ['bgmusic.wav']);
 	},
@@ -101,7 +100,7 @@ GamePlay.prototype = {
 		game.stage.backgroundColor = "#ba2500";
 
 		//create objects
-		this.knife = new Item(game, 650, 500, 'obj', 'knife');
+		this.knife = new Item(game, 650, 500, 'obj', 'Knife');
 		game.add.existing(knife);	
 		this.knife.input.enableDrag(); //enable click and drag
 		this.knife.alpha = 0.5; //set to be darkened
@@ -123,7 +122,7 @@ GamePlay.prototype = {
 
 
 		//create npc
-		this.commoner = game.add.sprite(game, 300, 100, 'npc');
+		this.commoner = game.add.sprite(game, 300, 100, 'obj', 'commoner');
 		this.physics.enable(this.commoner, Phaser.Physics.ARCADE);
 		this.commoner.enableBody();
 		this.commoner.body.immovable = true;
@@ -154,16 +153,19 @@ GamePlay.prototype = {
 		this.noble.text = "Nobles: " + noblePoints;
 		this.money.text = "Gold: " + money;
 		this.army.text = "Soldiers: " + men;
+		this.response = game.add.text(50, game.world.height - 100, "Oh thank you so much! I don’t really care if you kill the pirates or scare them off.\nJust make sure they don’t come back! We’ll provide payment once the job is done.");
 	},
 
 	declineQuest: function(){
 		comPoints -= 3;
 		this.com.text = "Commoners: " + comPoints;
+		this.response = game.add.text(50, game.world.height - 100, "Oh. I’m sorry to have bothered you then. I was just really hoping for help.\nWe really need these pirates gone before they destroy our town. Guess I’ll keep looking.");
 	},
 
 	killMessenger: function(){
 		suspicion += 10;
 		this.susp.text = "Suspiciousness: " + suspicion;
+		this.response = game.add.text(50, game.world.height - 100, "I should’ve just stayed home…. ");
 	},
 	// update, run the game loop =====================
 	update: function(){
@@ -240,9 +242,9 @@ Read.prototype = {
 
 		text = game.add.text(32, 32, '', {font: "15px Arial", fill: "#19de65"});
 		nextLine();
-	}
+	},
 
-	function nextLine(){
+	nextLine: function(){
 		if(lineIndex === story.length){
 			return; //we're done.
 		}
@@ -256,9 +258,9 @@ Read.prototype = {
 		game.time.events.repeat(wordDelay, line.length, nextWord, this);
 
 		lineIndex++;
-	}
+	},
 
-	function nextWord(){
+	nextWord: function() {
 		//add the next word onto the text string, followed by space
 		text.text = text.text.concat(line[wordIndex] + ' ');
 
@@ -273,10 +275,7 @@ Read.prototype = {
 			game.time.events.add(lineDelay, nextLine, this);
 
 		}
-	}
-
 	},
-
 
 	// update, run the game loop =====================
 	update: function(){
@@ -285,7 +284,7 @@ Read.prototype = {
 			game.state.start('GamePlay');
 		}
 	}
-
+}
 
 // GameOver State ==============================================
 var GameOver = function(game){};
