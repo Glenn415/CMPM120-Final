@@ -60,7 +60,7 @@ Tutorial.prototype = {
 	create: function(){
 		console.log("Tutorial: create");
 		game.stage.backgroundColor = "#39aeb2";
-		text = game.add.text(game.width/2, game.height/2, "Tutorial state");
+		text = game.add.text(game.width/2, game.height/2, "Tutorial will go here.\n Hit either button to continue to game play.");
 		text.anchor.set(0.5);
 
 		var tutButtonRed = game.add.button(game.width/4, game.width/2, "button", onChange, 1, 0, 2);
@@ -99,6 +99,7 @@ GamePlay.prototype = {
 
 	// place assets ==================================
 	create: function(){
+		game.add.text(250,0,"hit space to go to game over");
 		console.log("GamePlay: create");
 		//spin up physics
 		this.physics.startSystem(Phaser.Physics.ARCADE);
@@ -119,7 +120,6 @@ GamePlay.prototype = {
 		game.add.existing(this.stamp);	
 		this.stamp.input.enableDrag();
 		this.stamp.alpha = 0.5;
-
 		/*this.candle = new Item(game, 710, 560, 'obj', 'Candle');
 		game.add.existing(candle);
 		this.candle.input.enableDrag();
@@ -130,6 +130,7 @@ GamePlay.prototype = {
 		game.add.existing(this.scroll);
 		this.scroll.scale.set( .1, .1);
 		this.scroll.body.immovable = true; //scroll cannot be moved, scroll is a rock
+		this.scroll.body.setSize(400,150);
 
 
 		//create npc
@@ -305,7 +306,7 @@ GameOver.prototype = {
 	create: function(){
 		console.log("GameOver: create");
 		game.stage.backgroundColor = "#707070";
-		text = game.add.text(game.width/2, game.height/2, "You yawn and tiredly decide to go to bed.\n The end.");
+		text = game.add.text(game.width/2, game.height/2, "You yawn and tiredly decide to go to bed.\n It was a long and exhausting day.\n The end.\n Hit enter to return to the main menu");
 		text.anchor.set(0.5);
 	},
 
