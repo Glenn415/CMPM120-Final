@@ -1,5 +1,5 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO);
-var text;
+var text, men, money, influence, suspicion, negInfluence;
 
 // Main State ==================================================
 var Menu = function(game){};
@@ -7,10 +7,14 @@ Menu.prototype = {
 	// preload assets ================================
 	preload: function(){
 		console.log("Menu: preload");
-		game.load.atlas("button", "assets/img/buttons.png", "assets/img/buttons.json");
+		game.load.path = "../assets/img/";
+		game.load.atlas("button", "buttons.png", "buttons.json");
+		//game.load.atlas("bg", "bgSprites.png", "bgSprites.json");
+		//game.load.atlas("obj", "objSprites.png", "objSprites.json");
+		//game.load.atlas("char", "charSprites.png", charSprites.json");
 	},
 
-	// place assets ==================================
+	// place assets =========================================
 	create: function(){
 		console.log("Menu: create");
 		game.stage.backgroundColor = "#b373c6";
@@ -76,25 +80,70 @@ GamePlay.prototype = {
 	// preload assets ================================
 	preload: function(){
 		console.log("GamePlay: preload");
+		game.load.audio('bgMusic', ['bgmusic.wav']);
 	},
 
 	// place assets ==================================
 	create: function(){
 		console.log("GamePlay: create");
+
+		//spin up physics
+		this.physics.startSystem(Phaser.Physics.ARCADE);
+
+		//add sound
+		this.bgMusic = game.add.audio('bgMusic');
+		this.bgMusic.play('', 0, 1, true); //loops
 		game.stage.backgroundColor = "#ba2500";
-		text = game.add.text(game.width/2, game.height/2, "GamePlay state");
-		text.anchor.set(0.5);
+
+		//create objects
+		this.knife = new Item(game, 650, 500, 'obj', 'knife');
+		game.add.existing(knife);	
+		this.knife.input.enableDrag(); //enable click and drag
+
+		this.stamp = new Item(game, 680, 530, 'obj', 'stamp');
+		game.add.existing(stamp);	
+		this.stamp.input.enableDrag();
+
+		this.candle = new Item(game, 710, 560, 'obj', 'candle');
+		game.add.existing(candle);
+		this.candle.input.enableDrag();
+
+		//scroll obj is also quest obj, it acts as a double
+		this.scroll = new Scroll(game, 500, 500, 'obj', 'scroll', 5, 20, 5, 2, 10, quest1);
+		game.add.existing(scroll);
+		this.scroll.body.immovable = true; //scroll cannot be moved, scroll is a rock
+
+		//create npc
+		this.commoner = game.add.sprite(game, 300, 100, 'char', 'commoner');
+		this.physics.enable(this.commoner, Phaser.Physics.ARCADE);
+		this.commoner.enableBody();
+		this.commoner.body.immovable = true;
+
+
 	},
 
+	//player choice functions
+	acceptQuest: function(){
+		
+	},
+
+	declineQuest: function(){
+
+	},
+
+	killMessenger: function(){
+		this.suspicion += this.scroll.suspicion;
+	},
 	// update, run the game loop =====================
 	update: function(){
 		// load 'GamePlay' state when user pressed ENTER key
 		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
 			game.state.start('GameOver');
 		}
+
 	},
 
-	// debuging method ===============================
+	// debugging method ===============================
 	render: function(){}
 }
 
