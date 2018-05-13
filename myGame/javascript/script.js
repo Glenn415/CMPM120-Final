@@ -2,7 +2,7 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO);
 
 var text, men = 10, money = 50, suspicion = 0, comPoints = 0, noblePoints = 0;
 
-var story = ["words", "words", "words"]; //an array of strings
+var story = ["Hello,","I’m from Heaton and I have a request for you.", "Our town is on the coast with a thriving port.","But recently we’re having trouble with pirates.","For months they’ve been coming in and stealing","from us. If anyone tries to stop them,","they’ll get kidnapped or killed. These pirates","have been here too long and it has to end.","Since nobody in our town can do it without","being kidnapped or killed, we’d be so relieved","if you’d come help. We can pay a fair amount","as well as some men in return. This quest","should only take a few men to complete."]; //an array of strings
 		var line = [];
 
 		var wordIndex = 0;
@@ -24,6 +24,7 @@ Menu.prototype = {
 		game.load.atlas("obj", "Items.png", "Items.json");
 		//game.load.atlas("char", "charSprites.png", "charSprites.json");
 		game.load.image("GamePlayUI", "GamePlay_UI.png");
+		game.load.audio('bgMusic', ['bgmusic.wav']);
 	},
 
 	// place assets =========================================
@@ -99,7 +100,6 @@ GamePlay.prototype = {
 	// place assets ==================================
 	create: function(){
 		console.log("GamePlay: create");
-
 		//spin up physics
 		this.physics.startSystem(Phaser.Physics.ARCADE);
 		game.add.sprite(0, 0, "GamePlayUI");
@@ -137,6 +137,7 @@ GamePlay.prototype = {
 		this.physics.enable(this.commoner, Phaser.Physics.ARCADE);
 		//this.commoner.enableBody();
 		this.commoner.body.immovable = true;
+		this.commoner.body.setSize(310,225);
 
 		
 
@@ -239,8 +240,7 @@ Read.prototype = {
 		//	Place ReadScroll
 		game.add.sprite(0, 0, 'obj', 'ReadScroll');
 
-		text = game.add.text(game.width/2, game.height/2, "Read state\n"+
-			"Press DELETE/BACKSPACE to go back");
+		text = game.add.text(350,350,"Press DELETE/BACKSPACE to go back\n");
 		text.anchor.set(0.5);
 
 		
@@ -285,6 +285,7 @@ Read.prototype = {
 
 	// update, run the game loop =====================
 	update: function(){
+		//this.sound.stopAll();
 		// load 'GamePlay' state when user pressed DELETE key
 		if(game.input.keyboard.isDown(Phaser.Keyboard.BACKSPACE)) {
 			game.state.start('GamePlay');
@@ -310,6 +311,7 @@ GameOver.prototype = {
 
 	// update, run the game loop =====================
 	update: function(){
+		game.sound.stopAll();
 		// load 'GamePlay' state when user pressed ENTER key
 		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
 			game.state.start('Menu');
