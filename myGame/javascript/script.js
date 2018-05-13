@@ -1,5 +1,7 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO);
-var text, men, money, influence, suspicion, negInfluence;
+
+var text, men = 10, money = 50, suspicion = 0, comPoints, noblePoints;
+
 
 // Main State ==================================================
 var Menu = function(game){};
@@ -7,11 +9,13 @@ Menu.prototype = {
 	// preload assets ================================
 	preload: function(){
 		console.log("Menu: preload");
+
 		game.load.path = "../assets/img/";
 		game.load.atlas("button", "buttons.png", "buttons.json");
-		//game.load.atlas("bg", "bgSprites.png", "bgSprites.json");
-		//game.load.atlas("obj", "objSprites.png", "objSprites.json");
-		//game.load.atlas("char", "charSprites.png", charSprites.json");
+		game.load.atlas("bg", "bgSprites.png", "bgSprites.json");
+		game.load.atlas("obj", "objSprites.png", "objSprites.json");
+		game.load.atlas("char", "charSprites.png", "charSprites.json");
+		game.load.image("GamePlayUI", "GamePlay_UI.png");
 	},
 
 	// place assets =========================================
@@ -79,7 +83,8 @@ var GamePlay = function(game){};
 GamePlay.prototype = {
 	// preload assets ================================
 	preload: function(){
-		console.log("GamePlay: preload");
+		game.load.atlas("Items", "assets/img/Items.png", "assets/img/Items.json");
+		game.load.path = 'assets/audio/';
 		game.load.audio('bgMusic', ['bgmusic.wav']);
 	},
 
@@ -119,7 +124,17 @@ GamePlay.prototype = {
 		this.commoner.enableBody();
 		this.commoner.body.immovable = true;
 
+		game.add.sprite(0, 0, "GamePlayUI");
+		game.stage.backgroundColor = "#808080";
 
+		// UI score
+		var com = game.add.text(100, 50, "Commoners: " + comPoints);
+		var noble = game.add.text(70, 100, "Nobles: " + noblePoints);
+		com.anchor.set(0.5);
+		noble.anchor.set(0.5);
+		// Player UI
+		var money = game.add.text(650, 50, "Gold: ");
+		var army = game.add.text(650, 100, "Soldiers: ");
 	},
 
 	//player choice functions
@@ -132,19 +147,50 @@ GamePlay.prototype = {
 	},
 
 	killMessenger: function(){
-		this.suspicion += this.scroll.suspicion;
+		suspicion += 10;
 	},
 	// update, run the game loop =====================
 	update: function(){
 		// load 'GamePlay' state when user pressed ENTER key
 		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-			game.state.start('GameOver');
+			game.state.start('Read');
 		}
 
 	},
 
 	// debugging method ===============================
 	render: function(){}
+}
+
+// Read State ==============================================
+var Read = function(game){};
+Read.prototype = {
+	// preload assets ================================
+	preload: function(){
+		console.log("Read: preload");
+		game.load.atlas("Items", "assets/img/Items.png", "assets/img/Items.json");
+	},
+
+	// place assets ==================================
+	create: function(){
+		console.log("Read: create");
+
+		//	Place ReadScroll
+		game.add.sprite(0, 0, 'Items', 'ReadScroll');
+
+		text = game.add.text(game.width/2, game.height/2, "Read state\n"+
+			"Press DELETE/BACKSPACE to go back");
+		text.anchor.set(0.5);
+
+	},
+
+	// update, run the game loop =====================
+	update: function(){
+		// load 'GamePlay' state when user pressed DELETE key
+		if(game.input.keyboard.isDown(Phaser.Keyboard.BACKSPACE)) {
+			game.state.start('GamePlay');
+		}
+	}
 }
 
 // GameOver State ==============================================
@@ -176,6 +222,7 @@ GameOver.prototype = {
 game.state.add("Menu", Menu);
 game.state.add("Tutorial", Tutorial);
 game.state.add("GamePlay", GamePlay);
+game.state.add("Read", Read);
 game.state.add("GameOver", GameOver);
 game.state.start("Menu");
 

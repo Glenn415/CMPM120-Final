@@ -11,6 +11,7 @@ function Item(game, x, y, key, frame){
 	this.body.collideWorldBounds = true;
 	this.inputEnabled = true;
 	this.input.enableDrag(); //enable click and drag
+	this.enableBody = true;
 }
 
 Item.prototype = Object.create(Phaser.Sprite.prototype);
