@@ -214,6 +214,9 @@ GamePlay.prototype = {
 		if(game.input.activePointer.leftButton.isDown && this.scroll.input.pointerOver()){
 			game.state.start('Read');
 		}
+		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+			game.state.start('GameOver');
+		}
 
 	},
 
