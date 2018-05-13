@@ -304,7 +304,7 @@ GameOver.prototype = {
 	create: function(){
 		console.log("GameOver: create");
 		game.stage.backgroundColor = "#707070";
-		text = game.add.text(game.width/2, game.height/2, "GameOver state");
+		text = game.add.text(game.width/2, game.height/2, "You yawn and tiredly decide to go to bed.\n The end.");
 		text.anchor.set(0.5);
 	},
 
