@@ -133,7 +133,7 @@ GamePlay.prototype = {
 
 
 		//create npc
-		this.commoner = game.add.sprite(game, 300, 100,  'commoner');
+		this.commoner = game.add.sprite(300, 100,  'commoner');
 		this.physics.enable(this.commoner, Phaser.Physics.ARCADE);
 		//this.commoner.enableBody();
 		this.commoner.body.immovable = true;
@@ -174,7 +174,7 @@ GamePlay.prototype = {
 
 	killMessenger: function(){
 		suspicion += 10;
-		this.susp.text = "Suspiciousness: " + suspicion;
+		this.susp.text = "Susp: " + suspicion;
 		this.response = game.add.text(50, game.world.height - 100, "I should’ve just stayed home… ");
 	},
 	// update, run the game loop =====================
