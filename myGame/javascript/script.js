@@ -2,6 +2,14 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO);
 
 var text, men = 10, money = 50, suspicion = 0, comPoints = 0, noblePoints = 0;
 
+var story = ["words", "words", "words"]; //an array of strings
+		var line = [];
+
+		var wordIndex = 0;
+		var lineIndex = 0;
+
+		var wordDelay = 140;
+		var lineDelay = 400;
 
 // Main State ==================================================
 var Menu = function(game){};
@@ -138,9 +146,9 @@ GamePlay.prototype = {
 		this.com.anchor.set(0.5);
 		this.noble.anchor.set(0.5);
 		// Player UI
-		this.money = game.add.text(650, 50, "Gold: " + money);
-		this.army = game.add.text(650, 100, "Soldiers: " + men);
-		this.susp = game.add.text(650, 150, "Suspiciousness: " + suspicion);
+		this.money = game.add.text(600, 50, "Gold: " + money);
+		this.army = game.add.text(600, 100, "Soldiers: " + men);
+		this.susp = game.add.text(600, 150, "Susp.: " + suspicion);
 
 		game.input.mouse.capture = true;
 		//this.scroll.input.mouse.capture = true;
@@ -155,7 +163,7 @@ GamePlay.prototype = {
 		this.noble.text = "Nobles: " + noblePoints;
 		this.money.text = "Gold: " + money;
 		this.army.text = "Soldiers: " + men;
-		this.response = game.add.text(50, game.world.height - 100, "Oh thank you so much! I don’t really care if you kill the pirates or scare them off.\nJust make sure they don’t come back! We’ll provide payment once the job is done.");
+		this.response = game.add.text(50, game.world.height - 100, "Oh thank you so much! I don’t really care if you kill the \npirates or scare them off.Just make sure they don’t come back! \nWe’ll provide payment once the job is done.");
 	},
 
 	declineQuest: function(){
@@ -178,7 +186,7 @@ GamePlay.prototype = {
 
 		game.physics.arcade.collide(this.knife, this.commoner, this.killMessenger, null, this);
 		game.physics.arcade.collide(this.stamp, this.scroll, this.acceptQuest, null, this);
-		game.physics.arcade.collide(this.candle, this.scroll, this.declineQuest, null, this);
+		//x`game.physics.arcade.collide(this.candle, this.scroll, this.declineQuest, null, this);
 
 		//dimmed color if mouse isn't over it
 		if(this.knife.input.pointerOver()){
@@ -232,21 +240,13 @@ Read.prototype = {
 			"Press DELETE/BACKSPACE to go back");
 		text.anchor.set(0.5);
 
-		var story = ["words", "words", "words"]; //an array of strings
-		var line = [];
-
-		var wordIndex = 0;
-		var lineIndex = 0;
-
-		var wordDelay = 140;
-		var lineDelay = 400;
+		
 
 
-		text = game.add.text(32, 32, '', {font: "15px Arial", fill: "#19de65"});
-		nextLine();
+		this.text = game.add.text(32, 32, '', {font: "15px Arial", fill: "#19de65"});
+		this.nextLine();
 
 	},
-
 	nextLine: function(){
 		if(lineIndex === story.length){
 			return; //we're done.
@@ -258,7 +258,7 @@ Read.prototype = {
 		wordIndex = 0;
 
 		//call the nextWord function once for each word in the line (line.length)
-		game.time.events.repeat(wordDelay, line.length, nextWord, this);
+		game.time.events.repeat(wordDelay, line.length, this.nextWord, this);
 
 		lineIndex++;
 	},
@@ -275,7 +275,7 @@ Read.prototype = {
 			text.text = text.text.concat("\n");
 
 			//get the next line after the lineDelay amount of ms has passed
-			game.time.events.add(lineDelay, nextLine, this);
+			game.time.events.add(lineDelay, this.nextLine, this);
 
 		}
 	},
