@@ -100,6 +100,7 @@ GamePlay.prototype = {
 	// place assets ==================================
 	create: function(){
 		game.add.text(250,0,"hit space to go to game over");
+		game.add.text(360,100,"Click the scroll\n to see your quest\n click and drag\n the objects\nto accept or kill");
 		console.log("GamePlay: create");
 		//spin up physics
 		this.physics.startSystem(Phaser.Physics.ARCADE);
