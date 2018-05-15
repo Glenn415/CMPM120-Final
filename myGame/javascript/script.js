@@ -30,6 +30,8 @@ Menu.prototype = {
 		text = game.add.text(game.width/2, game.height/2, "Infiltrator\n"+
 			"Press ENTER to start the Tutorial or SPACE to Play");
 		text.anchor.set(0.5);
+
+		newGame();
 	},
 
 	// update, run game loop =========================
@@ -189,7 +191,9 @@ GamePlay.prototype = {
 		if(game.input.activePointer.leftButton.isDown && this.scroll.input.pointerOver()){
 			game.state.start('Read');
 		}
-		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+
+		// Game over conditions
+		if(men <= 0 || suspicion >= 100) {
 			game.state.start('GameOver');
 		}
 
@@ -267,8 +271,12 @@ game.state.add("GameOver", GameOver);
 game.state.start("Menu");
 
 // Helper functions ============================================
-function onChange(){
-	game.state.start("GamePlay");
+function newGame(){
+	men = 10;
+	money = 50;
+	suspicion = 0; 
+	comPoints = 0; 
+	noblePoints = 0;
 }
 
 //player choice functions
