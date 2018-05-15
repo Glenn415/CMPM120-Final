@@ -280,6 +280,7 @@ function newGame(){
 	suspicion = 0; 
 	comPoints = 0; 
 	noblePoints = 0;
+	questStatus = false;
 }
 
 //player choice functions
