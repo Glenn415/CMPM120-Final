@@ -197,7 +197,9 @@ GamePlay.prototype = {
 		if(men <= 0 || suspicion >= 100) {
 			game.state.start('GameOver');
 		}
-
+		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+		 	game.state.start('GameOver');
+		}
 	},
 
 	// debugging method ===============================
