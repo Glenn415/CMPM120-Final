@@ -6,6 +6,7 @@ var wordIndex = 0;
 var lineIndex = 0;
 var wordDelay = 140;
 var lineDelay = 400;
+var questStatus = false;
 
 // Main State ==================================================
 var Menu = function(game){};
@@ -98,17 +99,19 @@ GamePlay.prototype = {
 
 	// place assets ==================================
 	create: function(){
-		game.add.text(250,0,"hit space to go to game over");
-		game.add.text(360,100,"Click the scroll\n to see your quest\n click and drag\n the objects\nto accept or kill");
 		console.log("GamePlay: create");
+		game.stage.backgroundColor = "#900C3F";
+
+		// delete this line and explain on the tutorial
+		game.add.text(360,100,"Click the scroll\n to see your quest\n click and drag\n the objects\nto accept or kill");
+		
 		//spin up physics
-		this.physics.startSystem(Phaser.Physics.ARCADE);
+		game.physics.startSystem(Phaser.Physics.ARCADE);
 		game.add.sprite(0, 0, "GamePlayUI");
-		game.stage.backgroundColor = "#808080";
+
 		//add sound
 		this.bgMusic = game.add.audio('bgMusic');
 		this.bgMusic.play('', 0, 1, true); //loops
-		game.stage.backgroundColor = "#ba2500";
 
 		//create objects
 		this.knife = new Item(game, 650, 500, 'obj', 'Knife');
@@ -132,7 +135,6 @@ GamePlay.prototype = {
 		this.scroll.body.immovable = true; //scroll cannot be moved, scroll is a rock
 		this.scroll.body.setSize(400,150);
 
-
 		//create npc
 		this.commoner = game.add.sprite(0, 0,  'commoner');
 		this.physics.enable(this.commoner, Phaser.Physics.ARCADE);
@@ -145,6 +147,7 @@ GamePlay.prototype = {
 		this.noble = game.add.text(70, 100, "Nobles: " + noblePoints);
 		this.com.anchor.set(0.5);
 		this.noble.anchor.set(0.5);
+
 		// Player UI
 		this.money = game.add.text(600, 50, "Gold: " + money);
 		this.army = game.add.text(600, 100, "Soldiers: " + men);
@@ -152,38 +155,36 @@ GamePlay.prototype = {
 
 		game.input.mouse.capture = true;
 		//this.scroll.input.mouse.capture = true;
+
 	},
 
 	// update, run the game loop =====================
 	update: function(){
 		// load 'GamePlay' state when user pressed ENTER key
-		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-			game.state.start('Read');
-		}
+		// if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+		// 	game.state.start('Read');
+		// }
 
 		game.physics.arcade.collide(this.knife, this.commoner, killMessenger, null, this);
 		game.physics.arcade.collide(this.stamp, this.scroll, acceptQuest, null, this);
-		//x`game.physics.arcade.collide(this.candle, this.scroll, this.declineQuest, null, this);
+		//game.physics.arcade.collide(this.candle, this.scroll, this.declineQuest, null, this);
 
 		//dimmed color if mouse isn't over it
 		if(this.knife.input.pointerOver()){
 			this.knife.alpha = 1;
-		}
-		else{
+		}else{
 			this.knife.alpha = 0.5;
 		}
 
 		if(this.stamp.input.pointerOver()){
 			this.stamp.alpha = 1;
-		}
-		else{
+		}else{
 			this.stamp.alpha = 0.5;
 		}
 
 		/*if(this.candle.input.pointerOver()){
 			this.candle.alpha = 1;
-		}
-		else{
+		}else{
 			this.candle.alpha = 0.5;
 		}*/
 
@@ -228,7 +229,7 @@ Read.prototype = {
 
 	// update, run the game loop =====================
 	update: function(){
-		//this.sound.stopAll();
+		game.sound.stopAll();
 		// load 'GamePlay' state when user pressed DELETE key
 		if(game.input.keyboard.isDown(Phaser.Keyboard.BACKSPACE)) {
 			game.state.start('GamePlay');
@@ -281,26 +282,35 @@ function newGame(){
 
 //player choice functions
 function acceptQuest(){
-	comPoints += 10;
-	money += 20;
-	men -= 5;
-	this.com.text = "Commoners: " + comPoints;
-	this.noble.text = "Nobles: " + noblePoints;
-	this.money.text = "Gold: " + money;
-	this.army.text = "Soldiers: " + men;
-	this.response = game.add.text(50, game.world.height - 100, "Oh thank you so much! I don’t really care if you kill the \npirates or scare them off.Just make sure they don’t come back! \nWe’ll provide payment once the job is done.");
+	if (questStatus == false){
+		questStatus = true;
+		comPoints += 10;
+		money += 20;
+		men -= 5;
+		this.com.text = "Commoners: " + comPoints;
+		this.noble.text = "Nobles: " + noblePoints;
+		this.money.text = "Gold: " + money;
+		this.army.text = "Soldiers: " + men;
+		this.response = game.add.text(50, game.world.height - 100, "Oh thank you so much! I don’t really care if you kill the \npirates or scare them off.Just make sure they don’t come back! \nWe’ll provide payment once the job is done.");
+	}
 }
 
 function declineQuest(){
-	comPoints -= 3;
-	this.com.text = "Commoners: " + comPoints;
-	this.response = game.add.text(50, game.world.height - 100, "Oh. I’m sorry to have bothered you then. I was just really hoping for help.\nWe really need these pirates gone before they destroy our town. Guess I’ll keep looking.");
+	if (questStatus == false){
+		questStatus = true;
+		comPoints -= 3;
+		this.com.text = "Commoners: " + comPoints;
+		this.response = game.add.text(50, game.world.height - 100, "Oh. I’m sorry to have bothered you then. I was just really hoping for help.\nWe really need these pirates gone before they destroy our town. Guess I’ll keep looking.");
+	}
 }
 
 function killMessenger(){
-	suspicion += 10;
-	this.susp.text = "Susp: " + suspicion;
-	this.response = game.add.text(50, game.world.height - 100, "I should’ve just stayed home… ");
+	if (questStatus == false){
+		questStatus = true;
+		suspicion += 10;
+		this.susp.text = "Susp: " + suspicion;
+		this.response = game.add.text(50, game.world.height - 100, "I should’ve just stayed home… ");
+	}
 }
 
 function nextLine(){
