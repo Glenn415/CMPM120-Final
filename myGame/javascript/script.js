@@ -138,8 +138,6 @@ GamePlay.prototype = {
 		this.commoner.body.immovable = true;
 		this.commoner.body.setSize(310,225);
 
-		
-
 		// UI score
 		this.com = game.add.text(100, 50, "Commoners: " + comPoints);
 		this.noble = game.add.text(70, 100, "Nobles: " + noblePoints);
@@ -219,44 +217,9 @@ Read.prototype = {
 		text = game.add.text(350,350,"Press DELETE/BACKSPACE to go back\n");
 		text.anchor.set(0.5);
 
-		
-
-
 		this.text = game.add.text(32, 32, '', {font: "15px Arial", fill: "#19de65"});
-		this.nextLine();
+		nextLine();
 
-	},
-	nextLine: function(){
-		if(lineIndex === story.length){
-			return; //we're done.
-		}
-		//split current line on spaces, so one word per array element
-		line = story[lineIndex].split(' ');
-
-		//reseet the word index to zero (first word in the line)
-		wordIndex = 0;
-
-		//call the nextWord function once for each word in the line (line.length)
-		game.time.events.repeat(wordDelay, line.length, this.nextWord, this);
-
-		lineIndex++;
-	},
-
-	nextWord: function() {
-		//add the next word onto the text string, followed by space
-		text.text = text.text.concat(line[wordIndex] + ' ');
-
-		wordIndex++;
-
-		//last word?
-		if (wordIndex === line.length){
-			//add a carriage return
-			text.text = text.text.concat("\n");
-
-			//get the next line after the lineDelay amount of ms has passed
-			game.time.events.add(lineDelay, this.nextLine, this);
-
-		}
 	},
 
 	// update, run the game loop =====================
@@ -330,4 +293,35 @@ function killMessenger(){
 	suspicion += 10;
 	this.susp.text = "Susp: " + suspicion;
 	this.response = game.add.text(50, game.world.height - 100, "I should’ve just stayed home… ");
+}
+
+function nextLine(){
+	if(lineIndex === story.length){
+		return; //we're done.
+	}
+	//split current line on spaces, so one word per array element
+	line = story[lineIndex].split(' ');
+
+	//reseet the word index to zero (first word in the line)
+	wordIndex = 0;
+
+	//call the nextWord function once for each word in the line (line.length)
+	game.time.events.repeat(wordDelay, line.length, this.nextWord, this);
+
+	lineIndex++;
+}
+
+function nextWord() {
+	//add the next word onto the text string, followed by space
+	text.text = text.text.concat(line[wordIndex] + ' ');
+	wordIndex++;
+
+	//last word?
+	if (wordIndex === line.length){
+		//add a carriage return
+		text.text = text.text.concat("\n");
+		//get the next line after the lineDelay amount of ms has passed
+		game.time.events.add(lineDelay, nextLine, this);
+
+	}
 }
