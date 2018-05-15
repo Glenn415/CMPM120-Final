@@ -1,15 +1,11 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO);
-
 var text, men = 10, money = 50, suspicion = 0, comPoints = 0, noblePoints = 0;
-
 var story = ["Hello,","I’m from Heaton and I have a request for you.", "Our town is on the coast with a thriving port.","But recently we’re having trouble with pirates.","For months they’ve been coming in and stealing","from us. If anyone tries to stop them,","they’ll get kidnapped or killed. These pirates","have been here too long and it has to end.","Since nobody in our town can do it without","being kidnapped or killed, we’d be so relieved","if you’d come help. We can pay a fair amount","as well as some men in return. This quest","should only take a few men to complete."]; //an array of strings
-		var line = [];
-
-		var wordIndex = 0;
-		var lineIndex = 0;
-
-		var wordDelay = 140;
-		var lineDelay = 400;
+var line = [];
+var wordIndex = 0;
+var lineIndex = 0;
+var wordDelay = 140;
+var lineDelay = 400;
 
 // Main State ==================================================
 var Menu = function(game){};
@@ -19,7 +15,7 @@ Menu.prototype = {
 		console.log("Menu: preload");
 
 		game.load.path = "../myGame/assets/img/";
-		game.load.atlas("button", "buttons.png", "buttons.json");
+		//game.load.atlas("button", "buttons.png", "buttons.json");
 		//game.load.atlas("bg", "bgSprites.png", "bgSprites.json");
 		game.load.atlas("obj", "Items.png", "Items.json");
 		//game.load.atlas("char", "charSprites.png", "charSprites.json");
@@ -30,7 +26,7 @@ Menu.prototype = {
 	// place assets =========================================
 	create: function(){
 		console.log("Menu: create");
-		game.stage.backgroundColor = "#b373c6";
+		game.stage.backgroundColor = "#003C93";
 		text = game.add.text(game.width/2, game.height/2, "Infiltrator\n"+
 			"Press ENTER to start the Tutorial or SPACE to Play");
 		text.anchor.set(0.5);
@@ -63,19 +59,20 @@ Tutorial.prototype = {
 		text = game.add.text(game.width/2, game.height/2, "Tutorial will go here.\n Hit either button to continue to game play.");
 		text.anchor.set(0.5);
 
-		var tutButtonRed = game.add.button(game.width/4, game.width/2, "button", onChange, 1, 0, 2);
-		tutButtonRed.anchor.set(0.5);
-		text = game.add.text(0, 0, "Decline");
-		text.anchor.set(0.5);
-		text.x = tutButtonRed.x;
-		text.y = tutButtonRed.y;
+		// NOTE: delete later and add actualy tutorial
+		// var tutButtonRed = game.add.button(game.width/4, game.width/2, "button", onChange, 1, 0, 2);
+		// tutButtonRed.anchor.set(0.5);
+		// text = game.add.text(0, 0, "Decline");
+		// text.anchor.set(0.5);
+		// text.x = tutButtonRed.x;
+		// text.y = tutButtonRed.y;
 
-		var tutButtonGreen = game.add.button(game.width-200, game.width/2, "button", onChange, 4, 3, 5);
-		tutButtonGreen.anchor.set(0.5);
-		text = game.add.text(0, 0, "Accept");
-		text.anchor.set(0.5);
-		text.x = tutButtonGreen.x;
-		text.y = tutButtonGreen.y;
+		// var tutButtonGreen = game.add.button(game.width-200, game.width/2, "button", onChange, 4, 3, 5);
+		// tutButtonGreen.anchor.set(0.5);
+		// text = game.add.text(0, 0, "Accept");
+		// text.anchor.set(0.5);
+		// text.x = tutButtonGreen.x;
+		// text.y = tutButtonGreen.y;
 	},
 
 	// update, run the game loop =====================
@@ -157,29 +154,6 @@ GamePlay.prototype = {
 		//this.scroll.input.mouse.capture = true;
 	},
 
-	//player choice functions
-	acceptQuest: function(){
-		comPoints += 10;
-		money += 20;
-		men -= 5;
-		this.com.text = "Commoners: " + comPoints;
-		this.noble.text = "Nobles: " + noblePoints;
-		this.money.text = "Gold: " + money;
-		this.army.text = "Soldiers: " + men;
-		this.response = game.add.text(50, game.world.height - 100, "Oh thank you so much! I don’t really care if you kill the \npirates or scare them off.Just make sure they don’t come back! \nWe’ll provide payment once the job is done.");
-	},
-
-	declineQuest: function(){
-		comPoints -= 3;
-		this.com.text = "Commoners: " + comPoints;
-		this.response = game.add.text(50, game.world.height - 100, "Oh. I’m sorry to have bothered you then. I was just really hoping for help.\nWe really need these pirates gone before they destroy our town. Guess I’ll keep looking.");
-	},
-
-	killMessenger: function(){
-		suspicion += 10;
-		this.susp.text = "Susp: " + suspicion;
-		this.response = game.add.text(50, game.world.height - 100, "I should’ve just stayed home… ");
-	},
 	// update, run the game loop =====================
 	update: function(){
 		// load 'GamePlay' state when user pressed ENTER key
@@ -187,8 +161,8 @@ GamePlay.prototype = {
 			game.state.start('Read');
 		}
 
-		game.physics.arcade.collide(this.knife, this.commoner, this.killMessenger, null, this);
-		game.physics.arcade.collide(this.stamp, this.scroll, this.acceptQuest, null, this);
+		game.physics.arcade.collide(this.knife, this.commoner, killMessenger, null, this);
+		game.physics.arcade.collide(this.stamp, this.scroll, acceptQuest, null, this);
 		//x`game.physics.arcade.collide(this.candle, this.scroll, this.declineQuest, null, this);
 
 		//dimmed color if mouse isn't over it
@@ -334,3 +308,26 @@ function onChange(){
 	game.state.start("GamePlay");
 }
 
+//player choice functions
+function acceptQuest(){
+	comPoints += 10;
+	money += 20;
+	men -= 5;
+	this.com.text = "Commoners: " + comPoints;
+	this.noble.text = "Nobles: " + noblePoints;
+	this.money.text = "Gold: " + money;
+	this.army.text = "Soldiers: " + men;
+	this.response = game.add.text(50, game.world.height - 100, "Oh thank you so much! I don’t really care if you kill the \npirates or scare them off.Just make sure they don’t come back! \nWe’ll provide payment once the job is done.");
+}
+
+function declineQuest(){
+	comPoints -= 3;
+	this.com.text = "Commoners: " + comPoints;
+	this.response = game.add.text(50, game.world.height - 100, "Oh. I’m sorry to have bothered you then. I was just really hoping for help.\nWe really need these pirates gone before they destroy our town. Guess I’ll keep looking.");
+}
+
+function killMessenger(){
+	suspicion += 10;
+	this.susp.text = "Susp: " + suspicion;
+	this.response = game.add.text(50, game.world.height - 100, "I should’ve just stayed home… ");
+}
