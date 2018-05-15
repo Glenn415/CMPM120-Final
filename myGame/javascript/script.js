@@ -1,6 +1,29 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO);
-var text, men = 10, money = 50, suspicion = 0, comPoints = 0, noblePoints = 0;
-var story = ["Hello,","I’m from Heaton and I have a request for you.", "Our town is on the coast with a thriving port.","But recently we’re having trouble with pirates.","For months they’ve been coming in and stealing","from us. If anyone tries to stop them,","they’ll get kidnapped or killed. These pirates","have been here too long and it has to end.","Since nobody in our town can do it without","being kidnapped or killed, we’d be so relieved","if you’d come help. We can pay a fair amount","as well as some men in return. This quest","should only take a few men to complete."]; //an array of strings
+var text, men = 10, money = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 0;
+var story = [];
+var storyBase = [
+["Hello,",
+"I’m from Heaton and I have a request for you.",
+"Our town is on the coast with a thriving port.",
+"But recently we’re having trouble with pirates.",
+"For months they’ve been coming in and stealing",
+"from us. If anyone tries to stop them,",
+"they’ll get kidnapped or killed. These pirates",
+"have been here too long and it has to end.",
+"Since nobody in our town can do it without",
+"being kidnapped or killed, we’d be so relieved",
+"if you’d come help. We can pay a fair amount",
+"as well as some men in return. This quest",
+"should only take a few men to complete."], 
+["Hello,",
+"We, the people of Castow, are in need of your", 
+"immediate help. Bandits have taken over our town.",
+"We are a small, peaceful town, but unfortunately,", 
+"we have no major authority here. They’ve damaged our", 
+"poor town and harassed us so much and we’re sick of it.", 
+"Please come and kill these bandits. We may not be able to",
+"provide much but we’d be so grateful if you came and helped!"]
+]; //an array of strings
 var line = [];
 var wordIndex = 0;
 var lineIndex = 0;
@@ -154,7 +177,6 @@ GamePlay.prototype = {
 		this.susp = game.add.text(600, 150, "Susp.: " + suspicion);
 
 		game.input.mouse.capture = true;
-		//this.scroll.input.mouse.capture = true;
 
 	},
 
@@ -217,7 +239,8 @@ Read.prototype = {
 	// place assets ==================================
 	create: function(){
 		console.log("Read: create");
-
+		//set story content;
+		story = storyBase[questCounter];
 		//	Place ReadScroll
 		game.add.sprite(0, 0, 'obj', 'ReadScroll');
 
