@@ -1,6 +1,18 @@
+
 var game = new Phaser.Game(800, 600, Phaser.AUTO);
-var text, men = 10, money = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 0;
-var story = [];
+//status variables
+var text; men = 10, money = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 0;
+//====Below is a series of arrays holding input values for NPC object creation====
+var menArg = [5, 10]; 
+var suspArg = [7, 10]; 
+var comPtsArg = [10, 10]; 
+var nobPtsArg = [0, 0];
+var negNobPtsArg = [0, 0]; 
+var negComPtsArg = [3, 5]; 
+var moneyArg = [20, 40];
+//================================
+var story = []; //empty array variable, will later be used to temporarily store scrolling texts
+
 var storyBase = [
 ["Hello,",
 "I’m from Heaton and I have a request for you.",
@@ -23,7 +35,25 @@ var storyBase = [
 "poor town and harassed us so much and we’re sick of it.", 
 "Please come and kill these bandits. We may not be able to",
 "provide much but we’d be so grateful if you came and helped!"]
-]; //an array of strings
+]; //an array of strings for quest description
+var aD = [
+["Oh thank you so much! I don’t really care if you kill the", 
+"pirates or scare them off.Just make sure they don’t come back!", 
+"We’ll provide payment once the job is done."],
+["test test"]
+]; //accept dialogue array of array of strings :D
+var dD = [
+["Oh. I’m sorry to have bothered you then. I was just really hoping for help.",
+"We really need these pirates gone before they destroy our town.",
+"Guess I’ll keep looking."],
+["Decline test", 
+"woooooooo"]
+]; //decline dialogue
+var kD = [
+["I should’ve just stayed home… ", "fuck"], 
+["woops, test",
+"kill dialogue test"]
+]; //kill dialogue
 var line = [];
 var wordIndex = 0;
 var lineIndex = 0;
@@ -99,7 +129,7 @@ Tutorial.prototype = {
 		// text.anchor.set(0.5);
 		// text.x = tutButtonGreen.x;
 		// text.y = tutButtonGreen.y;
-	},
+	},                                                                
 
 	// update, run the game loop =====================
 	update: function(){
@@ -158,8 +188,9 @@ GamePlay.prototype = {
 		this.scroll.body.immovable = true; //scroll cannot be moved, scroll is a rock
 		this.scroll.body.setSize(400,150);
 
-		//create npc
-		this.commoner = game.add.sprite(0, 0,  'commoner');
+		//create npc depending on questNumber
+		//NPC constructor parameters(game, x, y, key, frame, aD, dD, kD, noblePoints, comPoints, negNoblePts, negComPts, men, susp, money);
+		this.commoner = new NPC(game, 0, 0,  'obj', 'commoner', aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
 		this.physics.enable(this.commoner, Phaser.Physics.ARCADE);
 		//this.commoner.enableBody();
 		this.commoner.body.immovable = true;
@@ -310,32 +341,38 @@ function newGame(){
 function acceptQuest(){
 	if (questStatus == false){
 		questStatus = true;
-		comPoints += 10;
-		money += 20;
-		men -= 5;
+		comPoints += this.commoner.comPoints;
+		money += this.commoner.money;
+		men -= this.commoner.men;
 		this.com.text = "Commoners: " + comPoints;
 		this.noble.text = "Nobles: " + noblePoints;
 		this.money.text = "Gold: " + money;
 		this.army.text = "Soldiers: " + men;
-		this.response = game.add.text(50, game.world.height - 100, "Oh thank you so much! I don’t really care if you kill the \npirates or scare them off.Just make sure they don’t come back! \nWe’ll provide payment once the job is done.");
+		story = this.commoner.aD;
+		this.text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
+		nextLine();
 	}
 }
 
 function declineQuest(){
 	if (questStatus == false){
 		questStatus = true;
-		comPoints -= 3;
+		comPoints -= this.commoner.negComPoints;
 		this.com.text = "Commoners: " + comPoints;
-		this.response = game.add.text(50, game.world.height - 100, "Oh. I’m sorry to have bothered you then. I was just really hoping for help.\nWe really need these pirates gone before they destroy our town. Guess I’ll keep looking.");
+		story = this.commoner.dD;
+		this.text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
+		nextLine();
 	}
 }
 
 function killMessenger(){
 	if (questStatus == false){
 		questStatus = true;
-		suspicion += 10;
+		suspicion += this.commoner.susp;
 		this.susp.text = "Susp: " + suspicion;
-		this.response = game.add.text(50, game.world.height - 100, "I should’ve just stayed home… ");
+		story = this.commoner.kD;
+		this.text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
+		nextLine();	
 	}
 }
 
