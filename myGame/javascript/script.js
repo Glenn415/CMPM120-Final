@@ -192,9 +192,11 @@ GamePlay.prototype = {
 		//NPC constructor parameters(game, x, y, key, frame, aD, dD, kD, noblePoints, comPoints, negNoblePts, negComPts, men, susp, money);
 		this.commoner = new NPC(game, 0, 0,  'obj', 'commoner', aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
 		this.physics.enable(this.commoner, Phaser.Physics.ARCADE);
+		game.add.existing(this.commoner);
 		//this.commoner.enableBody();
 		this.commoner.body.immovable = true;
 		this.commoner.body.setSize(310,225);
+
 
 		// UI score
 		this.com = game.add.text(100, 50, "Commoners: " + comPoints);
