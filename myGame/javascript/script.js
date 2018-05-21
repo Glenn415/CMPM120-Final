@@ -54,11 +54,16 @@ var kD = [
 ["woops, test",
 "kill dialogue test"]
 ]; //kill dialogue
+
+//borrowed from https://stackoverflow.com/questions/31849667/how-to-type-word-by-word-or-line-by-line-in-phaser-js
+//start
 var line = [];
 var wordIndex = 0;
 var lineIndex = 0;
 var wordDelay = 140;
 var lineDelay = 400;
+//end
+
 var questStatus = false;
 
 // Main State ==================================================
@@ -378,6 +383,8 @@ function killMessenger(){
 	}
 }
 
+//borrowed from https://stackoverflow.com/questions/31849667/how-to-type-word-by-word-or-line-by-line-in-phaser-js
+//start
 function nextLine(){
 	if(lineIndex === story.length){
 		return; //we're done.
@@ -408,3 +415,4 @@ function nextWord() {
 
 	}
 }
+//end
