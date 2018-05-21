@@ -190,7 +190,7 @@ GamePlay.prototype = {
 
 		//create npc depending on questNumber
 		//NPC constructor parameters(game, x, y, key, frame, aD, dD, kD, noblePoints, comPoints, negNoblePts, negComPts, men, susp, money);
-		this.commoner = new NPC(game, 0, 0,  'obj', 'commoner', aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
+		this.commoner = new NPC(game, 0, 0,'commoner', aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
 		this.physics.enable(this.commoner, Phaser.Physics.ARCADE);
 		game.add.existing(this.commoner);
 		//this.commoner.enableBody();
