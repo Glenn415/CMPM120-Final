@@ -1,7 +1,8 @@
 
 var game = new Phaser.Game(800, 600, Phaser.AUTO);
 //status variables
-var text; men = 10, money = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 0;
+var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 0;
+var commoner, noble;
 //====Below is a series of arrays holding input values for NPC object creation====
 var menArg = [5, 10]; 
 var suspArg = [7, 10]; 
@@ -74,10 +75,9 @@ Menu.prototype = {
 		console.log("Menu: preload");
 
 		game.load.path = "../myGame/assets/img/";
-		//game.load.atlas("button", "buttons.png", "buttons.json");
 		//game.load.atlas("bg", "bgSprites.png", "bgSprites.json");
 		game.load.atlas("obj", "Items.png", "Items.json");
-		//game.load.atlas("char", "charSprites.png", "charSprites.json");
+		game.load.atlas("npc", "npc_atlas.png", "npc_atlas.json");
 		game.load.image("GamePlayUI", "GamePlay_UI.png");
 		game.load.audio('bgMusic', ['bgmusic.wav']);
 	},
@@ -89,7 +89,6 @@ Menu.prototype = {
 		text = game.add.text(game.width/2, game.height/2, "Infiltrator\n"+
 			"Press ENTER to start the Tutorial or SPACE to Play");
 		text.anchor.set(0.5);
-
 		newGame();
 	},
 
@@ -120,20 +119,7 @@ Tutorial.prototype = {
 		text = game.add.text(game.width/2, game.height/2, "Tutorial will go here.\n Hit either button to continue to game play.");
 		text.anchor.set(0.5);
 
-		// NOTE: delete later and add actualy tutorial
-		// var tutButtonRed = game.add.button(game.width/4, game.width/2, "button", onChange, 1, 0, 2);
-		// tutButtonRed.anchor.set(0.5);
-		// text = game.add.text(0, 0, "Decline");
-		// text.anchor.set(0.5);
-		// text.x = tutButtonRed.x;
-		// text.y = tutButtonRed.y;
-
-		// var tutButtonGreen = game.add.button(game.width-200, game.width/2, "button", onChange, 4, 3, 5);
-		// tutButtonGreen.anchor.set(0.5);
-		// text = game.add.text(0, 0, "Accept");
-		// text.anchor.set(0.5);
-		// text.x = tutButtonGreen.x;
-		// text.y = tutButtonGreen.y;
+		// NOTE: Please add tutorial here
 	},                                                                
 
 	// update, run the game loop =====================
@@ -150,7 +136,8 @@ var GamePlay = function(game){};
 GamePlay.prototype = {
 	// preload assets ================================
 	preload: function(){
-		game.load.image("commoner", "commoner.png");
+		//game.load.image("commoner", "commoner.png");
+
 		game.load.path = 'assets/audio/';
 		game.load.audio('bgMusic', ['bgmusic.wav']);
 	},
@@ -159,60 +146,56 @@ GamePlay.prototype = {
 	create: function(){
 		console.log("GamePlay: create");
 		game.stage.backgroundColor = "#900C3F";
-
-		// delete this line and explain on the tutorial
-		game.add.text(360,100,"Click the scroll\n to see your quest\n click and drag\n the objects\nto accept or kill");
 		
 		//spin up physics
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		game.add.sprite(0, 0, "GamePlayUI");
 
 		//add sound
-		this.bgMusic = game.add.audio('bgMusic');
-		this.bgMusic.play('', 0, 1, true); //loops
+		bgMusic = game.add.audio('bgMusic');
+		bgMusic.play('', 0, 1, true); //loops
+
+		//scroll obj is also quest obj, it acts as a double
+		scroll = new Item(game, 370, 420, 'obj', 'ReadScroll');
+		game.add.existing(scroll);
+		scroll.scale.set( .1, .1);
+		scroll.body.immovable = true; //scroll cannot be moved, scroll is a rock
+		scroll.body.setSize(700,500, 50, 32);
+
+		//create npc depending on questNumber
+		//NPC constructor parameters(game, x, y, key, frame, aD, dD, kD, noblePoints, comPoints, negNoblePts, negComPts, men, susp, money);
+		commoner = new NPC(game, 400, 170,'npc', 4, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
+		game.physics.enable(commoner, Phaser.Physics.ARCADE);
+		game.add.existing(commoner);
+		commoner.scale.set(.9);
+		//this.commoner.enableBody();
+		//this.commoner.body.immovable = true;
+		commoner.body.setSize(100, 270, 135, 120);
 
 		//create objects
-		this.knife = new Item(game, 650, 500, 'obj', 'Knife');
-		game.add.existing(this.knife);	
-		this.knife.input.enableDrag(); //enable click and drag
-		this.knife.alpha = 0.5; //set to be darkened
+		knife = new Item(game, 200, 530, 'obj', 'Knife'); // (680, 530)
+		game.add.existing(knife);	
+		knife.alpha = 0.5; //set to be darkened
 
-		this.stamp = new Item(game, 680, 530, 'obj', 'Stamp');
-		game.add.existing(this.stamp);	
-		this.stamp.input.enableDrag();
-		this.stamp.alpha = 0.5;
+		stamp = new Item(game, 600, 450, 'obj', 'Stamp');
+		game.add.existing(stamp);	
+		stamp.alpha = 0.5;
+
 		/*this.candle = new Item(game, 710, 560, 'obj', 'Candle');
 		game.add.existing(candle);
 		this.candle.input.enableDrag();
 		this.candle.alpha = 0.5;*/
 
-		//scroll obj is also quest obj, it acts as a double
-		this.scroll = new Item(game, 500, 500, 'obj', 'ReadScroll');
-		game.add.existing(this.scroll);
-		this.scroll.scale.set( .1, .1);
-		this.scroll.body.immovable = true; //scroll cannot be moved, scroll is a rock
-		this.scroll.body.setSize(400,150);
-
-		//create npc depending on questNumber
-		//NPC constructor parameters(game, x, y, key, frame, aD, dD, kD, noblePoints, comPoints, negNoblePts, negComPts, men, susp, money);
-		this.commoner = new NPC(game, 0, 0,'commoner', aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
-		this.physics.enable(this.commoner, Phaser.Physics.ARCADE);
-		game.add.existing(this.commoner);
-		//this.commoner.enableBody();
-		this.commoner.body.immovable = true;
-		this.commoner.body.setSize(310,225);
-
-
 		// UI score
-		this.com = game.add.text(100, 50, "Commoners: " + comPoints);
-		this.noble = game.add.text(70, 100, "Nobles: " + noblePoints);
-		this.com.anchor.set(0.5);
-		this.noble.anchor.set(0.5);
+		printCP = game.add.text(135, 58, comPoints);
+		printNP = game.add.text(113, 87, noblePoints);
+		// com.anchor.set(0.5);
+		// noble.anchor.set(0.5);
 
 		// Player UI
-		this.money = game.add.text(600, 50, "Gold: " + money);
-		this.army = game.add.text(600, 100, "Soldiers: " + men);
-		this.susp = game.add.text(600, 150, "Susp.: " + suspicion);
+		printMoney = game.add.text(665, 78, moneyPoints);
+		printMen = game.add.text(700, 110, men);
+		printSusp = game.add.text(715, 140, suspicion);
 
 		game.input.mouse.capture = true;
 
@@ -220,26 +203,21 @@ GamePlay.prototype = {
 
 	// update, run the game loop =====================
 	update: function(){
-		// load 'GamePlay' state when user pressed ENTER key
-		// if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-		// 	game.state.start('Read');
-		// }
-
-		game.physics.arcade.collide(this.knife, this.commoner, killMessenger, null, this);
-		game.physics.arcade.collide(this.stamp, this.scroll, acceptQuest, null, this);
+		game.physics.arcade.collide(knife, commoner, killMessenger, null, this);
+		game.physics.arcade.collide(stamp, scroll, acceptQuest, null, this);
 		//game.physics.arcade.collide(this.candle, this.scroll, this.declineQuest, null, this);
 
 		//dimmed color if mouse isn't over it
-		if(this.knife.input.pointerOver()){
-			this.knife.alpha = 1;
+		if(knife.input.pointerOver()){
+			knife.alpha = 1;
 		}else{
-			this.knife.alpha = 0.5;
+			knife.alpha = 0.5;
 		}
 
-		if(this.stamp.input.pointerOver()){
-			this.stamp.alpha = 1;
+		if(stamp.input.pointerOver()){
+			stamp.alpha = 1;
 		}else{
-			this.stamp.alpha = 0.5;
+			stamp.alpha = 0.5;
 		}
 
 		/*if(this.candle.input.pointerOver()){
@@ -249,7 +227,7 @@ GamePlay.prototype = {
 		}*/
 
 		//if moused over scroll and click left button, go to READ state
-		if(game.input.activePointer.leftButton.isDown && this.scroll.input.pointerOver()){
+		if(game.input.activePointer.leftButton.isDown && scroll.input.pointerOver()){
 			game.state.start('Read');
 		}
 
@@ -263,7 +241,12 @@ GamePlay.prototype = {
 	},
 
 	// debugging method ===============================
-	render: function(){}
+	render: function(){
+		//game.debug.bodyInfo(scroll, 32, 32);
+		//game.debug.body(scroll);
+		//game.debug.bodyInfo(commoner, 32, 32);
+		//game.debug.body(commoner);
+	}
 }
 
 // Read State ==============================================
@@ -337,7 +320,7 @@ game.state.start("Menu");
 // Helper functions ============================================
 function newGame(){
 	men = 10;
-	money = 50;
+	moneyPoints = 50;
 	suspicion = 0; 
 	comPoints = 0; 
 	noblePoints = 0;
@@ -346,17 +329,19 @@ function newGame(){
 
 //player choice functions
 function acceptQuest(){
+	// add correct values for accepting this quest!
 	if (questStatus == false){
 		questStatus = true;
-		comPoints += this.commoner.comPoints;
-		money += this.commoner.money;
-		men -= this.commoner.men;
-		this.com.text = "Commoners: " + comPoints;
-		this.noble.text = "Nobles: " + noblePoints;
-		this.money.text = "Gold: " + money;
-		this.army.text = "Soldiers: " + men;
-		story = this.commoner.aD;
-		this.text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
+		commoner.frameName = "Peasant004";
+		comPoints += commoner.comPoints;
+		moneyPoints += commoner.moneyPoints;
+		men -= commoner.men;
+		printCP.text = comPoints;
+		printNP.text = noblePoints;
+		printMoney.text = moneyPoints;
+		printMen.text = men;
+		story = commoner.aD;
+		text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
 		nextLine();
 	}
 }
@@ -364,10 +349,11 @@ function acceptQuest(){
 function declineQuest(){
 	if (questStatus == false){
 		questStatus = true;
-		comPoints -= this.commoner.negComPoints;
-		this.com.text = "Commoners: " + comPoints;
-		story = this.commoner.dD;
-		this.text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
+		commoner.frameName = "Peasant003";
+		comPoints -= commoner.negComPoints;
+		this.com.text = comPoints;
+		story = commoner.dD;
+		text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
 		nextLine();
 	}
 }
@@ -375,10 +361,11 @@ function declineQuest(){
 function killMessenger(){
 	if (questStatus == false){
 		questStatus = true;
-		suspicion += this.commoner.susp;
-		this.susp.text = "Susp: " + suspicion;
-		story = this.commoner.kD;
-		this.text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
+		commoner.frameName = "Peasant002";
+		suspicion += commoner.susp;
+		printSusp.text = suspicion;
+		story = commoner.kD;
+		text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
 		nextLine();	
 	}
 }
@@ -391,13 +378,10 @@ function nextLine(){
 	}
 	//split current line on spaces, so one word per array element
 	line = story[lineIndex].split(' ');
-
 	//reseet the word index to zero (first word in the line)
 	wordIndex = 0;
-
 	//call the nextWord function once for each word in the line (line.length)
 	game.time.events.repeat(wordDelay, line.length, this.nextWord, this);
-
 	lineIndex++;
 }
 
