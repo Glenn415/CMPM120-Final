@@ -19,7 +19,6 @@ function NPC(game, x, y, key, frame, aD, dD, kD , noblePoints, comPoints, negNob
 	game.physics.enable(this);
 	this.body.collideWorldBounds = true;
 	this.inputEnabled = true;
-	this.input.enableDrag(); //enable click and drag
 	this.enableBody = true;
 }
 
