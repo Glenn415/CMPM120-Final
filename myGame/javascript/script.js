@@ -4,7 +4,7 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO);
 var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 0;
 var commoner, noble;
 //====Below is a series of arrays holding input values for NPC object creation====
-var menArg = [5, 10]; 
+var menArg = [5, 7]; 
 var suspArg = [7, 10]; 
 var comPtsArg = [10, 10]; 
 var nobPtsArg = [0, 0];
@@ -66,6 +66,8 @@ var lineDelay = 400;
 //end
 
 var questStatus = false;
+
+var haveRead = false;
 
 // Main State ==================================================
 var Menu = function(game){};
@@ -240,6 +242,8 @@ GamePlay.prototype = {
 		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
 		 	game.state.start('GameOver');
 		}
+		haveRead = false;
+		console.log(haveRead);
 	},
 
 	// debugging method ===============================
@@ -262,26 +266,35 @@ Read.prototype = {
 	// place assets ==================================
 	create: function(){
 		console.log("Read: create");
+		haveRead = true;
 		//set story content;
 		story = storyBase[questCounter];
 		//	Place ReadScroll
 		game.add.sprite(0, 0, 'obj', 'ReadScroll');
-
+		if(haveRead == true){
+			lineIndex = 0;
+			wordIndex = 0;
+		}
 		text = game.add.text(350,350,"Press DELETE/BACKSPACE to go back\n");
 		text.anchor.set(0.5);
 
 		this.text = game.add.text(32, 32, '', {font: "15px Arial", fill: "#19de65"});
 		nextLine();
-
+		questStatus = false;
 	},
 
 	// update, run the game loop =====================
 	update: function(){
+		console.log(haveRead);
+		//haveRead = true;
+		//console.log(haveRead);
 		game.sound.stopAll();
 		// load 'GamePlay' state when user pressed DELETE key
 		if(game.input.keyboard.isDown(Phaser.Keyboard.BACKSPACE)) {
 			game.state.start('GamePlay');
 		}
+		
+		//console.log(haveRead);
 	}
 }
 
@@ -331,6 +344,7 @@ function newGame(){
 	lineIndex = 0;
 	wordDelay = 140;
 	lineDelay = 400;
+	questCounter = 0;
 }
 
 //player choice functions
@@ -353,6 +367,7 @@ function acceptQuest(){
 	lineDelay = 400;
 		text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
 		nextLine();
+		questCounter++;
 	}
 }
 
@@ -365,6 +380,7 @@ function declineQuest(){
 		story = commoner.dD;
 		text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
 		nextLine();
+		questCounter++;
 	}
 }
 
@@ -384,6 +400,7 @@ function killMessenger(){
 		text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
 		console.log(text);
 		nextLine();	
+		questCounter++;
 	}
 }
 
@@ -391,7 +408,7 @@ function killMessenger(){
 //start
 function nextLine(){
 	console.log("entering nextLine() with index:",lineIndex);
-	if(lineIndex >= story.length){
+	if(lineIndex == story.length){
 		return; //we're done.
 	}
 	console.log("+++++++++++");
