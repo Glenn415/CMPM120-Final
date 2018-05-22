@@ -1,5 +1,5 @@
 
-function NPC(game, x, y, key, frame, aD, dD, kD , noblePoints, comPoints, negNoblePoints, negComPoints, men, susp, money){
+function NPC(game, x, y, key, frame, aD, dD, kD , noblePoints, comPoints, negNoblePoints, negComPoints, men, susp, moneyPoints){
 	//call to phaser.sprite
 	Phaser.Sprite.call(this, game, x, y, key, frame);
 
@@ -9,7 +9,7 @@ function NPC(game, x, y, key, frame, aD, dD, kD , noblePoints, comPoints, negNob
 	this.comPoints = comPoints;
 	this.men = men;
 	this.susp = susp;
-	this.money = money;
+	this.moneyPoints = moneyPoints;
 	this.aD = aD; //this is an array of Strings, accept dialogue
 	this.dD = dD; //decline dialogue
 	this.kD = kD; //kill dialogue
@@ -20,6 +20,7 @@ function NPC(game, x, y, key, frame, aD, dD, kD , noblePoints, comPoints, negNob
 	this.body.collideWorldBounds = true;
 	this.inputEnabled = true;
 	this.enableBody = true;
+	this.body.immovable = true;
 }
 
 NPC.prototype = Object.create(Phaser.Sprite.prototype);

@@ -16,3 +16,5 @@ function Item(game, x, y, key, frame){
 
 Item.prototype = Object.create(Phaser.Sprite.prototype);
 Item.prototype.constructor = Item;
+
+Item.prototype.update = function(){}
