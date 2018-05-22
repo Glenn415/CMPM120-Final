@@ -161,7 +161,8 @@ GamePlay.prototype = {
 		scroll.scale.set( .1, .1);
 		scroll.body.immovable = true; //scroll cannot be moved, scroll is a rock
 		scroll.body.setSize(700,500, 50, 32);
-
+	console.log(questCounter);
+	console.log(kD);
 		//create npc depending on questNumber
 		//NPC constructor parameters(game, x, y, key, frame, aD, dD, kD, noblePoints, comPoints, negNoblePts, negComPts, men, susp, money);
 		commoner = new NPC(game, 400, 170,'npc', 4, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
@@ -171,6 +172,7 @@ GamePlay.prototype = {
 		//this.commoner.enableBody();
 		//this.commoner.body.immovable = true;
 		commoner.body.setSize(100, 270, 135, 120);
+		console.log(commoner.kD);
 
 		//create objects
 		knife = new Item(game, 200, 530, 'obj', 'Knife'); // (680, 530)
@@ -325,6 +327,10 @@ function newGame(){
 	comPoints = 0; 
 	noblePoints = 0;
 	questStatus = false;
+	wordIndex = 0;
+	lineIndex = 0;
+	wordDelay = 140;
+	lineDelay = 400;
 }
 
 //player choice functions
@@ -341,6 +347,10 @@ function acceptQuest(){
 		printMoney.text = moneyPoints;
 		printMen.text = men;
 		story = commoner.aD;
+		wordIndex = 0;
+	lineIndex = 0;
+	wordDelay = 140;
+	lineDelay = 400;
 		text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
 		nextLine();
 	}
@@ -365,7 +375,14 @@ function killMessenger(){
 		suspicion += commoner.susp;
 		printSusp.text = suspicion;
 		story = commoner.kD;
+	wordIndex = 0;
+	lineIndex = 0;
+	wordDelay = 140;
+	lineDelay = 400;
+	console.log(lineIndex);
+	console.log(story[lineIndex]);
 		text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
+		console.log(text);
 		nextLine();	
 	}
 }
@@ -373,9 +390,14 @@ function killMessenger(){
 //borrowed from https://stackoverflow.com/questions/31849667/how-to-type-word-by-word-or-line-by-line-in-phaser-js
 //start
 function nextLine(){
-	if(lineIndex === story.length){
+	console.log("entering nextLine() with index:",lineIndex);
+	if(lineIndex >= story.length){
 		return; //we're done.
 	}
+	console.log("+++++++++++");
+	console.log("line index",lineIndex);
+	
+	console.log("story:",story[lineIndex]);
 	//split current line on spaces, so one word per array element
 	line = story[lineIndex].split(' ');
 	//reseet the word index to zero (first word in the line)
