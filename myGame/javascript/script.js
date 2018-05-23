@@ -185,10 +185,10 @@ GamePlay.prototype = {
 		game.add.existing(stamp);	
 		stamp.alpha = 0.5;
 
-		/*this.candle = new Item(game, 710, 560, 'obj', 'Candle');
+		candle = new Item(game, 710, 560, 'obj', 'Candle');
 		game.add.existing(candle);
-		this.candle.input.enableDrag();
-		this.candle.alpha = 0.5;*/
+		candle.input.enableDrag();
+		candle.alpha = 0.5;
 
 		// UI score
 		printCP = game.add.text(135, 58, comPoints);
@@ -224,11 +224,11 @@ GamePlay.prototype = {
 			stamp.alpha = 0.5;
 		}
 
-		/*if(this.candle.input.pointerOver()){
-			this.candle.alpha = 1;
+		if(candle.input.pointerOver()){
+			candle.alpha = 1;
 		}else{
-			this.candle.alpha = 0.5;
-		}*/
+			candle.alpha = 0.5;
+		}
 
 		//if moused over scroll and click left button, go to READ state
 		if(game.input.activePointer.leftButton.isDown && scroll.input.pointerOver()){
