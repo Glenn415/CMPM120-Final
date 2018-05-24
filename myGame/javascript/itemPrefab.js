@@ -1,4 +1,3 @@
-
 function Item(game, x, y, key, frame){
 	//call to phaser.sprite
 	Phaser.Sprite.call(this, game, x, y, key, frame);

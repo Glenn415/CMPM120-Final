@@ -81,7 +81,7 @@ Menu.prototype = {
 		game.load.atlas("obj", "Items.png", "Items.json");
 		game.load.atlas("npc", "npc_atlas.png", "npc_atlas.json");
 		game.load.image("GamePlayUI", "GamePlay_UI.png");
-		game.load.audio('bgMusic', ['bgmusic.wav']);
+		game.load.audio('bgMusic', ['assets/audio/bgmusic.wav']);
 	},
 
 	// place assets =========================================
@@ -142,6 +142,9 @@ GamePlay.prototype = {
 
 		game.load.path = 'assets/audio/';
 		game.load.audio('bgMusic', ['bgmusic.wav']);
+		game.load.audio('acceptMusic', ['stamp.wav']);
+		game.load.audio('declineMusic', ['candle.wav']);
+		game.load.audio('killMusic', ['knife.wav']);
 	},
 
 	// place assets ==================================
@@ -155,7 +158,11 @@ GamePlay.prototype = {
 
 		//add sound
 		bgMusic = game.add.audio('bgMusic');
-		bgMusic.play('', 0, 1, true); //loops
+		bgMusic.play('', 0, 0.5, true); //loops
+
+		acceptMusic = game.add.audio('acceptMusic');
+		declineMusic = game.add.audio('declineMusic');
+		killMusic = game.add.audio('killMusic');
 
 		//scroll obj is also quest obj, it acts as a double
 		scroll = new Item(game, 370, 420, 'obj', 'ReadScroll');
@@ -349,6 +356,8 @@ function newGame(){
 
 //player choice functions
 function acceptQuest(){
+	//acceptMusic.play('', 0, 1, false);
+
 	// add correct values for accepting this quest!
 	if (questStatus == false){
 		questStatus = true;
@@ -372,6 +381,8 @@ function acceptQuest(){
 }
 
 function declineQuest(){
+	//declineMusic.play('', 0, 1, false);
+
 	if (questStatus == false){
 		questStatus = true;
 		commoner.frameName = "Peasant003";
@@ -385,6 +396,8 @@ function declineQuest(){
 }
 
 function killMessenger(){
+	//killMusic.play('', 0, 1, false);
+
 	if (questStatus == false){
 		questStatus = true;
 		commoner.frameName = "Peasant002";
