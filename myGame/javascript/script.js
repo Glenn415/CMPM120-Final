@@ -158,20 +158,22 @@ GamePlay.prototype = {
 
 		//add sound
 		bgMusic = game.add.audio('bgMusic');
-		bgMusic.play('', 0, 0.5, true); //loops
-
 		acceptMusic = game.add.audio('acceptMusic');
 		declineMusic = game.add.audio('declineMusic');
 		killMusic = game.add.audio('killMusic');
+		bgMusic.play('', 0, 0.5, true); //loops
 
 		//scroll obj is also quest obj, it acts as a double
-		scroll = new Item(game, 370, 420, 'obj', 'ReadScroll');
+		scroll = new Item(game, 370, 300, 'obj', 'ReadScroll');
 		game.add.existing(scroll);
 		scroll.scale.set( .1, .1);
-		scroll.body.immovable = true; //scroll cannot be moved, scroll is a rock
+		//scroll.body.immovable = true; //scroll cannot be moved, scroll is a rock
 		scroll.body.setSize(700,500, 50, 32);
-	console.log(questCounter);
-	console.log(kD);
+		scroll.alpha = 0;
+		scrollAnimation = game.add.tween(scroll).to({y: 420, alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
+		//console.log(questCounter);
+		//console.log(kD);
+
 		//create npc depending on questNumber
 		//NPC constructor parameters(game, x, y, key, frame, aD, dD, kD, noblePoints, comPoints, negNoblePts, negComPts, men, susp, money);
 		commoner = new NPC(game, 400, 170,'npc', 4, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
@@ -181,7 +183,16 @@ GamePlay.prototype = {
 		//this.commoner.enableBody();
 		//this.commoner.body.immovable = true;
 		commoner.body.setSize(100, 270, 135, 120);
-		console.log(commoner.kD);
+		commoner.alpha = 0;
+		character = game.add.tween(commoner).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
+		character.chain(scrollAnimation);
+		//console.log(commoner.kD);
+
+		noble = new NPC(game, 400, 170,'npc', 0, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
+		game.physics.enable(noble, Phaser.Physics.ARCADE);
+		game.add.existing(noble);
+		noble.scale.set(.85);
+		noble.alpha = 0;
 
 		//create objects
 		knife = new Item(game, 200, 530, 'obj', 'Knife'); // (680, 530)
@@ -194,7 +205,7 @@ GamePlay.prototype = {
 
 		candle = new Item(game, 710, 560, 'obj', 'Candle');
 		game.add.existing(candle);
-		candle.input.enableDrag();
+		//candle.input.enableDrag();
 		candle.alpha = 0.5;
 
 		// UI score
@@ -250,7 +261,7 @@ GamePlay.prototype = {
 		 	game.state.start('GameOver');
 		}
 		haveRead = false;
-		console.log(haveRead);
+		//console.log(haveRead);
 	},
 
 	// debugging method ===============================
@@ -292,7 +303,7 @@ Read.prototype = {
 
 	// update, run the game loop =====================
 	update: function(){
-		console.log(haveRead);
+		//console.log(haveRead);
 		//haveRead = true;
 		//console.log(haveRead);
 		game.sound.stopAll();
@@ -397,6 +408,7 @@ function declineQuest(){
 
 function killMessenger(){
 	//killMusic.play('', 0, 1, false);
+	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 
 	if (questStatus == false){
 		questStatus = true;
@@ -404,12 +416,12 @@ function killMessenger(){
 		suspicion += commoner.susp;
 		printSusp.text = suspicion;
 		story = commoner.kD;
-	wordIndex = 0;
-	lineIndex = 0;
-	wordDelay = 140;
-	lineDelay = 400;
-	console.log(lineIndex);
-	console.log(story[lineIndex]);
+		wordIndex = 0;
+		lineIndex = 0;
+		wordDelay = 140;
+		lineDelay = 400;
+	//console.log(lineIndex);
+	//console.log(story[lineIndex]);
 		text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
 		console.log(text);
 		nextLine();	
@@ -420,14 +432,14 @@ function killMessenger(){
 //borrowed from https://stackoverflow.com/questions/31849667/how-to-type-word-by-word-or-line-by-line-in-phaser-js
 //start
 function nextLine(){
-	console.log("entering nextLine() with index:",lineIndex);
+	//console.log("entering nextLine() with index:",lineIndex);
 	if(lineIndex == story.length){
 		return; //we're done.
 	}
-	console.log("+++++++++++");
-	console.log("line index",lineIndex);
+	//console.log("+++++++++++");
+	//console.log("line index",lineIndex);
 	
-	console.log("story:",story[lineIndex]);
+	//console.log("story:",story[lineIndex]);
 	//split current line on spaces, so one word per array element
 	line = story[lineIndex].split(' ');
 	//reseet the word index to zero (first word in the line)
