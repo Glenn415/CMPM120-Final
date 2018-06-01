@@ -4,7 +4,7 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO);
 var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 0;
 var commoner, noble;
 //====Below is a series of arrays holding input values for NPC object creation====
-var menArg = [5, 7]; 
+var menArg = [5, 5]; 
 var suspArg = [7, 10]; 
 var comPtsArg = [10, 10]; 
 var nobPtsArg = [0, 0];
@@ -14,6 +14,8 @@ var moneyArg = [20, 40];
 //================================
 var story = []; //empty array variable, will later be used to temporarily store scrolling texts
 
+//This will be very long since it'll hold all the narrative for the game. 
+//start
 var storyBase = [
 ["Hello,",
 "I’m from Heaton and I have a request for you.",
@@ -28,20 +30,29 @@ var storyBase = [
 "if you’d come help. We can pay a fair amount",
 "as well as some men in return. This quest",
 "should only take a few men to complete."], 
-["Hello,",
-"We, the people of Castow, are in need of your", 
-"immediate help. Bandits have taken over our town.",
-"We are a small, peaceful town, but unfortunately,", 
-"we have no major authority here. They’ve damaged our", 
-"poor town and harassed us so much and we’re sick of it.", 
-"Please come and kill these bandits. We may not be able to",
-"provide much but we’d be so grateful if you came and helped!"]
+["quest 2"],
+["quest 3"],
+["quest 4"],
+["quest 5"],
+["quest 6"],
+["quest 7"],
+["quest 8"],
+["quest 9"],
+["quest 10"]
 ]; //an array of strings for quest description
 var aD = [
 ["Oh thank you so much! I don’t really care if you kill the", 
 "pirates or scare them off.Just make sure they don’t come back!", 
 "We’ll provide payment once the job is done."],
-["test test"]
+["quest 2"],
+["quest 3"],
+["quest 4"],
+["quest 5"],
+["quest 6"],
+["quest 7"],
+["quest 8"],
+["quest 9"],
+["quest 10"]
 ]; //accept dialogue array of array of strings :D
 var dD = [
 ["Oh. I’m sorry to have bothered you then. I was just really hoping for help.",
@@ -51,10 +62,19 @@ var dD = [
 "woooooooo"]
 ]; //decline dialogue
 var kD = [
-["I should’ve just stayed home… ", "fuck"], 
-["woops, test",
-"kill dialogue test"]
+["I should’ve just stayed home… "], 
+["quest 2"],
+["quest 3"],
+["quest 4"],
+["quest 5"],
+["quest 6"],
+["quest 7"],
+["quest 8"],
+["quest 9"],
+["quest 10"]
 ]; //kill dialogue
+
+//end
 
 //borrowed from https://stackoverflow.com/questions/31849667/how-to-type-word-by-word-or-line-by-line-in-phaser-js
 //start
@@ -87,9 +107,9 @@ Menu.prototype = {
 	// place assets =========================================
 	create: function(){
 		console.log("Menu: create");
-		game.stage.backgroundColor = "#003C93";
+		game.stage.backgroundColor = "#C38C9B";
 		text = game.add.text(game.width/2, game.height/2, "Infiltrator\n"+
-			"Press ENTER to start the Tutorial or SPACE to Play");
+			"Press ENTER to start the Prologue\n or SPACE to Play",{font: "40px Papyrus"});
 		text.anchor.set(0.5);
 		newGame();
 	},
@@ -98,7 +118,7 @@ Menu.prototype = {
 	update: function(){
 		// load 'Tutorial' state when user pressed ENTER key
 		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-			game.state.start('Tutorial');
+			game.state.start('Prologue');
 		}
 		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
 			game.state.start('GamePlay');
@@ -106,6 +126,29 @@ Menu.prototype = {
 	}
 }
 
+var Prologue = function(game){};
+Prologue.prototype = {
+	// preload assets ================================
+	preload: function(){
+		console.log("Prologue: preload");
+	},
+
+	// place assets ==================================
+	create: function(){
+		console.log("Prologue: create");
+		game.stage.backgroundColor = "#39aeb2";
+		text = game.add.text(0, 0, "Prologue:\n\nYou sigh and sit exhaustively on the bloodied chair.\nYou killed the current leader of the mercenary guild,\nwhile the floor is covered in blood. You’ve gotten into this\nkingdom unnoticed and now you’ll become valuable to them.\nYou can’t wait for it all to come crumbling down.\nFor this kingdom has kidnapped and killed your brother,\nand you want revenge. So naturally you’ve decided to\ninfiltrate the kingdom, gain the people’s trust and then\ndestroy the entire kingdom from the inside out.\nYou’ve grown a bit sadistic since your brother’s death\nbut everyone here, no matter how indirectly, was involved.\nBut this is the only way to avenge your brother and you’ll do\nwhatever it takes.\nHit Enter to read the tutorial.");
+		//text.anchor.set(0.5);
+	},                                                                
+
+	// update, run the game loop =====================
+	update: function(){
+		// load 'GamePlay' state when user pressed ENTER key
+		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+			game.state.start('Tutorial');
+		}
+	}
+}
 // Tutorial State ==============================================
 var Tutorial = function(game){};
 Tutorial.prototype = {
@@ -118,10 +161,8 @@ Tutorial.prototype = {
 	create: function(){
 		console.log("Tutorial: create");
 		game.stage.backgroundColor = "#39aeb2";
-		text = game.add.text(game.width/2, game.height/2, "Tutorial will go here.\n Hit either button to continue to game play.");
-		text.anchor.set(0.5);
-
-		// NOTE: Please add tutorial here
+		text = game.add.text(0, 0, "Tutorial:\nThere are several interactable objects within the game:\n\nThe quest scroll: This is the first thing that should be clicked on \neach quest iteration. It’ll explain the problem and what\n the person asks of you.\n\nThe stamp: Allows you to accept the given quest.\nPlayers click and drag it onto the scroll to see\nhow it affected them.\n\nThe candle: Allows you to deny the given quest.\nPlayers click and drag it onto the scroll to see\nhow it affected them.\n\nThe knife: Allows you to kill the messenger.\nPlayers click and drag it onto the person to see how\nit affected them.\nHit enter to go into gameplay.",{font: "23px"});
+		//text.anchor.set(0.5);
 	},                                                                
 
 	// update, run the game loop =====================
@@ -254,11 +295,14 @@ GamePlay.prototype = {
 		}
 
 		// Game over conditions
-		if(men <= 0 || suspicion >= 100) {
-			game.state.start('GameOver');
-		}
-		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-		 	game.state.start('GameOver');
+		if(comPoints == 100 || noblePoints ==100){
+			game.state.start('GameOverG');
+		}else if(suspicion >= 100) {
+			game.state.start('GameOverB1');
+		}else if(men <= 0){
+			game.state.start('GameOverB2');
+		}else if(questCounter == 10){
+			game.state.start('GameOverN');
 		}
 		haveRead = false;
 		//console.log(haveRead);
@@ -317,19 +361,91 @@ Read.prototype = {
 }
 
 // GameOver State ==============================================
-var GameOver = function(game){};
-GameOver.prototype = {
+var GameOverG = function(game){};
+GameOverG.prototype = {
 	// preload assets ================================
 	preload: function(){
-		console.log("GameOver: preload");
+		console.log("GameOverG: preload");
 	},
 
 	// place assets ==================================
 	create: function(){
-		console.log("GameOver: create");
+		console.log("GameOverG: create");
 		game.stage.backgroundColor = "#707070";
-		text = game.add.text(game.width/2, game.height/2, "You yawn and tiredly decide to go to bed.\n It was a long and exhausting day.\n The end.\n Hit enter to return to the main menu");
-		text.anchor.set(0.5);
+		text = game.add.text(0, 75, "You smile sadistically as you hear news of everything slowly\nfalling into chaos. Serves them right for murdering your\nbrother.They deserved this,this slow and painful demise of\nthis kingdom. And nobody will ever know it was your doing.\nYou decide to start packing up to leave soon.\nYou’re work here is done and you’re grown weary\nwith all the hard work your revenge took.\nYou yawn and decide on a nap before packing.\nYou can sleep happily knowing your plan was successful\nand you’ve finally avenged your brother.\n\nHit Enter to return to the menu");
+		//text.anchor.set(0.5);
+	},
+
+	// update, run the game loop =====================
+	update: function(){
+		game.sound.stopAll();
+		// load 'GamePlay' state when user pressed ENTER key
+		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+			game.state.start('Menu');
+		}
+	}
+}
+var GameOverN = function(game){};
+GameOverN.prototype = {
+	// preload assets ================================
+	preload: function(){
+		console.log("GameOverN: preload");
+	},
+
+	// place assets ==================================
+	create: function(){
+		console.log("GameOverN: create");
+		game.stage.backgroundColor = "#707070";
+		text = game.add.text(25, 85, "You look at the papers and curse yourself quietly.\nYou’ve done some damage, but not enough.\nThey need to pay, they have to pay.\nBut despite your exhaustive efforts, you haven’t completed\nyour task yet.You crumple up the paper and throw it on the\nground before slumping in your seat tiredly.\nYou miss your home but you must avenge him first.\nYou decide to take a small nap first,\nmaybe some new ideas will come up during it.\n\nHit Enter to retry and fully complete your mission.");
+		//text.anchor.set(0.5);
+	},
+
+	// update, run the game loop =====================
+	update: function(){
+		game.sound.stopAll();
+		// load 'GamePlay' state when user pressed ENTER key
+		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+			game.state.start('Menu');
+		}
+	}
+}
+var GameOverB1 = function(game){};
+GameOverB1.prototype = {
+	// preload assets ================================
+	preload: function(){
+		console.log("GameOverB1: preload");
+	},
+
+	// place assets ==================================
+	create: function(){
+		console.log("GameOverB1: create");
+		game.stage.backgroundColor = "#707070";
+		text = game.add.text(20, 35, "You hear news that people are coming for you.\nThey’ve figured you out.\nThey know you’ve been planning their demise and now\nthey’re coming to arrest and likely kill you.\nYour plan has failed but least you caused some chaos\nbefore it failed. Besides, you’ve grown tired\nwithout your brother around. But now\nyou’ll get to be with him soon enough.\nYou hear pounding on the door and you’re ready for them.\nYou’re done with this life anyways,\nnothing is holding you here anyways.\nThat was taken from you long ago.\n\nHit Enter to reattempt your mission without getting caught\n this time");
+		//text.anchor.set(0.5);
+	},
+
+	// update, run the game loop =====================
+	update: function(){
+		game.sound.stopAll();
+		// load 'GamePlay' state when user pressed ENTER key
+		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+			game.state.start('Menu');
+		}
+	}
+}
+var GameOverB2 = function(game){};
+GameOverB2.prototype = {
+	// preload assets ================================
+	preload: function(){
+		console.log("GameOverB2: preload");
+	},
+
+	// place assets ==================================
+	create: function(){
+		console.log("GameOverB2: create");
+		game.stage.backgroundColor = "#707070";
+		text = game.add.text(0, 0, "Bad ending, lost all men.");
+		//text.anchor.set(0.5);
 	},
 
 	// update, run the game loop =====================
@@ -344,10 +460,14 @@ GameOver.prototype = {
 
 // Add the states to the StateManager and start in Menu
 game.state.add("Menu", Menu);
+game.state.add('Prologue',Prologue);
 game.state.add("Tutorial", Tutorial);
 game.state.add("GamePlay", GamePlay);
 game.state.add("Read", Read);
-game.state.add("GameOver", GameOver);
+game.state.add("GameOverG", GameOverG);
+game.state.add("GameOverN",GameOverN);
+game.state.add("GameOverB1",GameOverB1);
+game.state.add("GameOverB2",GameOverB2);
 game.state.start("Menu");
 
 // Helper functions ============================================
