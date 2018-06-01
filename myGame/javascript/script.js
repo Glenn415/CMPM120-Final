@@ -268,7 +268,7 @@ GamePlay.prototype = {
 	update: function(){
 		game.physics.arcade.collide(knife, commoner, killMessenger, null, this);
 		game.physics.arcade.collide(stamp, scroll, acceptQuest, null, this);
-		//game.physics.arcade.collide(this.candle, this.scroll, this.declineQuest, null, this);
+		game.physics.arcade.collide(candle, scroll, declineQuest, null, this);
 
 		//dimmed color if mouse isn't over it
 		if(knife.input.pointerOver()){
@@ -505,7 +505,7 @@ function acceptQuest(){
 	lineIndex = 0;
 	wordDelay = 140;
 	lineDelay = 400;
-		text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
+		text = game.add.text(50, game.world.height - 100, '', {font: "22px Arial", fill: "#19de65"});
 		nextLine();
 		questCounter++;
 	}
@@ -518,9 +518,13 @@ function declineQuest(){
 		questStatus = true;
 		commoner.frameName = "Peasant003";
 		comPoints -= commoner.negComPoints;
-		this.com.text = comPoints;
+		printCP.text = comPoints;
 		story = commoner.dD;
-		text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
+		wordIndex = 0;
+		lineIndex = 0;
+		wordDelay = 140;
+		lineDelay = 400;
+		text = game.add.text(50, game.world.height - 100, '', {font: "22px Arial", fill: "#19de65"});
 		nextLine();
 		questCounter++;
 	}
@@ -542,7 +546,7 @@ function killMessenger(){
 		lineDelay = 400;
 	//console.log(lineIndex);
 	//console.log(story[lineIndex]);
-		text = game.add.text(50, game.world.height - 100, '', {font: "15px Arial", fill: "#19de65"});
+		text = game.add.text(50, game.world.height - 100, '', {font: "22px Arial", fill: "#19de65"});
 		console.log(text);
 		nextLine();	
 		questCounter++;
