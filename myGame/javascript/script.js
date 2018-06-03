@@ -402,6 +402,7 @@ CutSceneAccept.prototype = {
 	create: function(){
 		console.log("CutSceneAccept: create");
 		game.stage.backgroundColor = "#707070";
+		game.add.button(590, 520, "btnNext", gotoGame, this);
 	},
 
 	//checks to see which accept cutscene to display depending on the the current questNumber
@@ -495,6 +496,7 @@ CutSceneDecline.prototype = {
 	create: function(){
 		console.log("CutSceneDecline: create");
 		game.stage.backgroundColor = "#707070";
+		game.add.button(590, 520, "btnNext", gotoGame, this);
 		//text = game.add.text(0, 75, "Decline cut Scene");
 		//text.anchor.set(0.5);
 	},
@@ -581,6 +583,7 @@ CutSceneKill.prototype = {
 	create: function(){
 		console.log("CutSceneKill: create");
 		game.stage.backgroundColor = "#707070";
+		game.add.button(590, 520, "btnNext", gotoGame, this);
 	},
 
 	//checks to see which kill cutscene to display depending on the the current questNumber
