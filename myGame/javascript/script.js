@@ -115,6 +115,7 @@ Menu.prototype = {
 		game.load.image("btnPlay", "btnPlay.png");
 		game.load.image("btnTutorial", "btnTutorial.png");
 		game.load.image("btnPlayAgain", "btnPlayAgain.png");
+		game.load.image("btnNext", "btnNext.png");
 
 		//game.load.image("commoner", "commoner.png");
 		game.load.path = 'assets/audio/';
@@ -130,7 +131,7 @@ Menu.prototype = {
 		newGame();
 		game.add.sprite(0, 0, "background", "GameTitle");
 		game.add.button(150, 400, "btnPlay", gotoGame, this);
-		game.add.button(450, 400, "btnTutorial", gotoTutorial, this);
+		game.add.button(450, 400, "btnTutorial", gotoPrologue, this);
 	},
 
 	// update, run game loop =========================
@@ -150,6 +151,7 @@ Prologue.prototype = {
 		game.stage.backgroundColor = "#39aeb2";
 		text = game.add.text(0, 0, "Prologue:\n\nYou sigh and sit exhaustively on the bloodied chair.\nYou killed the current leader of the mercenary guild,\nwhile the floor is covered in blood. You’ve gotten into this\nkingdom unnoticed and now you’ll become valuable to them.\nYou can’t wait for it all to come crumbling down.\nFor this kingdom has kidnapped and killed your brother,\nand you want revenge. So naturally you’ve decided to\ninfiltrate the kingdom, gain the people’s trust and then\ndestroy the entire kingdom from the inside out.\nYou’ve grown a bit sadistic since your brother’s death\nbut everyone here, no matter how indirectly, was involved.\nBut this is the only way to avenge your brother and you’ll do\nwhatever it takes.\nHit Enter to read the tutorial.");
 		//text.anchor.set(0.5);
+		game.add.button(590, 520, "btnNext", gotoTutorial, this);
 	},                                                                
 
 	// update, run the game loop =====================
@@ -174,6 +176,7 @@ Tutorial.prototype = {
 		game.stage.backgroundColor = "#39aeb2";
 		text = game.add.text(0, 0, "Tutorial:\nThere are several interactable objects within the game:\n\nThe quest scroll: This is the first thing that should be clicked on \neach quest iteration. It’ll explain the problem and what\n the person asks of you.\n\nThe stamp: Allows you to accept the given quest.\nPlayers click and drag it onto the scroll to see\nhow it affected them.\n\nThe candle: Allows you to deny the given quest.\nPlayers click and drag it onto the scroll to see\nhow it affected them.\n\nThe knife: Allows you to kill the messenger.\nPlayers click and drag it onto the person to see how\nit affected them.\nHit enter to go into gameplay.",{font: "23px"});
 		//text.anchor.set(0.5);
+		game.add.button(590, 520, "btnNext", gotoGame, this);
 	},                                                                
 
 	// update, run the game loop =====================
@@ -952,8 +955,12 @@ function gotoMenu(){
 	game.state.start('Menu');
 }
 
-function gotoTutorial(){
+function gotoPrologue(){
 	game.state.start('Prologue');
+}
+
+function gotoTutorial(){
+	game.state.start('Tutorial');	
 }
 
 function moveAssets(){
