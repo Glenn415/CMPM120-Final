@@ -100,7 +100,13 @@ Menu.prototype = {
 		//game.load.atlas("bg", "bgSprites.png", "bgSprites.json");
 		game.load.atlas("obj", "Items.png", "Items.json");
 		game.load.atlas("npc", "npc_atlas.png", "npc_atlas.json");
+		//game.load.atlas("button", "button.png", "button.json");
+		game.load.image("btnPlay", "btnPlay.png");
+		game.load.image("btnTutorial", "btnTutorial.png");
+		game.load.image("btnPlayAgain", "btnPlayAgain.png");
 		game.load.image("GamePlayUI", "GamePlay_UI.png");
+		game.load.image("GamePlayBG", "GamePlay_BG.png");
+		game.load.image("GameOverBG", "GameOver.png");
 		game.load.audio('bgMusic', ['assets/audio/bgmusic.wav']);
 	},
 
@@ -112,17 +118,20 @@ Menu.prototype = {
 			"Press ENTER to start the Prologue\n or SPACE to Play",{font: "40px Papyrus"});
 		text.anchor.set(0.5);
 		newGame();
+
+		game.add.button(150, 400, "btnPlay", gotoGame, this);
+		game.add.button(450, 400, "btnTutorial", gotoTutorial, this);
 	},
 
 	// update, run game loop =========================
 	update: function(){
 		// load 'Tutorial' state when user pressed ENTER key
-		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-			game.state.start('Prologue');
-		}
-		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-			game.state.start('GamePlay');
-		}
+		// if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+		// 	game.state.start('Prologue');
+		// }
+		// if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+		// 	game.state.start('GamePlay');
+		// }
 	}
 }
 
@@ -190,11 +199,10 @@ GamePlay.prototype = {
 
 	// place assets ==================================
 	create: function(){
-		console.log("GamePlay: create");
-		game.stage.backgroundColor = "#900C3F";
-		
+		console.log("GamePlay: create");		
 		//spin up physics
 		game.physics.startSystem(Phaser.Physics.ARCADE);
+		game.add.sprite(0, 0, "GamePlayBG");
 		game.add.sprite(0, 0, "GamePlayUI");
 
 		//add sound
@@ -311,9 +319,9 @@ GamePlay.prototype = {
 	// debugging method ===============================
 	render: function(){
 		//game.debug.bodyInfo(scroll, 32, 32);
-		//game.debug.body(scroll);
+		game.debug.body(scroll);
 		//game.debug.bodyInfo(commoner, 32, 32);
-		//game.debug.body(commoner);
+		game.debug.body(commoner);
 	}
 }
 
@@ -372,6 +380,8 @@ GameOverG.prototype = {
 	create: function(){
 		console.log("GameOverG: create");
 		game.stage.backgroundColor = "#707070";
+		//game.add.sprite(0, 0, "GamePlayBG");
+		game.add.button(0, 0, "btnPlayAgain", gotoGame ,this);
 		text = game.add.text(0, 75, "You smile sadistically as you hear news of everything slowly\nfalling into chaos. Serves them right for murdering your\nbrother.They deserved this,this slow and painful demise of\nthis kingdom. And nobody will ever know it was your doing.\nYou decide to start packing up to leave soon.\nYou’re work here is done and you’re grown weary\nwith all the hard work your revenge took.\nYou yawn and decide on a nap before packing.\nYou can sleep happily knowing your plan was successful\nand you’ve finally avenged your brother.\n\nHit Enter to return to the menu");
 		//text.anchor.set(0.5);
 	},
@@ -469,6 +479,7 @@ game.state.add("GameOverN",GameOverN);
 game.state.add("GameOverB1",GameOverB1);
 game.state.add("GameOverB2",GameOverB2);
 game.state.start("Menu");
+//game.state.start("GameOverG");
 
 // Helper functions ============================================
 function newGame(){
@@ -488,7 +499,8 @@ function newGame(){
 //player choice functions
 function acceptQuest(){
 	//acceptMusic.play('', 0, 1, false);
-
+	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
 	// add correct values for accepting this quest!
 	if (questStatus == false){
 		questStatus = true;
@@ -513,7 +525,8 @@ function acceptQuest(){
 
 function declineQuest(){
 	//declineMusic.play('', 0, 1, false);
-
+	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
 	if (questStatus == false){
 		questStatus = true;
 		commoner.frameName = "Peasant003";
@@ -533,7 +546,7 @@ function declineQuest(){
 function killMessenger(){
 	//killMusic.play('', 0, 1, false);
 	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-
+	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
 	if (questStatus == false){
 		questStatus = true;
 		commoner.frameName = "Peasant002";
@@ -586,5 +599,13 @@ function nextWord() {
 		game.time.events.add(lineDelay, nextLine, this);
 
 	}
+}
+
+function gotoGame(){
+	game.state.start('GamePlay');
+}
+
+function gotoTutorial(){
+	game.state.start('Prologue');
 }
 //end
