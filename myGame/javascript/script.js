@@ -110,12 +110,24 @@ Menu.prototype = {
 	preload: function(){
 		console.log("Menu: preload");
 
-		//game.load.path = "../myGame/assets/img/";
+		game.load.path = "../myGame/assets/img/";
 		//game.load.atlas("bg", "bgSprites.png", "bgSprites.json");
-		game.load.atlas("obj", "assets/img/Items.png", "assets/img/Items.json");
-		game.load.atlas("npc", "assets/img/npc_atlas.png", "assets/img/npc_atlas.json");
-		game.load.image("GamePlayUI", "assets/img/GamePlay_UI.png");
-		game.load.audio('bgMusic', 'assets/audio/bgmusic.wav');
+		game.load.atlas("obj", "Items.png", "Items.json");
+		game.load.atlas("npc", "npc_atlas.png", "npc_atlas.json");
+		//game.load.atlas("button", "button.png", "button.json");
+		game.load.image("btnPlay", "btnPlay.png");
+		game.load.image("btnTutorial", "btnTutorial.png");
+		game.load.image("btnPlayAgain", "btnPlayAgain.png");
+		game.load.image("GamePlayUI", "GamePlay_UI.png");
+		game.load.image("GamePlayBG", "GamePlay_BG.png");
+		game.load.image("GameOverBG", "GameOver.png");
+
+		//game.load.image("commoner", "commoner.png");
+		game.load.path = 'assets/audio/';
+		game.load.audio('bgMusic', ['bgmusic.wav']);
+		game.load.audio('acceptMusic', ['stamp.wav']);
+		game.load.audio('declineMusic', ['candle.wav']);
+		game.load.audio('killMusic', ['knife.wav']);
 	},
 
 	// place assets =========================================
@@ -126,17 +138,20 @@ Menu.prototype = {
 			"Press ENTER to start the Prologue\n or SPACE to Play",{font: "40px Papyrus"});
 		text.anchor.set(0.5);
 		newGame();
+
+		game.add.button(150, 400, "btnPlay", gotoGame, this);
+		game.add.button(450, 400, "btnTutorial", gotoTutorial, this);
 	},
 
 	// update, run game loop =========================
 	update: function(){
 		// load 'Tutorial' state when user pressed ENTER key
-		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-			game.state.start('Prologue');
-		}
-		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-			game.state.start('GamePlay');
-		}
+		// if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+		// 	game.state.start('Prologue');
+		// }
+		// if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+		// 	game.state.start('GamePlay');
+		// }
 	}
 }
 
@@ -192,6 +207,7 @@ Tutorial.prototype = {
 var GamePlay = function(game){};
 GamePlay.prototype = {
 	// preload assets ================================
+<<<<<<< HEAD
 	preload: function(){
 		//game.load.image("commoner", "commoner.png");
 
@@ -201,14 +217,16 @@ GamePlay.prototype = {
 		game.load.audio('declineMusic', 'assets/audio/candle.wav');
 		game.load.audio('killMusic', 'assets/audio/knife.wav');
 	},
+=======
+	preload: function(){},
+>>>>>>> 00fa1c015e93411902f203c3e0164046d8ac91ab
 
 	// place assets ==================================
 	create: function(){
-		console.log("GamePlay: create");
-		game.stage.backgroundColor = "#900C3F";
-		
+		console.log("GamePlay: create");		
 		//spin up physics
 		game.physics.startSystem(Phaser.Physics.ARCADE);
+		game.add.sprite(0, 0, "GamePlayBG");
 		game.add.sprite(0, 0, "GamePlayUI");
 
 		//add sound
@@ -218,13 +236,15 @@ GamePlay.prototype = {
 		killMusic = game.add.audio('killMusic');
 		bgMusic.play('', 0, 0.5, true); //loops
 
+		///////////////////////////////////////////////////
 		//scroll obj is also quest obj, it acts as a double
 		scroll = new Item(game, 370, 300, 'obj', 'ReadScroll');
 		game.add.existing(scroll);
 		scroll.scale.set( .1, .1);
 		//scroll.body.immovable = true; //scroll cannot be moved, scroll is a rock
-		scroll.body.setSize(700,500, 50, 32);
+		//scroll.body.setSize(700,500, 50, 32);
 		scroll.alpha = 0;
+		scroll.body.collideWorldBounds = false;
 		scrollAnimation = game.add.tween(scroll).to({y: 420, alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
 		//console.log(questCounter);
 		//console.log(kD);
@@ -232,7 +252,7 @@ GamePlay.prototype = {
 		//create npc depending on questNumber
 		//NPC constructor parameters(game, x, y, key, frame, aD, dD, kD, noblePoints, comPoints, negNoblePts, negComPts, men, susp, money);
 		commoner = new NPC(game, 400, 170,'npc', 4, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
-		game.physics.enable(commoner, Phaser.Physics.ARCADE);
+		//game.physics.enable(commoner, Phaser.Physics.ARCADE);
 		game.add.existing(commoner);
 		commoner.scale.set(.9);
 		//this.commoner.enableBody();
@@ -311,7 +331,7 @@ GamePlay.prototype = {
 		}
 
 		// Game over conditions
-		if(comPoints == 100 || noblePoints ==100){
+		if(comPoints >= 100 || noblePoints >=100){
 			game.state.start('GameOverG');
 		}else if(suspicion >= 100) {
 			game.state.start('GameOverB1');
@@ -320,6 +340,7 @@ GamePlay.prototype = {
 		}else if(questCounter == 10){
 			game.state.start('GameOverN');
 		}
+<<<<<<< HEAD
 		if(acceptScene == true){
 			game.state.start('CutSceneAccept');
 		}
@@ -330,15 +351,19 @@ GamePlay.prototype = {
 			game.state.start('CutSceneKill');
 		}
 		haveRead = false;
+=======
+		//haveRead = false;
+>>>>>>> 00fa1c015e93411902f203c3e0164046d8ac91ab
 		//console.log(haveRead);
 	},
 
 	// debugging method ===============================
 	render: function(){
 		//game.debug.bodyInfo(scroll, 32, 32);
-		//game.debug.body(scroll);
+		game.debug.body(scroll);
+		game.debug.text("Over: " + scroll.input.pointerOver(), 32, 32);
 		//game.debug.bodyInfo(commoner, 32, 32);
-		//game.debug.body(commoner);
+		game.debug.body(commoner);
 	}
 }
 
@@ -367,10 +392,14 @@ Read.prototype = {
 
 		this.text = game.add.text(32, 32, '', {font: "15px Arial", fill: "#19de65"});
 		nextLine();
+<<<<<<< HEAD
 		questStatus = false;
 		playedKill = false;
 		playedDecline = false;
 		playedAccept = false;
+=======
+		//questStatus = false;
+>>>>>>> 00fa1c015e93411902f203c3e0164046d8ac91ab
 	},
 
 	// update, run the game loop =====================
@@ -628,6 +657,8 @@ GameOverG.prototype = {
 	create: function(){
 		console.log("GameOverG: create");
 		game.stage.backgroundColor = "#707070";
+		//game.add.sprite(0, 0, "GamePlayBG");
+		game.add.button(0, 0, "btnPlayAgain", gotoGame ,this);
 		text = game.add.text(0, 75, "You smile sadistically as you hear news of everything slowly\nfalling into chaos. Serves them right for murdering your\nbrother.They deserved this,this slow and painful demise of\nthis kingdom. And nobody will ever know it was your doing.\nYou decide to start packing up to leave soon.\nYou’re work here is done and you’re grown weary\nwith all the hard work your revenge took.\nYou yawn and decide on a nap before packing.\nYou can sleep happily knowing your plan was successful\nand you’ve finally avenged your brother.\n\nHit Enter to return to the menu");
 		//text.anchor.set(0.5);
 	},
@@ -733,6 +764,7 @@ game.state.add("CutSceneAccept",CutSceneAccept);
 game.state.add("CutSceneDecline",CutSceneDecline);
 game.state.add("CutSceneKill",CutSceneKill);
 game.state.start("Menu");
+//game.state.start("GameOverG");
 
 // Helper functions ============================================
 function newGame(){
@@ -749,8 +781,16 @@ function newGame(){
 	questCounter = 0;
 }
 
+function newQuest(){
+	questStatus = false;
+	// if(questCounter % 2 == 0){
+
+	// }
+}
+
 //player choice functions
 function acceptQuest(){
+<<<<<<< HEAD
 	////makes sure the sound effect doesn't repeat 
 	if(playedAccept == false){
 	acceptMusic.play('', 0, 1, false);
@@ -758,6 +798,12 @@ function acceptQuest(){
 	}
 
 	//checks to see if you've already done an action, if you haven't, it checks which quest you're on and adds influence for the correct group,adds money and subtracts men for the given quest and displays correct person
+=======
+	//acceptMusic.play('', 0, 1, false);
+	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
+	// add correct values for accepting this quest!
+>>>>>>> 00fa1c015e93411902f203c3e0164046d8ac91ab
 	if (questStatus == false){
 		questStatus = true;
 		//commoner accept quests
@@ -810,12 +856,18 @@ function acceptQuest(){
 }
 //holds everything for declining any quest
 function declineQuest(){
+<<<<<<< HEAD
 	//makes sure the sound effect doesn't repeat 
 	if(playedDecline == false){
 	declineMusic.play('', 0, 1, false);
 	playedDecline = true;
 	}
 //checks to see if you've already done an action, if you haven't, it checks which quest you're on and subtracts influence from the correct group and displays correct person
+=======
+	//declineMusic.play('', 0, 1, false);
+	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
+>>>>>>> 00fa1c015e93411902f203c3e0164046d8ac91ab
 	if (questStatus == false){
 		questStatus = true;
 		//commoner decline
@@ -852,12 +904,20 @@ function declineQuest(){
 }
 //holds everything killing the messenger for any quest
 function killMessenger(){
+<<<<<<< HEAD
 	//makes sure the sound effect doesn't repeat 
 	if(playedKill == false){
 	killMusic.play('', 0, 1, false);
 	playedKill = true;
 	}
 //checks to see if you've already done an action, if you haven't, it checks which quest you're on and adds suspicion and displays correct person
+=======
+	//killMusic.play('', 0, 1, false);
+	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
+	game.time.events.add(6000, moveAssets, this);
+
+>>>>>>> 00fa1c015e93411902f203c3e0164046d8ac91ab
 	if (questStatus == false){
 		questStatus = true;
 		game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
@@ -925,5 +985,19 @@ function nextWord() {
 		game.time.events.add(lineDelay, nextLine, this);
 
 	}
+}
+
+function gotoGame(){
+	game.state.start('GamePlay');
+}
+
+function gotoTutorial(){
+	game.state.start('Prologue');
+}
+
+function moveAssets(){
+	commoner.y = -500;
+	noble.y = -500;
+	scroll.y = -500;
 }
 //end

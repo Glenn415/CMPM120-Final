@@ -17,7 +17,7 @@ function NPC(game, x, y, key, frame, aD, dD, kD , noblePoints, comPoints, negNob
 	this.negComPoints = negComPoints;
 	//add physics
 	game.physics.enable(this);
-	this.body.collideWorldBounds = true;
+	//this.body.collideWorldBounds = true;
 	this.inputEnabled = true;
 	this.enableBody = true;
 	this.body.immovable = true;
