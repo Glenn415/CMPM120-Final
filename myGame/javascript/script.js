@@ -207,7 +207,6 @@ Tutorial.prototype = {
 var GamePlay = function(game){};
 GamePlay.prototype = {
 	// preload assets ================================
-<<<<<<< HEAD
 	preload: function(){
 		//game.load.image("commoner", "commoner.png");
 
@@ -217,9 +216,7 @@ GamePlay.prototype = {
 		game.load.audio('declineMusic', 'assets/audio/candle.wav');
 		game.load.audio('killMusic', 'assets/audio/knife.wav');
 	},
-=======
 	preload: function(){},
->>>>>>> 00fa1c015e93411902f203c3e0164046d8ac91ab
 
 	// place assets ==================================
 	create: function(){
@@ -340,7 +337,6 @@ GamePlay.prototype = {
 		}else if(questCounter == 10){
 			game.state.start('GameOverN');
 		}
-<<<<<<< HEAD
 		if(acceptScene == true){
 			game.state.start('CutSceneAccept');
 		}
@@ -351,9 +347,7 @@ GamePlay.prototype = {
 			game.state.start('CutSceneKill');
 		}
 		haveRead = false;
-=======
 		//haveRead = false;
->>>>>>> 00fa1c015e93411902f203c3e0164046d8ac91ab
 		//console.log(haveRead);
 	},
 
@@ -392,14 +386,11 @@ Read.prototype = {
 
 		this.text = game.add.text(32, 32, '', {font: "15px Arial", fill: "#19de65"});
 		nextLine();
-<<<<<<< HEAD
 		questStatus = false;
 		playedKill = false;
 		playedDecline = false;
 		playedAccept = false;
-=======
 		//questStatus = false;
->>>>>>> 00fa1c015e93411902f203c3e0164046d8ac91ab
 	},
 
 	// update, run the game loop =====================
@@ -790,7 +781,6 @@ function newQuest(){
 
 //player choice functions
 function acceptQuest(){
-<<<<<<< HEAD
 	////makes sure the sound effect doesn't repeat 
 	if(playedAccept == false){
 	acceptMusic.play('', 0, 1, false);
@@ -798,12 +788,10 @@ function acceptQuest(){
 	}
 
 	//checks to see if you've already done an action, if you haven't, it checks which quest you're on and adds influence for the correct group,adds money and subtracts men for the given quest and displays correct person
-=======
 	//acceptMusic.play('', 0, 1, false);
 	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
 	// add correct values for accepting this quest!
->>>>>>> 00fa1c015e93411902f203c3e0164046d8ac91ab
 	if (questStatus == false){
 		questStatus = true;
 		//commoner accept quests
@@ -856,18 +844,15 @@ function acceptQuest(){
 }
 //holds everything for declining any quest
 function declineQuest(){
-<<<<<<< HEAD
 	//makes sure the sound effect doesn't repeat 
 	if(playedDecline == false){
 	declineMusic.play('', 0, 1, false);
 	playedDecline = true;
 	}
 //checks to see if you've already done an action, if you haven't, it checks which quest you're on and subtracts influence from the correct group and displays correct person
-=======
 	//declineMusic.play('', 0, 1, false);
 	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
->>>>>>> 00fa1c015e93411902f203c3e0164046d8ac91ab
 	if (questStatus == false){
 		questStatus = true;
 		//commoner decline
@@ -904,20 +889,17 @@ function declineQuest(){
 }
 //holds everything killing the messenger for any quest
 function killMessenger(){
-<<<<<<< HEAD
 	//makes sure the sound effect doesn't repeat 
 	if(playedKill == false){
 	killMusic.play('', 0, 1, false);
 	playedKill = true;
 	}
 //checks to see if you've already done an action, if you haven't, it checks which quest you're on and adds suspicion and displays correct person
-=======
 	//killMusic.play('', 0, 1, false);
 	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
 	game.time.events.add(6000, moveAssets, this);
 
->>>>>>> 00fa1c015e93411902f203c3e0164046d8ac91ab
 	if (questStatus == false){
 		questStatus = true;
 		game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
