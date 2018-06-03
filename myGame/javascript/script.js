@@ -107,7 +107,13 @@ Menu.prototype = {
 		game.load.image("GamePlayUI", "GamePlay_UI.png");
 		game.load.image("GamePlayBG", "GamePlay_BG.png");
 		game.load.image("GameOverBG", "GameOver.png");
-		game.load.audio('bgMusic', ['assets/audio/bgmusic.wav']);
+
+		//game.load.image("commoner", "commoner.png");
+		game.load.path = 'assets/audio/';
+		game.load.audio('bgMusic', ['bgmusic.wav']);
+		game.load.audio('acceptMusic', ['stamp.wav']);
+		game.load.audio('declineMusic', ['candle.wav']);
+		game.load.audio('killMusic', ['knife.wav']);
 	},
 
 	// place assets =========================================
@@ -187,15 +193,7 @@ Tutorial.prototype = {
 var GamePlay = function(game){};
 GamePlay.prototype = {
 	// preload assets ================================
-	preload: function(){
-		//game.load.image("commoner", "commoner.png");
-
-		game.load.path = 'assets/audio/';
-		game.load.audio('bgMusic', ['bgmusic.wav']);
-		game.load.audio('acceptMusic', ['stamp.wav']);
-		game.load.audio('declineMusic', ['candle.wav']);
-		game.load.audio('killMusic', ['knife.wav']);
-	},
+	preload: function(){},
 
 	// place assets ==================================
 	create: function(){
@@ -212,13 +210,15 @@ GamePlay.prototype = {
 		killMusic = game.add.audio('killMusic');
 		bgMusic.play('', 0, 0.5, true); //loops
 
+		///////////////////////////////////////////////////
 		//scroll obj is also quest obj, it acts as a double
 		scroll = new Item(game, 370, 300, 'obj', 'ReadScroll');
 		game.add.existing(scroll);
 		scroll.scale.set( .1, .1);
 		//scroll.body.immovable = true; //scroll cannot be moved, scroll is a rock
-		scroll.body.setSize(700,500, 50, 32);
+		//scroll.body.setSize(700,500, 50, 32);
 		scroll.alpha = 0;
+		scroll.body.collideWorldBounds = false;
 		scrollAnimation = game.add.tween(scroll).to({y: 420, alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
 		//console.log(questCounter);
 		//console.log(kD);
@@ -226,7 +226,7 @@ GamePlay.prototype = {
 		//create npc depending on questNumber
 		//NPC constructor parameters(game, x, y, key, frame, aD, dD, kD, noblePoints, comPoints, negNoblePts, negComPts, men, susp, money);
 		commoner = new NPC(game, 400, 170,'npc', 4, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
-		game.physics.enable(commoner, Phaser.Physics.ARCADE);
+		//game.physics.enable(commoner, Phaser.Physics.ARCADE);
 		game.add.existing(commoner);
 		commoner.scale.set(.9);
 		//this.commoner.enableBody();
@@ -303,7 +303,7 @@ GamePlay.prototype = {
 		}
 
 		// Game over conditions
-		if(comPoints == 100 || noblePoints ==100){
+		if(comPoints >= 100 || noblePoints >=100){
 			game.state.start('GameOverG');
 		}else if(suspicion >= 100) {
 			game.state.start('GameOverB1');
@@ -312,7 +312,7 @@ GamePlay.prototype = {
 		}else if(questCounter == 10){
 			game.state.start('GameOverN');
 		}
-		haveRead = false;
+		//haveRead = false;
 		//console.log(haveRead);
 	},
 
@@ -320,6 +320,7 @@ GamePlay.prototype = {
 	render: function(){
 		//game.debug.bodyInfo(scroll, 32, 32);
 		game.debug.body(scroll);
+		game.debug.text("Over: " + scroll.input.pointerOver(), 32, 32);
 		//game.debug.bodyInfo(commoner, 32, 32);
 		game.debug.body(commoner);
 	}
@@ -350,7 +351,7 @@ Read.prototype = {
 
 		this.text = game.add.text(32, 32, '', {font: "15px Arial", fill: "#19de65"});
 		nextLine();
-		questStatus = false;
+		//questStatus = false;
 	},
 
 	// update, run the game loop =====================
@@ -496,6 +497,13 @@ function newGame(){
 	questCounter = 0;
 }
 
+function newQuest(){
+	questStatus = false;
+	// if(questCounter % 2 == 0){
+
+	// }
+}
+
 //player choice functions
 function acceptQuest(){
 	//acceptMusic.play('', 0, 1, false);
@@ -547,6 +555,8 @@ function killMessenger(){
 	//killMusic.play('', 0, 1, false);
 	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
+	game.time.events.add(6000, moveAssets, this);
+
 	if (questStatus == false){
 		questStatus = true;
 		commoner.frameName = "Peasant002";
@@ -607,5 +617,11 @@ function gotoGame(){
 
 function gotoTutorial(){
 	game.state.start('Prologue');
+}
+
+function moveAssets(){
+	commoner.y = -500;
+	noble.y = -500;
+	scroll.y = -500;
 }
 //end
