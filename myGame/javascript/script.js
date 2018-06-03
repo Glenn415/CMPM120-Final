@@ -3,14 +3,21 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO);
 //status variables
 var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 0;
 var commoner, noble;
+var playedKill = false;
+var playedDecline = false;
+var playedAccept = false;
+var cutSceneTracker = true;
+var acceptScene = false;
+var declineScene = false;
+var killScene = false;
 //====Below is a series of arrays holding input values for NPC object creation====
-var menArg = [5, 5]; 
-var suspArg = [7, 10]; 
-var comPtsArg = [10, 10]; 
-var nobPtsArg = [0, 0];
-var negNobPtsArg = [0, 0]; 
-var negComPtsArg = [3, 5]; 
-var moneyArg = [20, 40];
+var menArg = [5,7,0,4,5,0,7,0,9,0]; 
+var suspArg = [7,10,0,4,5,0,7,0,9,0]; 
+var comPtsArg = [10,0,0,4,5,0,7,0,9,0]; 
+var nobPtsArg = [0,3,0,4,5,0,7,0,9,0];
+var negNobPtsArg = [1,0,0,4,5,0,7,0,9,0]; 
+var negComPtsArg = [3,0,0,4,5,0,7,0,9,0]; 
+var moneyArg = [20,0,0,4,5,0,7,0,9,0];
 //================================
 var story = []; //empty array variable, will later be used to temporarily store scrolling texts
 
@@ -58,8 +65,15 @@ var dD = [
 ["Oh. I’m sorry to have bothered you then. I was just really hoping for help.",
 "We really need these pirates gone before they destroy our town.",
 "Guess I’ll keep looking."],
-["Decline test", 
-"woooooooo"]
+["quest 2"],
+["quest 3"],
+["quest 4"],
+["quest 5"],
+["quest 6"],
+["quest 7"],
+["quest 8"],
+["quest 9"],
+["quest 10"]
 ]; //decline dialogue
 var kD = [
 ["I should’ve just stayed home… "], 
@@ -96,12 +110,12 @@ Menu.prototype = {
 	preload: function(){
 		console.log("Menu: preload");
 
-		game.load.path = "../myGame/assets/img/";
+		//game.load.path = "../myGame/assets/img/";
 		//game.load.atlas("bg", "bgSprites.png", "bgSprites.json");
-		game.load.atlas("obj", "Items.png", "Items.json");
-		game.load.atlas("npc", "npc_atlas.png", "npc_atlas.json");
-		game.load.image("GamePlayUI", "GamePlay_UI.png");
-		game.load.audio('bgMusic', ['assets/audio/bgmusic.wav']);
+		game.load.atlas("obj", "assets/img/Items.png", "assets/img/Items.json");
+		game.load.atlas("npc", "assets/img/npc_atlas.png", "assets/img/npc_atlas.json");
+		game.load.image("GamePlayUI", "assets/img/GamePlay_UI.png");
+		game.load.audio('bgMusic', 'assets/audio/bgmusic.wav');
 	},
 
 	// place assets =========================================
@@ -181,11 +195,11 @@ GamePlay.prototype = {
 	preload: function(){
 		//game.load.image("commoner", "commoner.png");
 
-		game.load.path = 'assets/audio/';
-		game.load.audio('bgMusic', ['bgmusic.wav']);
-		game.load.audio('acceptMusic', ['stamp.wav']);
-		game.load.audio('declineMusic', ['candle.wav']);
-		game.load.audio('killMusic', ['knife.wav']);
+		//game.load.path = 'assets/audio/';
+		game.load.audio('bgMusic', 'assets/audio/bgmusic.wav');
+		game.load.audio('acceptMusic', 'assets/audio/stamp.wav');
+		game.load.audio('declineMusic', 'assets/audio/candle.wav');
+		game.load.audio('killMusic', 'assets/audio/knife.wav');
 	},
 
 	// place assets ==================================
@@ -234,6 +248,8 @@ GamePlay.prototype = {
 		game.add.existing(noble);
 		noble.scale.set(.85);
 		noble.alpha = 0;
+		//character = game.add.tween(noble).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
+		//character.chain(scrollAnimation);
 
 		//create objects
 		knife = new Item(game, 200, 530, 'obj', 'Knife'); // (680, 530)
@@ -304,6 +320,15 @@ GamePlay.prototype = {
 		}else if(questCounter == 10){
 			game.state.start('GameOverN');
 		}
+		if(acceptScene == true){
+			game.state.start('CutSceneAccept');
+		}
+		if(declineScene == true){
+			game.state.start('CutSceneDecline');
+		}
+		if(killScene == true){
+			game.state.start('CutSceneKill');
+		}
 		haveRead = false;
 		//console.log(haveRead);
 	},
@@ -343,6 +368,9 @@ Read.prototype = {
 		this.text = game.add.text(32, 32, '', {font: "15px Arial", fill: "#19de65"});
 		nextLine();
 		questStatus = false;
+		playedKill = false;
+		playedDecline = false;
+		playedAccept = false;
 	},
 
 	// update, run the game loop =====================
@@ -360,7 +388,235 @@ Read.prototype = {
 	}
 }
 
-// GameOver State ==============================================
+//cut scene for all accepts
+var CutSceneAccept = function(game){};
+CutSceneAccept.prototype = {
+	// preload assets ================================
+	preload: function(){
+		console.log("CutSceneAccept: preload");
+	},
+
+	// place assets ==================================
+	create: function(){
+		console.log("CutSceneAccept: create");
+		game.stage.backgroundColor = "#707070";
+	//	text = game.add.text(0, 75, "Accept cut Scene");
+		//text.anchor.set(0.5);
+	},
+
+	//checks to see which accept cutscene to display depending on the the current questNumber
+	update: function(){
+		game.sound.stopAll();
+		if(cutSceneTracker == false && questCounter == 1){
+			game.add.text(0,75,"TextA");
+			cutSceneTracker = true;
+			acceptScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 2){
+			game.add.text(0,75,"new TextA");
+			cutSceneTracker = true;
+			acceptScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 3){
+			game.add.text(0,75,"Some more textA");
+			cutSceneTracker = true;
+			AcceptScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 4){
+			game.add.text(0,75,"Some more textA");
+			cutSceneTracker = true;
+			AcceptScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 5){
+			game.add.text(0,75,"Some more textA");
+			cutSceneTracker = true;
+			AcceptScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 6){
+			game.add.text(0,75,"Some more textA");
+			cutSceneTracker = true;
+			AcceptScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 7){
+			game.add.text(0,75,"Some more textA");
+			cutSceneTracker = true;
+			AcceptScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 8){
+			game.add.text(0,75,"Some more textA");
+			cutSceneTracker = true;
+			AcceptScene = false;
+		} 
+		if(cutSceneTracker == false && questCounter == 9){
+			game.add.text(0,75,"Some more textA");
+			cutSceneTracker = true;
+			AcceptScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 10){
+			game.add.text(0,75,"You really shouldn't be here. Something went wrong if you're here");
+			cutSceneTracker = true;
+			AcceptScene = false;
+		}
+		// load 'GamePlay' state when user pressed ENTER key
+		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+			game.state.start('GamePlay');
+		}
+	}
+}
+
+//cutscenes for all declines
+var CutSceneDecline = function(game){};
+CutSceneDecline.prototype = {
+	// preload assets ================================
+	preload: function(){
+		console.log("CutSceneDecline: preload");
+	},
+
+	// place assets ==================================
+	create: function(){
+		console.log("CutSceneDecline: create");
+		game.stage.backgroundColor = "#707070";
+		//text = game.add.text(0, 75, "Decline cut Scene");
+		//text.anchor.set(0.5);
+	},
+
+//checks to see which decline cutscene to display depending on the the current questNumber
+	update: function(){
+		game.sound.stopAll();
+		if(cutSceneTracker == false && questCounter == 1){
+			game.add.text(0,75,"TextD");
+			cutSceneTracker = true;
+			declineScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 2){
+			game.add.text(0,75,"new TextD");
+			cutSceneTracker = true;
+			declineScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 3){
+			game.add.text(0,75,"Some more textD");
+			cutSceneTracker = true;
+			declineScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 4){
+			game.add.text(0,75,"Some more textD");
+			cutSceneTracker = true;
+			declineScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 5){
+			game.add.text(0,75,"Some more textD");
+			cutSceneTracker = true;
+			declineScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 6){
+			game.add.text(0,75,"Some more textD");
+			cutSceneTracker = true;
+			declineScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 7){
+			game.add.text(0,75,"Some more textD");
+			cutSceneTracker = true;
+			declineScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 8){
+			game.add.text(0,75,"Some more textD");
+			cutSceneTracker = true;
+			declineScene = false;
+		} 
+		if(cutSceneTracker == false && questCounter == 9){
+			game.add.text(0,75,"Some more textD");
+			cutSceneTracker = true;
+			declineScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 10){
+			game.add.text(0,75,"You really shouldn't be here. Something went wrong if you're here");
+			cutSceneTracker = true;
+			declineScene = false;
+		}
+		// load 'GamePlay' state when user pressed ENTER key
+		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+			game.state.start('GamePlay');
+		}
+	}
+}
+
+//cutscenes for all kills
+var CutSceneKill = function(game){};
+CutSceneKill.prototype = {
+	// preload assets ================================
+	preload: function(){
+		console.log("CutSceneKill: preload");
+	},
+
+	// place assets ==================================
+	create: function(){
+		console.log("CutSceneKill: create");
+		game.stage.backgroundColor = "#707070";
+		//text = game.add.text(0, 75, "Kill cut Scene");
+		//text.anchor.set(0.5);
+	},
+
+	//checks to see which kill cutscene to display depending on the the current questNumber
+	update: function(){
+		game.sound.stopAll();
+		if(cutSceneTracker == false && questCounter == 1){
+			game.add.text(0,75,"Text");
+			cutSceneTracker = true;
+			killScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 2){
+			game.add.text(0,75,"new Text");
+			cutSceneTracker = true;
+			killScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 3){
+			game.add.text(0,75,"Some more textK");
+			cutSceneTracker = true;
+			killScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 4){
+			game.add.text(0,75,"Some more textK");
+			cutSceneTracker = true;
+			killScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 5){
+			game.add.text(0,75,"Some more textK");
+			cutSceneTracker = true;
+			killScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 6){
+			game.add.text(0,75,"Some more textK");
+			cutSceneTracker = true;
+			killScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 7){
+			game.add.text(0,75,"Some more textK");
+			cutSceneTracker = true;
+			killScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 8){
+			game.add.text(0,75,"Some more textK");
+			cutSceneTracker = true;
+			killScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 9){
+			game.add.text(0,75,"Some more textK");
+			cutSceneTracker = true;
+			killScene = false;
+		}
+		if(cutSceneTracker == false && questCounter == 10){
+			game.add.text(0,75,"You really shouldn't be here. Something went wrong if you're here");
+			cutSceneTracker = true;
+			killScene = false;
+		}
+		// load 'GamePlay' state when user pressed ENTER key
+		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER) && cutSceneTracker == true) {
+			game.state.start('GamePlay');
+		}
+	}
+}
+
+//gameover state for if you have 100% influence in a faction
 var GameOverG = function(game){};
 GameOverG.prototype = {
 	// preload assets ================================
@@ -385,6 +641,8 @@ GameOverG.prototype = {
 		}
 	}
 }
+
+//gameover state for if you have not gotten 100% influence with a faction but also have not gotten 100% suspicion or lost all your men
 var GameOverN = function(game){};
 GameOverN.prototype = {
 	// preload assets ================================
@@ -409,6 +667,7 @@ GameOverN.prototype = {
 		}
 	}
 }
+//gameover state for if you have gotten 100% suspicion
 var GameOverB1 = function(game){};
 GameOverB1.prototype = {
 	// preload assets ================================
@@ -433,6 +692,8 @@ GameOverB1.prototype = {
 		}
 	}
 }
+
+//gameover state for if you have run out of men
 var GameOverB2 = function(game){};
 GameOverB2.prototype = {
 	// preload assets ================================
@@ -468,6 +729,9 @@ game.state.add("GameOverG", GameOverG);
 game.state.add("GameOverN",GameOverN);
 game.state.add("GameOverB1",GameOverB1);
 game.state.add("GameOverB2",GameOverB2);
+game.state.add("CutSceneAccept",CutSceneAccept);
+game.state.add("CutSceneDecline",CutSceneDecline);
+game.state.add("CutSceneKill",CutSceneKill);
 game.state.start("Menu");
 
 // Helper functions ============================================
@@ -487,69 +751,148 @@ function newGame(){
 
 //player choice functions
 function acceptQuest(){
-	//acceptMusic.play('', 0, 1, false);
+	////makes sure the sound effect doesn't repeat 
+	if(playedAccept == false){
+	acceptMusic.play('', 0, 1, false);
+	playedAccept = true;
+	}
 
-	// add correct values for accepting this quest!
+	//checks to see if you've already done an action, if you haven't, it checks which quest you're on and adds influence for the correct group,adds money and subtracts men for the given quest and displays correct person
 	if (questStatus == false){
 		questStatus = true;
+		//commoner accept quests
+		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 8 ){
 		commoner.frameName = "Peasant004";
+		//commoner spy accept quests
+		if(questCounter == 6){
+		comPoints -= commoner.negComPoints;
+		}
 		comPoints += commoner.comPoints;
 		moneyPoints += commoner.moneyPoints;
-		men -= commoner.men;
+		men -= commoner.men;	
+		}
+		//noble accept quests
+		if(questCounter == 1 || questCounter == 5 || questCounter == 7 || questCounter == 9){
+			noble.frameName = "Noble004";
+			//noble spy accept quests
+			if(questCounter == 3){
+			noblePoints -= noble.negNoblePts;
+			}
+			noblePoints +=  noble.noblePoints;
+			moneyPoints += noble.moneyPoints;
+			men -= noble.men
+		}
 		printCP.text = comPoints;
 		printNP.text = noblePoints;
 		printMoney.text = moneyPoints;
 		printMen.text = men;
 		story = commoner.aD;
+		//makes sure THE GAME DOESN'T BREAK AFTER READING THE QUEST
 		wordIndex = 0;
 	lineIndex = 0;
 	wordDelay = 140;
 	lineDelay = 400;
+	//loads in the text to scroll
 		text = game.add.text(50, game.world.height - 100, '', {font: "22px Arial", fill: "#19de65"});
 		nextLine();
 		questCounter++;
+		//checks to see if any end conditions have been met, if they have not then the next cutscene will be shown
+		if(questCounter != 10 && men != 0 && comPoints != 100 && noblePoints != 100 && suspicion != 100){
+			cutSceneTracker = false;
+			acceptScene = true;
+		}
+		//checks to see if any end conditions have been met, if they have, do not show the next cut scene. Go to end game
+		if(questCounter == 10 || men <= 0 || comPoints == 100 || noblePoints == 100 || suspicion == 100){
+			cutSceneTracker = true;
+			acceptScene = false;
+		}
 	}
 }
-
+//holds everything for declining any quest
 function declineQuest(){
-	//declineMusic.play('', 0, 1, false);
-
+	//makes sure the sound effect doesn't repeat 
+	if(playedDecline == false){
+	declineMusic.play('', 0, 1, false);
+	playedDecline = true;
+	}
+//checks to see if you've already done an action, if you haven't, it checks which quest you're on and subtracts influence from the correct group and displays correct person
 	if (questStatus == false){
 		questStatus = true;
+		//commoner decline
+		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 8 ){
 		commoner.frameName = "Peasant003";
-		comPoints -= commoner.negComPoints;
+		comPoints -= commoner.negComPoints;	
+		}
+		//noble decline
+		if(questCounter == 1 || questCounter == 5 || questCounter == 7 || questCounter == 9){
+			noble.frameName = "Noble003";
+			noblePoints -= noble.negNoblePts;
+		}
 		printCP.text = comPoints;
+		printNP.text = noblePoints;
 		story = commoner.dD;
+		//makes sure THE GAME DOESN'T BREAK AFTER READING THE QUEST
 		wordIndex = 0;
 		lineIndex = 0;
 		wordDelay = 140;
 		lineDelay = 400;
+		//loads in the text to scroll
 		text = game.add.text(50, game.world.height - 100, '', {font: "22px Arial", fill: "#19de65"});
 		nextLine();
 		questCounter++;
+		if(questCounter != 10 && men != 0 && comPoints != 100 && noblePoints != 100 && suspicion != 100){
+			cutSceneTracker = false;
+			declineScene = true;
+		}
+		if(questCounter == 10 || men <= 0 || comPoints == 100 || noblePoints == 100 || suspicion == 100){
+			cutSceneTracker = true;
+			declineScene = false;
+		}
 	}
 }
-
+//holds everything killing the messenger for any quest
 function killMessenger(){
-	//killMusic.play('', 0, 1, false);
-	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-
+	//makes sure the sound effect doesn't repeat 
+	if(playedKill == false){
+	killMusic.play('', 0, 1, false);
+	playedKill = true;
+	}
+//checks to see if you've already done an action, if you haven't, it checks which quest you're on and adds suspicion and displays correct person
 	if (questStatus == false){
 		questStatus = true;
-		commoner.frameName = "Peasant002";
-		suspicion += commoner.susp;
+		game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+		//commoner kill
+		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 8 ){
+			commoner.frameName = "Peasant002";
+			suspicion += commoner.susp;
+			//game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+		}
+		//noble kill
+		if(questCounter == 1 || questCounter == 5 || questCounter == 7 || questCounter == 9){
+			noble.frameName = "Noble002";
+			suspicion += noble.susp;
+			//game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+		}
 		printSusp.text = suspicion;
 		story = commoner.kD;
+		//makes sure THE GAME DOESN'T BREAK AFTER READING THE QUEST
 		wordIndex = 0;
 		lineIndex = 0;
 		wordDelay = 140;
 		lineDelay = 400;
-	//console.log(lineIndex);
-	//console.log(story[lineIndex]);
+		//loads in the text to scroll
 		text = game.add.text(50, game.world.height - 100, '', {font: "22px Arial", fill: "#19de65"});
-		console.log(text);
+		//console.log(text);
 		nextLine();	
 		questCounter++;
+		if(questCounter != 10 && men != 0 && comPoints != 100 && noblePoints != 100 && suspicion != 100){
+			cutSceneTracker = false;
+			killScene = true;
+		}
+		if(questCounter == 10 || men <= 0 || comPoints == 100 || noblePoints == 100 || suspicion == 100){
+			cutSceneTracker = true;
+			killScene = false;
+		}
 	}
 }
 
@@ -560,13 +903,9 @@ function nextLine(){
 	if(lineIndex == story.length){
 		return; //we're done.
 	}
-	//console.log("+++++++++++");
-	//console.log("line index",lineIndex);
-	
-	//console.log("story:",story[lineIndex]);
 	//split current line on spaces, so one word per array element
 	line = story[lineIndex].split(' ');
-	//reseet the word index to zero (first word in the line)
+	//reset the word index to zero (first word in the line)
 	wordIndex = 0;
 	//call the nextWord function once for each word in the line (line.length)
 	game.time.events.repeat(wordDelay, line.length, this.nextWord, this);
