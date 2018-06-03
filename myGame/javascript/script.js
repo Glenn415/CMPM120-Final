@@ -11,13 +11,13 @@ var acceptScene = false;
 var declineScene = false;
 var killScene = false;
 //====Below is a series of arrays holding input values for NPC object creation====
-var menArg = [5,3,0,4,5,0,7,0,9,0]; 
-var suspArg = [7,10,0,4,5,0,7,0,9,0]; 
-var comPtsArg = [10,0,0,4,5,0,7,0,9,0]; 
-var nobPtsArg = [0,100,0,4,5,0,7,0,9,0];
-var negNobPtsArg = [1,0,0,4,5,0,7,0,9,0]; 
-var negComPtsArg = [3,0,0,4,5,0,7,0,9,0]; 
-var moneyArg = [20,0,0,4,5,0,7,0,9,0];
+var menArg = [5,0,0,5,4,0,7,0,5,0]; 
+var suspArg = [7,0,0,10,12,0,20,0,15,0]; 
+var comPtsArg = [10,0,0,0,15,0,0,0,30,0]; 
+var nobPtsArg = [0,0,0,0,0,0,0,0,0,0];
+var negNobPtsArg = [0,0,0,0,0,0,20,0,0,0]; 
+var negComPtsArg = [5,0,0,10,5,0,3,0,7,0]; 
+var moneyArg = [20,0,0,0,15,0,0,0,30,0];
 //================================
 var story = []; //empty array variable, will later be used to temporarily store scrolling texts
 
@@ -423,55 +423,74 @@ CutSceneAccept.prototype = {
 	//checks to see which accept cutscene to display depending on the the current questNumber
 	update: function(){
 		game.sound.stopAll();
+		//quest 1's
 		if(cutSceneTracker == false && questCounter == 1){
 			game.add.text(0,75,"TextA");
 			cutSceneTracker = true;
 			acceptScene = false;
+			men += 10;
 		}
+		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
 			game.add.text(0,75,"new TextA");
 			cutSceneTracker = true;
 			acceptScene = false;
+			//add men
 		}
+		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
 			game.add.text(0,75,"Some more textA");
 			cutSceneTracker = true;
-			AcceptScene = false;
+			acceptScene = false;
+			//add men
 		}
+		//quest 4's.
 		if(cutSceneTracker == false && questCounter == 4){
 			game.add.text(0,75,"Some more textA");
 			cutSceneTracker = true;
-			AcceptScene = false;
+			acceptScene = false;
+			//spy. no men are gained
 		}
+		//quest 5's.
 		if(cutSceneTracker == false && questCounter == 5){
 			game.add.text(0,75,"Some more textA");
 			cutSceneTracker = true;
-			AcceptScene = false;
+			acceptScene = false;
+			men += 15;
 		}
+		//quest 6's.
 		if(cutSceneTracker == false && questCounter == 6){
 			game.add.text(0,75,"Some more textA");
 			cutSceneTracker = true;
-			AcceptScene = false;
+			acceptScene = false;
+			//add men
 		}
+		//quest 7's.
 		if(cutSceneTracker == false && questCounter == 7){
 			game.add.text(0,75,"Some more textA");
 			cutSceneTracker = true;
-			AcceptScene = false;
+			acceptScene = false;
+			//spy. no men are gained
 		}
+		//quest 8's.
 		if(cutSceneTracker == false && questCounter == 8){
 			game.add.text(0,75,"Some more textA");
 			cutSceneTracker = true;
-			AcceptScene = false;
+			acceptScene = false;
+			//add men
 		} 
+		//quest 9's.
 		if(cutSceneTracker == false && questCounter == 9){
 			game.add.text(0,75,"Some more textA");
 			cutSceneTracker = true;
-			AcceptScene = false;
+			acceptScene = false;
+			men += 10;
 		}
+		//quest 10 shouldn't have a cutscene since the game will end.
 		if(cutSceneTracker == false && questCounter == 10){
 			game.add.text(0,75,"You really shouldn't be here. Something went wrong if you're here");
 			cutSceneTracker = true;
-			AcceptScene = false;
+			acceptScene = false;
 		}
 		// load 'GamePlay' state when user pressed ENTER key
 		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
@@ -499,51 +518,61 @@ CutSceneDecline.prototype = {
 //checks to see which decline cutscene to display depending on the the current questNumber
 	update: function(){
 		game.sound.stopAll();
+		//quest 1's.
 		if(cutSceneTracker == false && questCounter == 1){
 			game.add.text(0,75,"TextD");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
+		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
 			game.add.text(0,75,"new TextD");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
+		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
 			game.add.text(0,75,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
+		//quest 4's.
 		if(cutSceneTracker == false && questCounter == 4){
 			game.add.text(0,75,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
+		//quest 5's.
 		if(cutSceneTracker == false && questCounter == 5){
 			game.add.text(0,75,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
+		//quest 6's.
 		if(cutSceneTracker == false && questCounter == 6){
 			game.add.text(0,75,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
+		//quest 7's.
 		if(cutSceneTracker == false && questCounter == 7){
 			game.add.text(0,75,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
+		//quest 8's.
 		if(cutSceneTracker == false && questCounter == 8){
 			game.add.text(0,75,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
 		} 
+		//quest 9's.
 		if(cutSceneTracker == false && questCounter == 9){
 			game.add.text(0,75,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
+		//quest 10 shouldn't have a cutscene since the game will end.
 		if(cutSceneTracker == false && questCounter == 10){
 			game.add.text(0,75,"You really shouldn't be here. Something went wrong if you're here");
 			cutSceneTracker = true;
@@ -573,51 +602,61 @@ CutSceneKill.prototype = {
 	//checks to see which kill cutscene to display depending on the the current questNumber
 	update: function(){
 		game.sound.stopAll();
+		//quest 1's.
 		if(cutSceneTracker == false && questCounter == 1){
 			game.add.text(0,75,"Text");
 			cutSceneTracker = true;
 			killScene = false;
 		}
+		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
 			game.add.text(0,75,"new Text");
 			cutSceneTracker = true;
 			killScene = false;
 		}
+		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
 			game.add.text(0,75,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
 		}
+		//quest 4's.
 		if(cutSceneTracker == false && questCounter == 4){
 			game.add.text(0,75,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
 		}
+		//quest 5's.
 		if(cutSceneTracker == false && questCounter == 5){
 			game.add.text(0,75,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
 		}
+		//quest 6's.
 		if(cutSceneTracker == false && questCounter == 6){
 			game.add.text(0,75,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
 		}
+		//quest 7's.
 		if(cutSceneTracker == false && questCounter == 7){
 			game.add.text(0,75,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
 		}
+		//quest 8's.
 		if(cutSceneTracker == false && questCounter == 8){
 			game.add.text(0,75,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
 		}
+		//quest 9's.
 		if(cutSceneTracker == false && questCounter == 9){
 			game.add.text(0,75,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
 		}
+		//quest 10 shouldn't have a cutscene since the game will end
 		if(cutSceneTracker == false && questCounter == 10){
 			game.add.text(0,75,"You really shouldn't be here. Something went wrong if you're here");
 			cutSceneTracker = true;
@@ -723,6 +762,7 @@ GameOverB2.prototype = {
 	create: function(){
 		console.log("GameOverB2: create");
 		game.stage.backgroundColor = "#707070";
+		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
 		text = game.add.text(0, 0, "Bad ending, lost all men.");
 		//text.anchor.set(0.5);
 	},
@@ -751,7 +791,6 @@ game.state.add("CutSceneAccept",CutSceneAccept);
 game.state.add("CutSceneDecline",CutSceneDecline);
 game.state.add("CutSceneKill",CutSceneKill);
 game.state.start("Menu");
-//game.state.start("GameOverG");
 
 // Helper functions ============================================
 function newGame(){
@@ -766,6 +805,13 @@ function newGame(){
 	wordDelay = 140;
 	lineDelay = 400;
 	questCounter = 0;
+	playedKill = false;
+	playedDecline = false;
+	playedAccept = false;
+	cutSceneTracker = true;	
+	acceptScene = false;
+	declineScene = false;
+	killScene = false;
 }
 
 function newQuest(){
@@ -784,9 +830,8 @@ function acceptQuest(){
 	}
 
 	//checks to see if you've already done an action, if you haven't, it checks which quest you're on and adds influence for the correct group,adds money and subtracts men for the given quest and displays correct person
-	//acceptMusic.play('', 0, 1, false);
 	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
+	//game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
 	// add correct values for accepting this quest!
 	if (questStatus == false){
 		questStatus = true;
@@ -846,9 +891,8 @@ function declineQuest(){
 	playedDecline = true;
 	}
 //checks to see if you've already done an action, if you haven't, it checks which quest you're on and subtracts influence from the correct group and displays correct person
-	//declineMusic.play('', 0, 1, false);
 	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
+	//game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
 	if (questStatus == false){
 		questStatus = true;
 		//commoner decline
