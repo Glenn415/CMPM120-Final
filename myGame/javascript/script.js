@@ -97,10 +97,7 @@ var wordIndex = 0;
 var lineIndex = 0;
 var wordDelay = 140;
 var lineDelay = 400;
-//end
-
 var questStatus = false;
-
 var haveRead = false;
 
 // Main State ==================================================
@@ -114,13 +111,11 @@ Menu.prototype = {
 		//game.load.atlas("bg", "bgSprites.png", "bgSprites.json");
 		game.load.atlas("obj", "Items.png", "Items.json");
 		game.load.atlas("npc", "npc_atlas.png", "npc_atlas.json");
-		//game.load.atlas("button", "button.png", "button.json");
+		game.load.atlas("background", "background.png", "background.json");
 		game.load.image("btnPlay", "btnPlay.png");
 		game.load.image("btnTutorial", "btnTutorial.png");
 		game.load.image("btnPlayAgain", "btnPlayAgain.png");
-		game.load.image("GamePlayUI", "GamePlay_UI.png");
-		game.load.image("GamePlayBG", "GamePlay_BG.png");
-		game.load.image("GameOverBG", "GameOver.png");
+		game.load.image("btnNext", "btnNext.png");
 
 		//game.load.image("commoner", "commoner.png");
 		game.load.path = 'assets/audio/';
@@ -133,25 +128,14 @@ Menu.prototype = {
 	// place assets =========================================
 	create: function(){
 		console.log("Menu: create");
-		game.stage.backgroundColor = "#C38C9B";
-		text = game.add.text(game.width/2, game.height/2, "Infiltrator\n",{font: "80px Papyrus"});
-		text.anchor.set(0.5);
 		newGame();
-
+		game.add.sprite(0, 0, "background", "GameTitle");
 		game.add.button(150, 400, "btnPlay", gotoGame, this);
-		game.add.button(450, 400, "btnTutorial", gotoTutorial, this);
+		game.add.button(450, 400, "btnTutorial", gotoPrologue, this);
 	},
 
 	// update, run game loop =========================
-	update: function(){
-		// load 'Tutorial' state when user pressed ENTER key
-		// if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-		// 	game.state.start('Prologue');
-		// }
-		// if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-		// 	game.state.start('GamePlay');
-		// }
-	}
+	update: function(){}
 }
 
 var Prologue = function(game){};
@@ -167,6 +151,7 @@ Prologue.prototype = {
 		game.stage.backgroundColor = "#39aeb2";
 		text = game.add.text(0, 0, "Prologue:\n\nYou sigh and sit exhaustively on the bloodied chair.\nYou killed the current leader of the mercenary guild,\nwhile the floor is covered in blood. You’ve gotten into this\nkingdom unnoticed and now you’ll become valuable to them.\nYou can’t wait for it all to come crumbling down.\nFor this kingdom has kidnapped and killed your brother,\nand you want revenge. So naturally you’ve decided to\ninfiltrate the kingdom, gain the people’s trust and then\ndestroy the entire kingdom from the inside out.\nYou’ve grown a bit sadistic since your brother’s death\nbut everyone here, no matter how indirectly, was involved.\nBut this is the only way to avenge your brother and you’ll do\nwhatever it takes.\nHit Enter to read the tutorial.");
 		//text.anchor.set(0.5);
+		game.add.button(590, 520, "btnNext", gotoTutorial, this);
 	},                                                                
 
 	// update, run the game loop =====================
@@ -191,6 +176,7 @@ Tutorial.prototype = {
 		game.stage.backgroundColor = "#39aeb2";
 		text = game.add.text(0, 0, "Tutorial:\nThere are several interactable objects within the game:\n\nThe quest scroll: This is the first thing that should be clicked on \neach quest iteration. It’ll explain the problem and what\n the person asks of you.\n\nThe stamp: Allows you to accept the given quest.\nPlayers click and drag it onto the scroll to see\nhow it affected them.\n\nThe candle: Allows you to deny the given quest.\nPlayers click and drag it onto the scroll to see\nhow it affected them.\n\nThe knife: Allows you to kill the messenger.\nPlayers click and drag it onto the person to see how\nit affected them.\nHit enter to go into gameplay.",{font: "23px"});
 		//text.anchor.set(0.5);
+		game.add.button(590, 520, "btnNext", gotoGame, this);
 	},                                                                
 
 	// update, run the game loop =====================
@@ -208,22 +194,20 @@ GamePlay.prototype = {
 	// preload assets ================================
 	preload: function(){
 		//game.load.image("commoner", "commoner.png");
-
 		//game.load.path = 'assets/audio/';
-		game.load.audio('bgMusic', 'assets/audio/bgmusic.wav');
-		game.load.audio('acceptMusic', 'assets/audio/stamp.wav');
-		game.load.audio('declineMusic', 'assets/audio/candle.wav');
-		game.load.audio('killMusic', 'assets/audio/knife.wav');
+		// game.load.audio('bgMusic', 'assets/audio/bgmusic.wav');
+		// game.load.audio('acceptMusic', 'assets/audio/stamp.wav');
+		// game.load.audio('declineMusic', 'assets/audio/candle.wav');
+		// game.load.audio('killMusic', 'assets/audio/knife.wav');
 	},
 	preload: function(){},
 
 	// place assets ==================================
 	create: function(){
-		console.log("GamePlay: create");		
+		console.log("GamePlay: create");
 		//spin up physics
+		game.add.sprite(0, 0, "background", "GamePlay");
 		game.physics.startSystem(Phaser.Physics.ARCADE);
-		game.add.sprite(0, 0, "GamePlayBG");
-		game.add.sprite(0, 0, "GamePlayUI");
 
 		//add sound
 		bgMusic = game.add.audio('bgMusic');
@@ -233,20 +217,20 @@ GamePlay.prototype = {
 		bgMusic.play('', 0, 0.5, true); //loops
 
 		//scroll obj is also quest obj, it acts as a double
-		scroll = new Item(game, 370, 300, 'obj', 'ReadScroll');
+		scroll = new Item(game, 370, 400, 'obj', 'ReadScroll');
 		game.add.existing(scroll);
 		scroll.scale.set( .1, .1);
 		//scroll.body.immovable = true; //scroll cannot be moved, scroll is a rock
 		//scroll.body.setSize(700,500, 50, 32);
 		scroll.alpha = 0;
 		scroll.body.collideWorldBounds = false;
-		scrollAnimation = game.add.tween(scroll).to({y: 420, alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
+		scrollAnimation = game.add.tween(scroll).to({y: 460, alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
 		//console.log(questCounter);
 		//console.log(kD);
 
 		//create npc depending on questNumber
 		//NPC constructor parameters(game, x, y, key, frame, aD, dD, kD, noblePoints, comPoints, negNoblePts, negComPts, men, susp, money);
-		commoner = new NPC(game, 400, 170,'npc', 4, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
+		commoner = new NPC(game, 400, 240,'npc', 4, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
 		//game.physics.enable(commoner, Phaser.Physics.ARCADE);
 		game.add.existing(commoner);
 		commoner.scale.set(.9);
@@ -680,8 +664,7 @@ GameOverG.prototype = {
 	// place assets ==================================
 	create: function(){
 		console.log("GameOverG: create");
-		game.stage.backgroundColor = "#707070";
-		//game.add.sprite(0, 0, "GamePlayBG");
+		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
 		text = game.add.text(0, 75, "You smile sadistically as you hear news of everything slowly\nfalling into chaos. Serves them right for murdering your\nbrother.They deserved this,this slow and painful demise of\nthis kingdom. And nobody will ever know it was your doing.\nYou decide to start packing up to leave soon.\nYou’re work here is done and you’re grown weary\nwith all the hard work your revenge took.\nYou yawn and decide on a nap before packing.\nYou can sleep happily knowing your plan was successful\nand you’ve finally avenged your brother.",{fill: "#ffffff"});
 		//text.anchor.set(0.5);
@@ -708,7 +691,7 @@ GameOverN.prototype = {
 	// place assets ==================================
 	create: function(){
 		console.log("GameOverN: create");
-		game.stage.backgroundColor = "#707070";
+		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
 		text = game.add.text(25, 85, "You look at the papers and curse yourself quietly.\nYou’ve done some damage, but not enough.\nThey need to pay, they have to pay.\nBut despite your exhaustive efforts, you haven’t completed\nyour task yet.You crumple up the paper and throw it on the\nground before slumping in your seat tiredly.\nYou miss your home but you must avenge him first.\nYou decide to take a small nap first,\nmaybe some new ideas will come up during it.\n\nClick the retry button to try and fully complete your mission.");
 		//text.anchor.set(0.5);
@@ -734,7 +717,7 @@ GameOverB1.prototype = {
 	// place assets ==================================
 	create: function(){
 		console.log("GameOverB1: create");
-		game.stage.backgroundColor = "#707070";
+		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
 		text = game.add.text(20, 35, "You hear news that people are coming for you.\nThey’ve figured you out.\nThey know you’ve been planning their demise and now\nthey’re coming to arrest and likely kill you.\nYour plan has failed but least you caused some chaos\nbefore it failed. Besides, you’ve grown tired\nwithout your brother around. But now\nyou’ll get to be with him soon enough.\nYou hear pounding on the door and you’re ready for them.\nYou’re done with this life anyways,\nnothing is holding you here anyways.\nThat was taken from you long ago.\n\nClick the retry button to reattempt your mission without getting caught\n this time");
 		//text.anchor.set(0.5);
@@ -762,6 +745,7 @@ GameOverB2.prototype = {
 	create: function(){
 		console.log("GameOverB2: create");
 		game.stage.backgroundColor = "#707070";
+		//game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
 		text = game.add.text(0, 0, "Bad ending, lost all men.");
 		//text.anchor.set(0.5);
@@ -831,7 +815,7 @@ function acceptQuest(){
 
 	//checks to see if you've already done an action, if you haven't, it checks which quest you're on and adds influence for the correct group,adds money and subtracts men for the given quest and displays correct person
 	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-	//game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
+	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
 	// add correct values for accepting this quest!
 	if (questStatus == false){
 		questStatus = true;
@@ -892,7 +876,7 @@ function declineQuest(){
 	}
 //checks to see if you've already done an action, if you haven't, it checks which quest you're on and subtracts influence from the correct group and displays correct person
 	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-	//game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
+	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
 	if (questStatus == false){
 		questStatus = true;
 		//commoner decline
@@ -935,7 +919,7 @@ function killMessenger(){
 	playedKill = true;
 	}
 	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-//	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
+	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
 	game.time.events.add(6000, moveAssets, this);
 //checks to see if you've already done an action, if you haven't, it checks which quest you're on and adds suspicion and displays correct person
 	if (questStatus == false){
@@ -1015,8 +999,12 @@ function gotoMenu(){
 	game.state.start('Menu');
 }
 
-function gotoTutorial(){
+function gotoPrologue(){
 	game.state.start('Prologue');
+}
+
+function gotoTutorial(){
+	game.state.start('Tutorial');	
 }
 
 function moveAssets(){
