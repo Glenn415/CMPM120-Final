@@ -11,7 +11,7 @@ var acceptScene = false;
 var declineScene = false;
 var killScene = false;
 //====Below is a series of arrays holding input values for NPC object creation====
-var menArg = [5,0,0,5,4,0,7,0,5,0]; 
+var menArg = [5,7,0,5,4,0,7,0,5,0]; 
 var suspArg = [7,0,0,10,12,0,20,0,15,0]; 
 var comPtsArg = [10,0,0,0,15,0,0,0,30,0]; 
 var nobPtsArg = [0,0,0,0,0,0,0,0,0,0];
@@ -748,7 +748,7 @@ GameOverB2.prototype = {
 	create: function(){
 		console.log("GameOverB2: create");
 		game.stage.backgroundColor = "#707070";
-		//game.add.sprite(0, 0, "background", "GameOver");
+		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
 		text = game.add.text(0, 0, "Bad ending, lost all men.");
 		//text.anchor.set(0.5);
