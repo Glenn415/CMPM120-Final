@@ -1,4 +1,3 @@
-
 var game = new Phaser.Game(800, 600, Phaser.AUTO);
 //status variables
 var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 0;
@@ -29,17 +28,25 @@ var storyBase = [
 "Our town is on the coast with a thriving port.",
 "But recently we’re having trouble with pirates.",
 "For months they’ve been coming in and stealing",
-"from us. If anyone tries to stop them,",
-"they’ll get kidnapped or killed. These pirates",
-"have been here too long and it has to end.",
-"Since nobody in our town can do it without",
-"being kidnapped or killed, we’d be so relieved",
-"if you’d come help. We can pay a fair amount",
-"as well as some men in return. This quest",
-"should only take a few men to complete."], 
+"from us. If anyone tries to stop them, they'll get",
+"kidnapped or killed. These pirates have been",
+"here too long and it has to end. Since nobody in",
+"our town can do it, we'd  be so relieved if you'd",
+"come help. We can pay a fair amount as well as some",
+"men in return."], 
 ["quest 2"],
 ["quest 3"],
-["quest 4"],
+["Hello,",
+"I’m from Baystone and I have a simple request.",
+"An important package was stolen from me by some",
+"commoner swine. You shouldn’t concern yourself",
+"with the squabble between the nobles and the commoners.",
+"This package is very important for me to get back.",
+"I can pay generously for your time! Oh and as for",
+"what’s in the package...You don’t need to know",
+"what’s in it. But if your reputation does you",
+"justice, it should be easy for you to get it back",
+"from these thieving maggots."],
 ["quest 5"],
 ["quest 6"],
 ["quest 7"],
@@ -53,7 +60,8 @@ var aD = [
 "We’ll provide payment once the job is done."],
 ["quest 2"],
 ["quest 3"],
-["quest 4"],
+["Excellent!",
+"I greatly look forward to your success."],
 ["quest 5"],
 ["quest 6"],
 ["quest 7"],
@@ -67,7 +75,8 @@ var dD = [
 "Guess I’ll keep looking."],
 ["quest 2"],
 ["quest 3"],
-["quest 4"],
+["Decline will you? I see... Well a piece of parting advice.", 
+"Watch your back in Baystone"],
 ["quest 5"],
 ["quest 6"],
 ["quest 7"],
@@ -79,7 +88,7 @@ var kD = [
 ["I should’ve just stayed home… "], 
 ["quest 2"],
 ["quest 3"],
-["quest 4"],
+["You’re the worst."],
 ["quest 5"],
 ["quest 6"],
 ["quest 7"],
@@ -364,11 +373,10 @@ Read.prototype = {
 			lineIndex = 0;
 			wordIndex = 0;
 		}
-		text = game.add.text(350,350,"Press DELETE/BACKSPACE to go back\n");
+		text = game.add.text(350,350,"");
 		text.anchor.set(0.5);
 		game.add.button(590, 530, "btnBack", gotoGame, this);
-
-		this.text = game.add.text(32, 32, '', {font: "15px Arial", fill: "#19de65"});
+		text = game.add.text(45,55, '', {font: "28px Papyrus", fill: "#8a3324"});
 		nextLine();
 		questStatus = false;
 		playedKill = false;
@@ -857,7 +865,7 @@ function acceptQuest(){
 	wordDelay = 140;
 	lineDelay = 400;
 	//loads in the text to scroll
-		text = game.add.text(50, game.world.height - 100, '', {font: "22px Arial", fill: "#19de65"});
+		text = game.add.text(50, game.world.height - 100, '', {font: "23px Arial", fill: "#cc7722"});
 		nextLine();
 		questCounter++;
 		//checks to see if any end conditions have been met, if they have not then the next cutscene will be shown
@@ -903,7 +911,7 @@ function declineQuest(){
 		wordDelay = 140;
 		lineDelay = 400;
 		//loads in the text to scroll
-		text = game.add.text(50, game.world.height - 100, '', {font: "22px Arial", fill: "#19de65"});
+		text = game.add.text(50, game.world.height - 100, '', {font: "23px Arial", fill: "#cc7722"});
 		nextLine();
 		questCounter++;
 		if(questCounter != 10 && men != 0 && comPoints != 100 && noblePoints != 100 && suspicion != 100){
@@ -950,7 +958,7 @@ function killMessenger(){
 		wordDelay = 140;
 		lineDelay = 400;
 		//loads in the text to scroll
-		text = game.add.text(50, game.world.height - 100, '', {font: "22px Arial", fill: "#19de65"});
+		text = game.add.text(50, game.world.height - 100, '', {font: "23px Arial", fill: "#cc7722"});
 		//console.log(text);
 		nextLine();	
 		questCounter++;
