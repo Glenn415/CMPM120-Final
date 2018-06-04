@@ -72,7 +72,7 @@ var storyBase = [
 ["Hello,",
 "I’m from Befeld and our town is in great need of help.",
 "We’ve recently found out that our kingdom wants to",
-"use us as fodder to lower one of the enemy’s town’s",
+"use us as fodder to lower one of the enemy town’s",
 "defenses! We will not go along with this plan. Please,",
 "we really need you to go and raid this city for us and",
 "weaken it so we don’t end up as live fodder for them.",
@@ -82,16 +82,14 @@ var storyBase = [
 ["quest 10"]
 ]; //an array of strings for quest description
 var aD = [
-["Oh thank you so much! I don’t really care if you kill the", 
-"pirates or scare them off.Just make sure they don’t come back!", 
-"We’ll provide payment once the job is done."],
+["Oh thank you so much! I don’t really care if you kill them", 
+"or scare them off. Just make sure they don’t come back!"],
 ["quest 2"],
 ["quest 3"],
 ["Excellent!",
 "I greatly look forward to your success."],
 ["“Oh thanks so much!",
-"This means so much that you’ll help us calm it down!",
-"We’ll pay you what we can afterwards."],
+"This means so much that you’ll help us calm it down."],
 ["quest 6"],
 ["Oh thank you so much!"],
 ["quest 8"],
@@ -900,7 +898,7 @@ function acceptQuest(){
 	wordDelay = 140;
 	lineDelay = 400;
 	//loads in the text to scroll
-		text = game.add.text(50, game.world.height - 100, '', {font: "23px Arial", fill: "#cc7722"});
+		text = game.add.text(50, game.world.height - 100, '', {font: "23px Fira Sans", fill: "#eed7a1"});
 		nextLine();
 		questCounter++;
 		//checks to see if any end conditions have been met, if they have not then the next cutscene will be shown
@@ -946,7 +944,7 @@ function declineQuest(){
 		wordDelay = 140;
 		lineDelay = 400;
 		//loads in the text to scroll
-		text = game.add.text(50, game.world.height - 100, '', {font: "23px Arial", fill: "#cc7722"});
+		text = game.add.text(50, game.world.height - 100, '', {font: "23px Fira Sans", fill: "#eed7a1"});
 		nextLine();
 		questCounter++;
 		if(questCounter != 10 && men != 0 && comPoints != 100 && noblePoints != 100 && suspicion != 100){
@@ -993,7 +991,7 @@ function killMessenger(){
 		wordDelay = 140;
 		lineDelay = 400;
 		//loads in the text to scroll
-		text = game.add.text(50, game.world.height - 100, '', {font: "23px Arial", fill: "#cc7722"});
+		text = game.add.text(55, game.world.height - 100, '', {font: "23px Fira Sans", fill: "#eed7a1"});
 		//console.log(text);
 		nextLine();	
 		questCounter++;
