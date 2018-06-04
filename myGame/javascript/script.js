@@ -10,7 +10,7 @@ var acceptScene = false;
 var declineScene = false;
 var killScene = false;
 //====Below is a series of arrays holding input values for NPC object creation====
-var menArg = [5,7,0,5,4,0,7,0,5,0]; 
+var menArg = [5,0,0,5,4,0,7,0,5,0]; 
 var suspArg = [7,0,0,10,12,0,20,0,15,0]; 
 var comPtsArg = [10,0,0,0,15,0,0,0,30,0]; 
 var nobPtsArg = [0,0,0,0,0,0,0,0,0,0];
@@ -21,7 +21,6 @@ var moneyArg = [20,0,0,0,15,0,0,0,30,0];
 var story = []; //empty array variable, will later be used to temporarily store scrolling texts
 
 //This will be very long since it'll hold all the narrative for the game. 
-//start
 var storyBase = [
 ["Hello,",
 "I’m from Heaton and I have a request for you.",
@@ -130,8 +129,6 @@ var kD = [
 ["quest 10"]
 ]; //kill dialogue
 
-//end
-
 //borrowed from https://stackoverflow.com/questions/31849667/how-to-type-word-by-word-or-line-by-line-in-phaser-js
 //start
 var line = [];
@@ -139,6 +136,7 @@ var wordIndex = 0;
 var lineIndex = 0;
 var wordDelay = 140;
 var lineDelay = 400;
+//end
 var questStatus = false;
 var haveRead = false;
 
@@ -150,7 +148,6 @@ Menu.prototype = {
 		console.log("Menu: preload");
 
 		game.load.path = "../myGame/assets/img/";
-		//game.load.atlas("bg", "bgSprites.png", "bgSprites.json");
 		game.load.atlas("obj", "Items.png", "Items.json");
 		game.load.atlas("npc", "npc_atlas.png", "npc_atlas.json");
 		game.load.atlas("background", "background.png", "background.json");
@@ -159,8 +156,7 @@ Menu.prototype = {
 		game.load.image("btnPlayAgain", "btnPlayAgain.png");
 		game.load.image("btnNext", "btnNext.png");
 		game.load.image("btnBack", "btnBack.png");
-
-		//game.load.image("commoner", "commoner.png");
+		
 		game.load.path = 'assets/audio/';
 		game.load.audio('bgMusic', ['bgmusic.wav']);
 		game.load.audio('acceptMusic', ['stamp.wav']);
@@ -192,8 +188,7 @@ Prologue.prototype = {
 	create: function(){
 		console.log("Prologue: create");
 		game.stage.backgroundColor = "#39aeb2";
-		text = game.add.text(0, 0, "Prologue:\n\nYou sigh and sit exhaustively on the bloodied chair.\nYou killed the current leader of the mercenary guild,\nwhile the floor is covered in blood. You’ve gotten into this\nkingdom unnoticed and now you’ll become valuable to them.\nYou can’t wait for it all to come crumbling down.\nFor this kingdom has kidnapped and killed your brother,\nand you want revenge. So naturally you’ve decided to\ninfiltrate the kingdom, gain the people’s trust and then\ndestroy the entire kingdom from the inside out.\nYou’ve grown a bit sadistic since your brother’s death\nbut everyone here, no matter how indirectly, was involved.\nBut this is the only way to avenge your brother and you’ll do\nwhatever it takes.\nHit Enter to read the tutorial.");
-		//text.anchor.set(0.5);
+		text = game.add.text(0, 0, "Prologue:\n\nYou sigh and sit exhaustively on the bloodied chair.\nYou killed the current leader of the mercenary guild,\nwhile the floor is covered in blood. You’ve gotten into this\nkingdom unnoticed and now you’ll become valuable to them.\nYou can’t wait for it all to come crumbling down.\nFor this kingdom has kidnapped and killed your brother,\nand you want revenge. So naturally you’ve decided to\ninfiltrate the kingdom, gain the people’s trust and then\ndestroy the entire kingdom from the inside out.\nYou’ve grown a bit sadistic since your brother’s death\nbut everyone here, no matter how indirectly, was involved.\nBut this is the only way to avenge your brother and you’ll do\nwhatever it takes.\nHit the next button to go to the tutorial.");
 		game.add.button(590, 520, "btnNext", gotoTutorial, this);
 	},                                                                
 
@@ -217,17 +212,13 @@ Tutorial.prototype = {
 	create: function(){
 		console.log("Tutorial: create");
 		game.stage.backgroundColor = "#39aeb2";
-		text = game.add.text(0, 0, "Tutorial:\nThere are several interactable objects within the game:\n\nThe quest scroll: This is the first thing that should be clicked on \neach quest iteration. It’ll explain the problem and what\n the person asks of you.\n\nThe stamp: Allows you to accept the given quest.\nPlayers click and drag it onto the scroll to see\nhow it affected them.\n\nThe candle: Allows you to deny the given quest.\nPlayers click and drag it onto the scroll to see\nhow it affected them.\n\nThe knife: Allows you to kill the messenger.\nPlayers click and drag it onto the person to see how\nit affected them.\nHit enter to go into gameplay.",{font: "23px"});
-		//text.anchor.set(0.5);
+		text = game.add.text(0, 0, "Tutorial:\nThere are several interactable objects within the game:\n\nThe quest scroll: This is the first thing that should be clicked on \neach quest iteration. It’ll explain the problem and what\n the person asks of you.\n\nThe stamp: Allows you to accept the given quest.\nPlayers click and drag it onto the scroll to see\nhow it affected them.\n\nThe candle: Allows you to deny the given quest.\nPlayers click and drag it onto the scroll to see\nhow it affected them.\n\nThe knife: Allows you to kill the messenger.\nPlayers click and drag it onto the person to see how\nit affected them.\nHit the next button to go to the tutorial.",{font: "23px"});
 		game.add.button(590, 520, "btnNext", gotoGame, this);
 	},                                                                
 
 	// update, run the game loop =====================
 	update: function(){
-		// load 'GamePlay' state when user pressed ENTER key
-		// if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-		// 	game.state.start('GamePlay');
-		// }
+		
 	}
 }
 
@@ -236,12 +227,7 @@ var GamePlay = function(game){};
 GamePlay.prototype = {
 	// preload assets ================================
 	preload: function(){
-		//game.load.image("commoner", "commoner.png");
-		//game.load.path = 'assets/audio/';
-		// game.load.audio('bgMusic', 'assets/audio/bgmusic.wav');
-		// game.load.audio('acceptMusic', 'assets/audio/stamp.wav');
-		// game.load.audio('declineMusic', 'assets/audio/candle.wav');
-		// game.load.audio('killMusic', 'assets/audio/knife.wav');
+		
 	},
 	preload: function(){},
 
@@ -296,14 +282,11 @@ GamePlay.prototype = {
 
 		candle = new Item(game, 710, 560, 'obj', 'Candle');
 		game.add.existing(candle);
-		//candle.input.enableDrag();
 		candle.alpha = 0.5;
 
 		// UI score
 		printCP = game.add.text(135, 58, comPoints);
 		printNP = game.add.text(113, 87, noblePoints);
-		// com.anchor.set(0.5);
-		// noble.anchor.set(0.5);
 
 		// Player UI
 		printMoney = game.add.text(665, 78, moneyPoints);
@@ -363,9 +346,7 @@ GamePlay.prototype = {
 		//if(killScene == true){
 		//	game.state.start('CutSceneKill');
 		//}
-		haveRead = false;
-		//haveRead = false;
-		//console.log(haveRead);
+		haveRead = false;;
 	},
 
 	// debugging method ===============================
@@ -412,16 +393,12 @@ Read.prototype = {
 
 	// update, run the game loop =====================
 	update: function(){
-		//console.log(haveRead);
 		//haveRead = true;
-		//console.log(haveRead);
 		game.sound.stopAll();
 		// load 'GamePlay' state when user pressed DELETE key
 		if(game.input.keyboard.isDown(Phaser.Keyboard.BACKSPACE)) {
 			game.state.start('GamePlay');
 		}
-		
-		//console.log(haveRead);
 	}
 }
 
@@ -512,10 +489,6 @@ CutSceneAccept.prototype = {
 			cutSceneTracker = true;
 			acceptScene = false;
 		}
-		// load 'GamePlay' state when user pressed ENTER key
-		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-			game.state.start('GamePlay');
-		}
 	}
 }
 
@@ -532,8 +505,6 @@ CutSceneDecline.prototype = {
 		console.log("CutSceneDecline: create");
 		game.stage.backgroundColor = "#707070";
 		game.add.button(590, 520, "btnNext", gotoGame, this);
-		//text = game.add.text(0, 75, "Decline cut Scene");
-		//text.anchor.set(0.5);
 	},
 
 //checks to see which decline cutscene to display depending on the the current questNumber
@@ -598,10 +569,6 @@ CutSceneDecline.prototype = {
 			game.add.text(0,75,"You really shouldn't be here. Something went wrong if you're here");
 			cutSceneTracker = true;
 			declineScene = false;
-		}
-		// load 'GamePlay' state when user pressed ENTER key
-		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-			game.state.start('GamePlay');
 		}
 	}
 }
@@ -684,10 +651,6 @@ CutSceneKill.prototype = {
 			cutSceneTracker = true;
 			killScene = false;
 		}
-		// load 'GamePlay' state when user pressed ENTER key
-		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER) && cutSceneTracker == true) {
-			game.state.start('GamePlay');
-		}
 	}
 }
 
@@ -705,16 +668,11 @@ GameOverG.prototype = {
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
 		text = game.add.text(0, 75, "You smile sadistically as you hear news of everything slowly\nfalling into chaos. Serves them right for murdering your\nbrother.They deserved this,this slow and painful demise of\nthis kingdom. And nobody will ever know it was your doing.\nYou decide to start packing up to leave soon.\nYou’re work here is done and you’re grown weary\nwith all the hard work your revenge took.\nYou yawn and decide on a nap before packing.\nYou can sleep happily knowing your plan was successful\nand you’ve finally avenged your brother.",{fill: "#ffffff"});
-		//text.anchor.set(0.5);
 	},
 
 	// update, run the game loop =====================
 	update: function(){
 		game.sound.stopAll();
-		// load 'GamePlay' state when user pressed ENTER key
-		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-			game.state.start('Menu');
-		}
 	}
 }
 
@@ -732,16 +690,11 @@ GameOverN.prototype = {
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
 		text = game.add.text(25, 85, "You look at the papers and curse yourself quietly.\nYou’ve done some damage, but not enough.\nThey need to pay, they have to pay.\nBut despite your exhaustive efforts, you haven’t completed\nyour task yet.You crumple up the paper and throw it on the\nground before slumping in your seat tiredly.\nYou miss your home but you must avenge him first.\nYou decide to take a small nap first,\nmaybe some new ideas will come up during it.\n\nClick the retry button to try and fully complete your mission.");
-		//text.anchor.set(0.5);
 	},
 
 	// update, run the game loop =====================
 	update: function(){
 		game.sound.stopAll();
-		// load 'GamePlay' state when user pressed ENTER key
-		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-			game.state.start('Menu');
-		}
 	}
 }
 //gameover state for if you have gotten 100% suspicion
@@ -758,16 +711,11 @@ GameOverB1.prototype = {
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
 		text = game.add.text(20, 35, "You hear news that people are coming for you.\nThey’ve figured you out.\nThey know you’ve been planning their demise and now\nthey’re coming to arrest and likely kill you.\nYour plan has failed but least you caused some chaos\nbefore it failed. Besides, you’ve grown tired\nwithout your brother around. But now\nyou’ll get to be with him soon enough.\nYou hear pounding on the door and you’re ready for them.\nYou’re done with this life anyways,\nnothing is holding you here anyways.\nThat was taken from you long ago.\n\nClick the retry button to reattempt your mission without getting caught\n this time");
-		//text.anchor.set(0.5);
 	},
 
 	// update, run the game loop =====================
 	update: function(){
 		game.sound.stopAll();
-		// load 'GamePlay' state when user pressed ENTER key
-		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-			game.state.start('Menu');
-		}
 	}
 }
 
@@ -786,16 +734,11 @@ GameOverB2.prototype = {
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
 		text = game.add.text(0, 0, "Bad ending, lost all men.");
-		//text.anchor.set(0.5);
 	},
 
 	// update, run the game loop =====================
 	update: function(){
 		game.sound.stopAll();
-		// load 'GamePlay' state when user pressed ENTER key
-		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-			game.state.start('Menu');
-		}
 	}
 }
 
@@ -845,7 +788,7 @@ function newQuest(){
 
 //player choice functions
 function acceptQuest(){
-	////makes sure the sound effect doesn't repeat 
+	//makes sure the sound effect doesn't repeat 
 	if(playedAccept == false){
 	acceptMusic.play('', 0, 1, false);
 	playedAccept = true;
@@ -860,7 +803,7 @@ function acceptQuest(){
 		//commoner accept quests
 		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 8 ){
 		commoner.frameName = "Peasant004";
-		//commoner spy accept quests
+		//commoner spy accept quests. something is wrong here. it's not decreasing properly
 		if(questCounter == 6){
 		comPoints -= commoner.negComPoints;
 		}
@@ -871,7 +814,7 @@ function acceptQuest(){
 		//noble accept quests
 		if(questCounter == 1 || questCounter == 5 || questCounter == 7 || questCounter == 9){
 			noble.frameName = "Noble004";
-			//noble spy accept quests
+			//noble spy accept quests. something is wrong here. it's not decreasing properly
 			if(questCounter == 3){
 			noblePoints -= noble.negNoblePts;
 			}
@@ -984,7 +927,6 @@ function killMessenger(){
 		lineDelay = 400;
 		//loads in the text to scroll
 		text = game.add.text(55, game.world.height - 100, '', {font: "23px Fira Sans", fill: "#eed7a1"});
-		//console.log(text);
 		nextLine();	
 		questCounter++;
 		if(questCounter != 10 && men != 0 && comPoints != 100 && noblePoints != 100 && suspicion != 100){
@@ -1048,5 +990,5 @@ function gotoTutorial(){
 function moveAssets(){
 	commoner.y = -500;
 	noble.y = -500;
-//	scroll.y = -500;
+	scroll.y = -500;
 }
