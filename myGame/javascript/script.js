@@ -116,6 +116,7 @@ Menu.prototype = {
 		game.load.image("btnTutorial", "btnTutorial.png");
 		game.load.image("btnPlayAgain", "btnPlayAgain.png");
 		game.load.image("btnNext", "btnNext.png");
+		game.load.image("btnBack", "btnBack.png");
 
 		//game.load.image("commoner", "commoner.png");
 		game.load.path = 'assets/audio/';
@@ -182,9 +183,9 @@ Tutorial.prototype = {
 	// update, run the game loop =====================
 	update: function(){
 		// load 'GamePlay' state when user pressed ENTER key
-		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-			game.state.start('GamePlay');
-		}
+		// if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+		// 	game.state.start('GamePlay');
+		// }
 	}
 }
 
@@ -365,6 +366,7 @@ Read.prototype = {
 		}
 		text = game.add.text(350,350,"Press DELETE/BACKSPACE to go back\n");
 		text.anchor.set(0.5);
+		game.add.button(590, 530, "btnBack", gotoGame, this);
 
 		this.text = game.add.text(32, 32, '', {font: "15px Arial", fill: "#19de65"});
 		nextLine();
