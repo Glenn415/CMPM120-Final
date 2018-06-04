@@ -1,6 +1,6 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO);
 //status variables
-var text; men = 20, moneyPoints = 100, suspicion = 10, comPoints = 25, noblePoints =10 , questCounter = 3;
+var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 0;
 var commoner, noble;
 var playedKill = false;
 var playedDecline = false;
@@ -263,7 +263,6 @@ GamePlay.prototype = {
 		scroll = new Item(game, 370, 400, 'obj', 'ReadScroll');
 		game.add.existing(scroll);
 		scroll.scale.set( .1, .1);
-		//scroll.body.setSize(700,500, 50, 32);
 		scroll.alpha = 0;
 		scroll.body.collideWorldBounds = false;
 		scrollAnimation = game.add.tween(scroll).to({y: 460, alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
@@ -275,16 +274,16 @@ GamePlay.prototype = {
 		commoner.scale.set(.9);
 		commoner.body.setSize(100, 270, 135, 120);
 		commoner.alpha = 0;
-		//character = game.add.tween(commoner).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
-		//character.chain(scrollAnimation);
+		character = game.add.tween(commoner).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
+		character.chain(scrollAnimation);
 
 		noble = new NPC(game, 400, 220,'npc', 0, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
 		game.physics.enable(noble, Phaser.Physics.ARCADE);
 		game.add.existing(noble);
 		noble.scale.set(.85);
 		noble.alpha = 0;
-		character = game.add.tween(noble).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
-		character.chain(scrollAnimation);
+		//character = game.add.tween(noble).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
+		//character.chain(scrollAnimation);
 
 		//create objects
 		knife = new Item(game, 200, 530, 'obj', 'Knife'); // (680, 530)
@@ -408,6 +407,7 @@ Read.prototype = {
 		playedKill = false;
 		playedDecline = false;
 		playedAccept = false;
+		//questStatus = false;
 	},
 
 	// update, run the game loop =====================
@@ -816,17 +816,17 @@ game.state.start("Menu");
 
 // Helper functions ============================================
 function newGame(){
-	men = 20;
-	moneyPoints = 100;
-	suspicion = 10; 
-	comPoints = 25; 
-	noblePoints = 10;
+	men = 10;
+	moneyPoints = 50;
+	suspicion = 0; 
+	comPoints = 0; 
+	noblePoints = 0;
 	questStatus = false;
 	wordIndex = 0;
 	lineIndex = 0;
 	wordDelay = 140;
 	lineDelay = 400;
-	questCounter = 3;
+	questCounter = 0;
 	playedKill = false;
 	playedDecline = false;
 	playedAccept = false;
