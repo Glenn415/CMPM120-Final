@@ -434,70 +434,70 @@ CutSceneAccept.prototype = {
 	update: function(){
 		//quest 1's
 		if(cutSceneTracker == false && questCounter == 1){
-			game.add.text(0,75,"TextA");
+			game.add.text(30,50,"TextA");
 			cutSceneTracker = true;
 			acceptScene = false;
 			men += 10;
 		}
 		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
-			game.add.text(0,75,"new TextA");
+			game.add.text(30,50,"new TextA");
 			cutSceneTracker = true;
 			acceptScene = false;
 			//add men
 		}
 		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
-			game.add.text(0,75,"Some more textA");
+			game.add.text(30,50,"Some more textA");
 			cutSceneTracker = true;
 			acceptScene = false;
 			//add men
 		}
 		//quest 4's.
 		if(cutSceneTracker == false && questCounter == 4){
-			game.add.text(0,75,"Some more textA");
+			game.add.text(30,50,"The guy smiles a bit too suspiciously for your taste\nbut you already accepted. No backing out now.\nStrangely enough the guy refuses to meet your eyes.\n ----\nYou later find out that the quest was a failure.\nRemember when you thought they seemed a bit\nsuspicious after you accepted their request? Yea, it’s\nbecause they were suspicious.You believe they were\nlikely a spy. You lost all the men you sent out as well,\nthe compensation was a lie and some commoners are now\nalso angry with you for taking the package. Apparently\nit never belonged to the damn spy in the first place.");
 			cutSceneTracker = true;
 			acceptScene = false;
 			//spy. no men are gained
 		}
 		//quest 5's.
 		if(cutSceneTracker == false && questCounter == 5){
-			game.add.text(0,75,"Some more textA");
+			game.add.text(30,50,"Some more textA");
 			cutSceneTracker = true;
 			acceptScene = false;
 			men += 15;
 		}
 		//quest 6's.
 		if(cutSceneTracker == false && questCounter == 6){
-			game.add.text(0,75,"Some more textA");
+			game.add.text(30,50,"Some more textA");
 			cutSceneTracker = true;
 			acceptScene = false;
 			//add men
 		}
 		//quest 7's.
 		if(cutSceneTracker == false && questCounter == 7){
-			game.add.text(0,75,"Some more textA");
+			game.add.text(30,50,"Some more textA");
 			cutSceneTracker = true;
 			acceptScene = false;
 			//spy. no men are gained
 		}
 		//quest 8's.
 		if(cutSceneTracker == false && questCounter == 8){
-			game.add.text(0,75,"Some more textA");
+			game.add.text(30,50,"Some more textA");
 			cutSceneTracker = true;
 			acceptScene = false;
 			//add men
 		} 
 		//quest 9's.
 		if(cutSceneTracker == false && questCounter == 9){
-			game.add.text(0,75,"Some more textA");
+			game.add.text(30,50,"Some more textA");
 			cutSceneTracker = true;
 			acceptScene = false;
 			men += 10;
 		}
 		//quest 10 shouldn't have a cutscene since the game will end.
 		if(cutSceneTracker == false && questCounter == 10){
-			game.add.text(0,75,"You really shouldn't be here. Something went wrong if you're here");
+			game.add.text(30,50,"You really shouldn't be here. Something went wrong if you're here");
 			cutSceneTracker = true;
 			acceptScene = false;
 		}
@@ -523,61 +523,61 @@ CutSceneDecline.prototype = {
 	update: function(){
 		//quest 1's.
 		if(cutSceneTracker == false && questCounter == 1){
-			game.add.text(0,75,"TextD");
+			game.add.text(30,50,"TextD");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
 		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
-			game.add.text(0,75,"new TextD");
+			game.add.text(30,50,"new TextD");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
 		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
-			game.add.text(0,75,"Some more textD");
+			game.add.text(30,50,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
 		//quest 4's.
 		if(cutSceneTracker == false && questCounter == 4){
-			game.add.text(0,75,"Some more textD");
+			game.add.text(30,50,"The guy storms out of the place and you shrug.\nSomething seemed fishy about him.\nMaybe it was the fidgetiness or maybe it was\nthe fact that they never looked you in the eye.\nYou’ll get more requests later anyways.\n-----\nYou find out later that some trouble was going on in\na nearby town to the one the noble came from...You suspect\nthe noble probably hired someone else to do the task.\nLooks like you’ll probably be cleaning up that mess.");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
 		//quest 5's.
 		if(cutSceneTracker == false && questCounter == 5){
-			game.add.text(0,75,"Some more textD");
+			game.add.text(30,50,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
 		//quest 6's.
 		if(cutSceneTracker == false && questCounter == 6){
-			game.add.text(0,75,"Some more textD");
+			game.add.text(30,50,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
 		//quest 7's.
 		if(cutSceneTracker == false && questCounter == 7){
-			game.add.text(0,75,"Some more textD");
+			game.add.text(30,50,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
 		//quest 8's.
 		if(cutSceneTracker == false && questCounter == 8){
-			game.add.text(0,75,"Some more textD");
+			game.add.text(30,50,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
 		} 
 		//quest 9's.
 		if(cutSceneTracker == false && questCounter == 9){
-			game.add.text(0,75,"Some more textD");
+			game.add.text(30,50,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
 		//quest 10 shouldn't have a cutscene since the game will end.
 		if(cutSceneTracker == false && questCounter == 10){
-			game.add.text(0,75,"You really shouldn't be here. Something went wrong if you're here");
+			game.add.text(30,50,"You really shouldn't be here. Something went wrong if you're here");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
@@ -603,61 +603,61 @@ CutSceneKill.prototype = {
 	update: function(){;
 		//quest 1's.
 		if(cutSceneTracker == false && questCounter == 1){
-			game.add.text(0,75,"Text");
+			game.add.text(30,50,"Text");
 			cutSceneTracker = true;
 			killScene = false;
 		}
 		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
-			game.add.text(0,75,"new Text");
+			game.add.text(30,50,"new Text");
 			cutSceneTracker = true;
 			killScene = false;
 		}
 		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
-			game.add.text(0,75,"Some more textK");
+			game.add.text(30,50,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
 		}
 		//quest 4's.
 		if(cutSceneTracker == false && questCounter == 4){
-			game.add.text(0,75,"Some more textK");
+			game.add.text(30,50,"You watch them die and realize you may have enjoyed that\na bit too much. Oh well. They were a noble, part of the\nreason you came into this kingdom. They indirectly had a\n hand inkidnapping and killing your brother. So they\nprobably deserved it. But god…the blood was getting\neverywhere. You’ll have to deal with that later. You dig\naround his pockets to find a piece of paper that seemed\nto have a plan scrawled on it. “So they were a spy after all”\nYou mutter. You’re even more thankful you killed them.\nAs for the blood…You do have men who could take care\nof the dead body. You’ll make them do it.");
 			cutSceneTracker = true;
 			killScene = false;
 		}
 		//quest 5's.
 		if(cutSceneTracker == false && questCounter == 5){
-			game.add.text(0,75,"Some more textK");
+			game.add.text(30,50,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
 		}
 		//quest 6's.
 		if(cutSceneTracker == false && questCounter == 6){
-			game.add.text(0,75,"Some more textK");
+			game.add.text(30,50,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
 		}
 		//quest 7's.
 		if(cutSceneTracker == false && questCounter == 7){
-			game.add.text(0,75,"Some more textK");
+			game.add.text(30,50,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
 		}
 		//quest 8's.
 		if(cutSceneTracker == false && questCounter == 8){
-			game.add.text(0,75,"Some more textK");
+			game.add.text(30,50,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
 		}
 		//quest 9's.
 		if(cutSceneTracker == false && questCounter == 9){
-			game.add.text(0,75,"Some more textK");
+			game.add.text(30,50,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
 		}
 		//quest 10 shouldn't have a cutscene since the game will end
 		if(cutSceneTracker == false && questCounter == 10){
-			game.add.text(0,75,"You really shouldn't be here. Something went wrong if you're here");
+			game.add.text(30,50,"You really shouldn't be here. Something went wrong if you're here");
 			cutSceneTracker = true;
 			killScene = false;
 		}
