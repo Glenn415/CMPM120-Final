@@ -265,7 +265,7 @@ GamePlay.prototype = {
 		game.add.existing(noble);
 		noble.scale.set(.85);
 		noble.alpha = 0;
-			if(questCounter == 0){
+			if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8){
 		character = game.add.tween(commoner).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
 		character.chain(scrollAnimation);
 		}else{
@@ -338,9 +338,9 @@ GamePlay.prototype = {
 		}else if(questCounter == 10){
 			game.state.start('GameOverN');
 		}
-		if(acceptScene == true){
-			game.state.start('CutSceneAccept');
-		}
+		//if(acceptScene == true){
+		//	game.state.start('CutSceneAccept');
+		//}
 		//if(declineScene == true){
 		//	game.state.start('CutSceneDecline');
 		//}
@@ -795,10 +795,12 @@ function acceptQuest(){
 	playedAccept = true;
 	}
 
+	//if (questStatus == true){
+	//	game.add.text(60,game.world.height-100,"don't forget to read the quest first.",{font: "23px Fira Sans", fill: "#eed7a1"});
+	//}
+	
 	//checks to see if you've already done an action, if you haven't, it checks which quest you're on and adds influence for the correct group,adds money and subtracts men for the given quest and displays correct person
-	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
-	// add correct values for accepting this quest!
+	
 	if (questStatus == false){
 		questStatus = true;
 		//commoner accept quests
@@ -810,7 +812,9 @@ function acceptQuest(){
 		}
 		comPoints += commoner.comPoints;
 		moneyPoints += commoner.moneyPoints;
-		men -= commoner.men;	
+		men -= commoner.men;
+	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);		
 		}
 		//noble accept quests
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
@@ -822,6 +826,8 @@ function acceptQuest(){
 			noblePoints +=  noble.noblePoints;
 			moneyPoints += noble.moneyPoints;
 			men -= noble.men
+			game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+			game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
 		}
 		printCP.text = comPoints;
 		printNP.text = noblePoints;
@@ -864,14 +870,14 @@ function declineQuest(){
 		commoner.frameName = "Peasant003";
 		comPoints -= commoner.negComPoints;	
 		game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-		game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
+		game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);		
 		}
 		//noble decline
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
 			noble.frameName = "Noble003";
 			noblePoints -= noble.negNoblePts;
 			game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-			game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
+			game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);		
 		}
 		printCP.text = comPoints;
 		printNP.text = noblePoints;
@@ -902,7 +908,6 @@ function killMessenger(){
 	killMusic.play('', 0, 1, false);
 	playedKill = true;
 	}
-	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 //checks to see if you've already done an action, if you haven't, it checks which quest you're on and adds suspicion and displays correct person
 	if (questStatus == false){
 		questStatus = true;
@@ -911,16 +916,16 @@ function killMessenger(){
 			commoner.frameName = "Peasant002";
 			suspicion += commoner.susp;
 			game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-			game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
-			game.time.events.add(6000, moveAssets, this);
+			game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);		
+			//game.time.events.add(6000, moveAssets, this);
 		}
 		//noble kill
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
 			noble.frameName = "Noble002";
 			suspicion += noble.susp;
-			game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-			game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
-			game.time.events.add(6000, moveAssets, this);
+			game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+			game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);		
+			//game.time.events.add(6000, moveAssets, this);
 		}
 		printSusp.text = suspicion;
 		story = commoner.kD;
