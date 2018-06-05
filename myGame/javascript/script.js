@@ -13,7 +13,7 @@ var killScene = false;
 var menArg = [5,0,0,5,4,0,7,0,5,0]; 
 var suspArg = [7,0,0,10,12,0,20,0,15,0]; 
 var comPtsArg = [10,0,0,0,15,0,0,0,30,0]; 
-var nobPtsArg = [0,0,0,0,0,0,0,0,0,0];
+var nobPtsArg = [0,2,0,0,0,0,0,0,0,0];
 var negNobPtsArg = [0,2,0,4,0,0,20,0,0,0]; 
 var negComPtsArg = [5,0,0,10,5,0,3,0,7,0]; 
 var moneyArg = [20,0,0,0,15,0,0,0,30,0];
@@ -887,6 +887,7 @@ function declineQuest(){
 		//noble decline
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
 			noble.frameName = "Noble003";
+			console.log(noble.negNoblePts);
 			noblePoints -= noble.negNoblePts;
 			game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 			game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);	
