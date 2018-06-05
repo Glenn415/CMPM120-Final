@@ -462,7 +462,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 5's.
 		if(cutSceneTracker == false && questCounter == 5){
-			game.add.text(30,50,"Some more textA");
+			game.add.text(30,50,"You see them smile happily as they leave. You sigh a bit\nin your seat and get ready to tell your men about this\nquest for them to do.\n-----\nMost of your men come back as well as some more.They\ntell you that they were so thankful that you got rid of their\nchimera problem that they came to join you. They also\n hand you a bag with some money. It was a pitiful amount\nbut you guess you shouldn’t expect much more from a\ngroup of commoners. Least you got more men into your\nguild. Easier to plot revenge with more men to send out.");
 			cutSceneTracker = true;
 			acceptScene = false;
 			men += 15;
@@ -547,7 +547,7 @@ CutSceneDecline.prototype = {
 		}
 		//quest 5's.
 		if(cutSceneTracker == false && questCounter == 5){
-			game.add.text(30,50,"Some more textD");
+			game.add.text(30,50,"You see them look away and slowly slink away. You feel\na slight twinge of pity for them before shrugging it\noff. You don’t have to fix every problem that comes to you.\n-------\nYou later find out the town’s people eventually got their\nroblem fixed. Their town is in shambles now because it took\nso long. You feel a bit guilty for saying no but hey, a\nchimera is not your problem to deal with. Besides,it ended\nwell anyways. So what if some commoners hold a bit of a\ngrudge against you right now. You’ll gladly watch their\nworld crumble later when you finish your mission.");
 			cutSceneTracker = true;
 			declineScene = false;
 		}
@@ -627,7 +627,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 5's.
 		if(cutSceneTracker == false && questCounter == 5){
-			game.add.text(30,50,"Some more textK");
+			game.add.text(30,50,"You stare at the dead body before you. Unfortunately for\nyou,blood is now everywhere and that’s always just a pain\nto clean up. You’ll have to come up with a better way to kill\npeople.The knife is effective but messy and something\ncleaner might be nicer. As you dispose of the body, some\npeople wonder what that loud scream was coming from\nyour place.They also notice you covered in what\nsuspiciously looks like blood. Most are smart enough not to confront\nyou about his as you are the leader of the mercenaries\nand nobody wants them on their bad sides. They still can’t\nhelp but be curious though.");
 			cutSceneTracker = true;
 			killScene = false;
 		}
