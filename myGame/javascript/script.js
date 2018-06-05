@@ -14,7 +14,7 @@ var menArg = [5,0,0,5,4,0,7,0,5,0];
 var suspArg = [7,0,0,10,12,0,20,0,15,0]; 
 var comPtsArg = [10,0,0,0,15,0,0,0,30,0]; 
 var nobPtsArg = [0,0,0,0,0,0,0,0,0,0];
-var negNobPtsArg = [0,0,0,0,0,0,20,0,0,0]; 
+var negNobPtsArg = [0,2,0,4,0,0,20,0,0,0]; 
 var negComPtsArg = [5,0,0,10,5,0,3,0,7,0]; 
 var moneyArg = [20,0,0,0,15,0,0,0,30,0];
 //================================
@@ -260,16 +260,18 @@ GamePlay.prototype = {
 		commoner.scale.set(.9);
 		commoner.body.setSize(100, 270, 135, 120);
 		commoner.alpha = 0;
-		character = game.add.tween(commoner).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
-		character.chain(scrollAnimation);
-
 		noble = new NPC(game, 400, 220,'npc', 0, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
 		game.physics.enable(noble, Phaser.Physics.ARCADE);
 		game.add.existing(noble);
 		noble.scale.set(.85);
 		noble.alpha = 0;
-		//character = game.add.tween(noble).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
-		//character.chain(scrollAnimation);
+			if(questCounter == 0){
+		character = game.add.tween(commoner).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
+		character.chain(scrollAnimation);
+		}else{
+		character = game.add.tween(noble).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
+		character.chain(scrollAnimation);	
+		}
 
 		//create objects
 		knife = new Item(game, 200, 530, 'obj', 'Knife'); // (680, 530)
@@ -302,7 +304,6 @@ GamePlay.prototype = {
 		game.physics.arcade.collide(knife, commoner, killMessenger, null, this);
 		game.physics.arcade.collide(stamp, scroll, acceptQuest, null, this);
 		game.physics.arcade.collide(candle, scroll, declineQuest, null, this);
-
 		//dimmed color if mouse isn't over it
 		if(knife.input.pointerOver()){
 			knife.alpha = 1;
@@ -337,9 +338,9 @@ GamePlay.prototype = {
 		}else if(questCounter == 10){
 			game.state.start('GameOverN');
 		}
-		//if(acceptScene == true){
-		//	game.state.start('CutSceneAccept');
-		//}
+		if(acceptScene == true){
+			game.state.start('CutSceneAccept');
+		}
 		//if(declineScene == true){
 		//	game.state.start('CutSceneDecline');
 		//}
@@ -801,7 +802,7 @@ function acceptQuest(){
 	if (questStatus == false){
 		questStatus = true;
 		//commoner accept quests
-		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 8 ){
+		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8 ){
 		commoner.frameName = "Peasant004";
 		//commoner spy accept quests. something is wrong here. it's not decreasing properly
 		if(questCounter == 6){
@@ -812,7 +813,7 @@ function acceptQuest(){
 		men -= commoner.men;	
 		}
 		//noble accept quests
-		if(questCounter == 1 || questCounter == 5 || questCounter == 7 || questCounter == 9){
+		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
 			noble.frameName = "Noble004";
 			//noble spy accept quests. something is wrong here. it's not decreasing properly
 			if(questCounter == 3){
@@ -856,19 +857,21 @@ function declineQuest(){
 	playedDecline = true;
 	}
 //checks to see if you've already done an action, if you haven't, it checks which quest you're on and subtracts influence from the correct group and displays correct person
-	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
 	if (questStatus == false){
 		questStatus = true;
 		//commoner decline
-		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 8 ){
+		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8 ){
 		commoner.frameName = "Peasant003";
 		comPoints -= commoner.negComPoints;	
+		game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+		game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
 		}
 		//noble decline
-		if(questCounter == 1 || questCounter == 5 || questCounter == 7 || questCounter == 9){
+		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
 			noble.frameName = "Noble003";
 			noblePoints -= noble.negNoblePts;
+			game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+			game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
 		}
 		printCP.text = comPoints;
 		printNP.text = noblePoints;
@@ -900,23 +903,24 @@ function killMessenger(){
 	playedKill = true;
 	}
 	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
-	game.time.events.add(6000, moveAssets, this);
 //checks to see if you've already done an action, if you haven't, it checks which quest you're on and adds suspicion and displays correct person
 	if (questStatus == false){
 		questStatus = true;
-		game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 		//commoner kill
-		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 8 ){
+		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8 ){
 			commoner.frameName = "Peasant002";
 			suspicion += commoner.susp;
-			//game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+			game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+			game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
+			game.time.events.add(6000, moveAssets, this);
 		}
 		//noble kill
-		if(questCounter == 1 || questCounter == 5 || questCounter == 7 || questCounter == 9){
+		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
 			noble.frameName = "Noble002";
 			suspicion += noble.susp;
-			//game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+			game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+			game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
+			game.time.events.add(6000, moveAssets, this);
 		}
 		printSusp.text = suspicion;
 		story = commoner.kD;
