@@ -78,7 +78,8 @@ var storyBase = [
 "We’ve raised a good amount of money to ask this of",
 "you! Please...We’re good people and we don’t want",
 "to die being live fodder. Please help us…."],
-["quest 10"]
+["quest 10"],
+["You're done. Please leave the scroll and await the transition to the end screen."]
 ]; //an array of strings for quest description
 var aD = [
 ["Oh thank you so much! I don’t really care if you kill them", 
@@ -330,23 +331,35 @@ GamePlay.prototype = {
 
 		// Game over conditions
 		if(comPoints >= 100 || noblePoints >=100){
-			game.state.start('GameOverG');
+			bgMusic.fadeOut(4500);
+		game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverG')});
 		}else if(suspicion >= 100) {
-			game.state.start('GameOverB1');
+			bgMusic.fadeOut(4500)
+		game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverB1')});
 		}else if(men <= 0){
-			game.state.start('GameOverB2');
+			bgMusic.fadeOut(4500)
+		game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverB2')});
 		}else if(questCounter == 10){
-			game.state.start('GameOverN');
+			bgMusic.fadeOut(4500);
+		game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverN')});
 		}
-		//if(acceptScene == true){
-		//	game.state.start('CutSceneAccept');
-		//}
-		//if(declineScene == true){
-		//	game.state.start('CutSceneDecline');
-		//}
-		//if(killScene == true){
-		//	game.state.start('CutSceneKill');
-		//}
+		
+		//cutscene conditions
+		if(acceptScene == true){
+			//taken from nathan's paddle pakour example
+			//start
+			bgMusic.fadeOut(4999)
+		game.time.events.add(Phaser.Timer.SECOND * 7, function() { game.state.start('CutSceneAccept')});
+		}
+		if(declineScene == true){
+			bgMusic.fadeOut(4999)
+		game.time.events.add(Phaser.Timer.SECOND * 7, function() { game.state.start('CutSceneDecline')});
+		}
+		if(killScene == true){
+			bgMusic.fadeOut(4999)
+		game.time.events.add(Phaser.Timer.SECOND * 7, function() { game.state.start('CutSceneKill')});
+		//end
+		}
 		haveRead = false;;
 	},
 
@@ -389,7 +402,6 @@ Read.prototype = {
 		playedKill = false;
 		playedDecline = false;
 		playedAccept = false;
-		//questStatus = false;
 	},
 
 	// update, run the game loop =====================
@@ -420,7 +432,6 @@ CutSceneAccept.prototype = {
 
 	//checks to see which accept cutscene to display depending on the the current questNumber
 	update: function(){
-		game.sound.stopAll();
 		//quest 1's
 		if(cutSceneTracker == false && questCounter == 1){
 			game.add.text(0,75,"TextA");
@@ -510,7 +521,6 @@ CutSceneDecline.prototype = {
 
 //checks to see which decline cutscene to display depending on the the current questNumber
 	update: function(){
-		game.sound.stopAll();
 		//quest 1's.
 		if(cutSceneTracker == false && questCounter == 1){
 			game.add.text(0,75,"TextD");
@@ -590,8 +600,7 @@ CutSceneKill.prototype = {
 	},
 
 	//checks to see which kill cutscene to display depending on the the current questNumber
-	update: function(){
-		game.sound.stopAll();
+	update: function(){;
 		//quest 1's.
 		if(cutSceneTracker == false && questCounter == 1){
 			game.add.text(0,75,"Text");
@@ -673,7 +682,7 @@ GameOverG.prototype = {
 
 	// update, run the game loop =====================
 	update: function(){
-		game.sound.stopAll();
+		
 	}
 }
 
@@ -695,7 +704,7 @@ GameOverN.prototype = {
 
 	// update, run the game loop =====================
 	update: function(){
-		game.sound.stopAll();
+		
 	}
 }
 //gameover state for if you have gotten 100% suspicion
@@ -716,7 +725,7 @@ GameOverB1.prototype = {
 
 	// update, run the game loop =====================
 	update: function(){
-		game.sound.stopAll();
+		
 	}
 }
 
@@ -739,7 +748,7 @@ GameOverB2.prototype = {
 
 	// update, run the game loop =====================
 	update: function(){
-		game.sound.stopAll();
+		
 	}
 }
 
@@ -806,28 +815,30 @@ function acceptQuest(){
 		//commoner accept quests
 		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8 ){
 		commoner.frameName = "Peasant004";
-		//commoner spy accept quests. something is wrong here. it's not decreasing properly
+		//commoner spy accept quests. 
 		if(questCounter == 6){
 		comPoints -= commoner.negComPoints;
 		}
 		comPoints += commoner.comPoints;
 		moneyPoints += commoner.moneyPoints;
 		men -= commoner.men;
-	game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-	game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);		
+		game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+		game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);	
+		game.time.events.add(5000, moveAssets, this);	
 		}
 		//noble accept quests
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
 			noble.frameName = "Noble004";
-			//noble spy accept quests. something is wrong here. it's not decreasing properly
+			//noble spy accept quests.
 			if(questCounter == 3){
 			noblePoints -= noble.negNoblePts;
 			}
 			noblePoints +=  noble.noblePoints;
 			moneyPoints += noble.moneyPoints;
 			men -= noble.men
-			game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-			game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);
+			game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+			game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);
+			game.time.events.add(5000, moveAssets, this);
 		}
 		printCP.text = comPoints;
 		printNP.text = noblePoints;
@@ -870,14 +881,16 @@ function declineQuest(){
 		commoner.frameName = "Peasant003";
 		comPoints -= commoner.negComPoints;	
 		game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-		game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);		
+		game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);	
+		game.time.events.add(5000, moveAssets, this);		
 		}
 		//noble decline
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
 			noble.frameName = "Noble003";
 			noblePoints -= noble.negNoblePts;
 			game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-			game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);		
+			game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);	
+			game.time.events.add(5000, moveAssets, this);			
 		}
 		printCP.text = comPoints;
 		printNP.text = noblePoints;
@@ -916,16 +929,16 @@ function killMessenger(){
 			commoner.frameName = "Peasant002";
 			suspicion += commoner.susp;
 			game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-			game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);		
-			//game.time.events.add(6000, moveAssets, this);
+			game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);		
+			game.time.events.add(5000, moveAssets, this);
 		}
 		//noble kill
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
 			noble.frameName = "Noble002";
 			suspicion += noble.susp;
-			game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-			game.add.tween(scroll).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true, 1000);		
-			//game.time.events.add(6000, moveAssets, this);
+			game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+			game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);		
+			game.time.events.add(5000, moveAssets, this);
 		}
 		printSusp.text = suspicion;
 		story = commoner.kD;
