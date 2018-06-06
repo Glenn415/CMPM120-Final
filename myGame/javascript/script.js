@@ -381,7 +381,7 @@ GamePlay.prototype = {
 	render: function(){
 	//	game.debug.bodyInfo(scroll, 32, 32);
 		game.debug.body(scroll);
-	//	game.debug.text("Over: " + scroll.input.pointerOver(), 32, 32);
+		game.debug.text("Over: " + scroll.input.pointerOver(), 32, 32);
 	//	game.debug.bodyInfo(commoner, 32, 32);
 		game.debug.body(commoner);
 	// game.debug.bodyInfo(noble, 32, 32);
@@ -827,13 +827,13 @@ function newNPC(){
 		// Pick a commer NPC
 		if (Math.random() <= .33) {
 			commoner.frameName = "Peasant001";
-			console.log("commoner 1");
+			console.log(commoner.frameName);
 		} else if (Math.random() <= .66) {
 			commoner.frameName = "Peasant005";
-			console.log("commoner 2");
+			console.log(commoner.frameName);
 		} else {
 			commoner.frameName = "Peasant009";
-			console.log("commoner 3");
+			console.log(commoner.frameName);
 		}
 
 	} else {
@@ -954,11 +954,11 @@ function declineQuest(){
 		questStatus = true;
 		//commoner decline
 		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8 ){
-		commoner.frameName = "Peasant003";
-		comPoints -= commoner.negComPoints;	
-		game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-		game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);	
-		game.time.events.add(5000, moveComOut, this);		
+			commoner.frameName = "Peasant003";
+			comPoints -= commoner.negComPoints;	
+			game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+			game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);	
+			game.time.events.add(5000, moveComOut, this);		
 		}
 		//noble decline
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
