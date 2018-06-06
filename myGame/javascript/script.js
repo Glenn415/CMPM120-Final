@@ -260,6 +260,7 @@ GamePlay.prototype = {
 
 		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8){
 			if (haveRead == false){
+				character = game.add.tween(commoner).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
 				scrollAnimation = game.add.tween(scroll).to({y: 460, alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
 				character.chain(scrollAnimation);
 			}else{
