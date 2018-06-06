@@ -164,6 +164,11 @@ Menu.prototype = {
 		game.load.audio('acceptMusic', ['stamp.wav']);
 		game.load.audio('declineMusic', ['candle.wav']);
 		game.load.audio('killMusic', ['knife.wav']);
+		game.load.audio('titleMusic', ['titleMusic.wav']);
+		game.load.audio('cutSceneMusic', ['cutsceneMusic.wav']);
+		game.load.audio('goodEndingMusic', ['goodEnding.wav']);
+		game.load.audio('neutralEndingMusic', ['neutralEnding.wav']);
+		game.load.audio('badEndingMusic', ['badEnding.wav']);
 	},
 
 	// place assets =========================================
