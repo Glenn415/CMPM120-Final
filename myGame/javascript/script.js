@@ -1,6 +1,6 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO);
 //status variables
-var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 8;
+var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 0;
 var commoner, noble;
 var playedKill = true;
 var playedDecline = true;
@@ -456,7 +456,7 @@ CutSceneAccept.prototype = {
 	update: function(){
 		//quest 1's
 		if(cutSceneTracker == false && questCounter == 1){
-			game.add.text(30,50,"TextA");
+			game.add.text(30,50," He smile brightly at you as they leave. You think about\nthe times you were that happy and you realize all of\nthem were from when your brother was alive. You sigh\nheavily and leave to find your men.\n----\nMost come back as well as few more. They were so excited\nthat you helped them that they came to join you. It’s still\nearly so you’ll need all the men you can get. So they join\nand pay you a pitiful amount in reward but it doesn’t matter.\nYou don’t need it anyways.");
 			cutSceneTracker = true;
 			acceptScene = false;
 			men += 10;
@@ -585,7 +585,7 @@ CutSceneDecline.prototype = {
 	update: function(){
 		//quest 1's.
 		if(cutSceneTracker == false && questCounter == 1){
-			game.add.text(30,50,"TextD");
+			game.add.text(30,50,"They shuffle a bit sadly out of the place and you shrug.\nWho said you had to help everyone? Besides, when you\nwere younger, your brother used to joke about the two of\nyou being pirates together. You sit in your chair and silently\nreminisce about the past.\n----\nYou find out that he eventually got some help. The town\nwas a bit destroyed but hey, it was fixed in the end. Some\nof the commoners were a bit miffed with you for not\nhelping but oh well. It’s still early.");
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
@@ -701,7 +701,7 @@ CutSceneKill.prototype = {
 	update: function(){;
 		//quest 1's.
 		if(cutSceneTracker == false && questCounter == 1){
-			game.add.text(30,50,"Text");
+			game.add.text(30,50,"As the person dies, you wonder how you’ll clean up all\nthis mess. You sigh and set the knife down. You’ll have\nto clean this all up later. But first, disposing of the body.\nAs you leave to get rid of the body, some people take\nnote of the blood on your clothes and the bloody bag\nyou’re carrying with you. Some whisper about not\ngetting close as they heard a loud scream come from\ninside your guild recently. People are slightly suspicious\nof something going on but are far too afraid to say\nanything about it.");
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
@@ -917,7 +917,7 @@ function newGame(){
 	lineIndex = 0;
 	wordDelay = 140;
 	lineDelay = 400;
-	questCounter = 8;
+	questCounter = 0;
 	playedKill = true;
 	playedDecline = true;
 	playedAccept = true;
