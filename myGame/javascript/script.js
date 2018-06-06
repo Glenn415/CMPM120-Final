@@ -2,13 +2,14 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO);
 //status variables
 var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 0;
 var commoner, noble;
-var playedKill = false;
-var playedDecline = false;
-var playedAccept = false;
+var playedKill = true;
+var playedDecline = true;
+var playedAccept = true;
 var cutSceneTracker = true;
 var acceptScene = false;
 var declineScene = false;
 var killScene = false;
+var questCheck = false;
 //====Below is a series of arrays holding input values for NPC object creation====
 var menArg = [5,0,0,5,4,0,7,0,5,0]; 
 var suspArg = [7,0,0,10,12,0,20,0,15,0]; 
@@ -139,7 +140,7 @@ var wordIndex = 0;
 var lineIndex = 0;
 var wordDelay = 140;
 var lineDelay = 400;
-var questStatus = false;
+var questStatus = true;
 var haveRead = false;
 
 // Main State ==================================================
@@ -385,12 +386,12 @@ GamePlay.prototype = {
 	// debugging method ===============================
 	render: function(){
 	//	game.debug.bodyInfo(scroll, 32, 32);
-		game.debug.body(scroll);
-		game.debug.text("Over: " + scroll.input.pointerOver(), 32, 32);
+	//	game.debug.body(scroll);
+	//	game.debug.text("Over: " + scroll.input.pointerOver(), 32, 32);
 	//	game.debug.bodyInfo(commoner, 32, 32);
-		game.debug.body(commoner);
+	//	game.debug.body(commoner);
 	// game.debug.bodyInfo(noble, 32, 32);
-	 game.debug.body(noble);
+	//  game.debug.body(noble);
 	}
 }
 
@@ -423,6 +424,7 @@ Read.prototype = {
 		playedKill = false;
 		playedDecline = false;
 		playedAccept = false;
+		questCheck = true;
 	},
 
 	// update, run the game loop =====================
@@ -458,6 +460,10 @@ CutSceneAccept.prototype = {
 			cutSceneTracker = true;
 			acceptScene = false;
 			men += 10;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
@@ -465,6 +471,10 @@ CutSceneAccept.prototype = {
 			cutSceneTracker = true;
 			acceptScene = false;
 			//add men
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
@@ -472,6 +482,10 @@ CutSceneAccept.prototype = {
 			cutSceneTracker = true;
 			acceptScene = false;
 			//add men
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 4's.
 		if(cutSceneTracker == false && questCounter == 4){
@@ -479,6 +493,10 @@ CutSceneAccept.prototype = {
 			cutSceneTracker = true;
 			acceptScene = false;
 			//spy. no men are gained
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 5's.
 		if(cutSceneTracker == false && questCounter == 5){
@@ -486,12 +504,20 @@ CutSceneAccept.prototype = {
 			cutSceneTracker = true;
 			acceptScene = false;
 			men += 15;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 6's.
 		if(cutSceneTracker == false && questCounter == 6){
 			game.add.text(30,50,"Some more textA");
 			cutSceneTracker = true;
 			acceptScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 			//add men
 		}
 		//quest 7's.
@@ -499,6 +525,10 @@ CutSceneAccept.prototype = {
 			game.add.text(30,50,"Some more textA");
 			cutSceneTracker = true;
 			acceptScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 			//spy. no men are gained
 		}
 		//quest 8's.
@@ -506,6 +536,10 @@ CutSceneAccept.prototype = {
 			game.add.text(30,50,"Some more textA");
 			cutSceneTracker = true;
 			acceptScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 			//add men
 		} 
 		//quest 9's.
@@ -514,12 +548,20 @@ CutSceneAccept.prototype = {
 			cutSceneTracker = true;
 			acceptScene = false;
 			men += 10;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 10 shouldn't have a cutscene since the game will end.
 		if(cutSceneTracker == false && questCounter == 10){
 			game.add.text(30,50,"You really shouldn't be here. Something went wrong if you're here");
 			cutSceneTracker = true;
 			acceptScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 	}
 }
@@ -546,6 +588,10 @@ CutSceneDecline.prototype = {
 			game.add.text(30,50,"TextD");
 			cutSceneTracker = true;
 			declineScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
@@ -558,48 +604,80 @@ CutSceneDecline.prototype = {
 			game.add.text(30,50,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 4's.
 		if(cutSceneTracker == false && questCounter == 4){
 			game.add.text(30,50,"The guy storms out of the place and you shrug.\nSomething seemed fishy about him.\nMaybe it was the fidgetiness or maybe it was\nthe fact that they never looked you in the eye.\nYou’ll get more requests later anyways.\n-----\nYou find out later that some trouble was going on in\na nearby town to the one the noble came from...You suspect\nthe noble probably hired someone else to do the task.\nLooks like you’ll probably be cleaning up that mess.");
 			cutSceneTracker = true;
 			declineScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 5's.
 		if(cutSceneTracker == false && questCounter == 5){
 			game.add.text(30,50,"You see them look away and slowly slink away. You feel\na slight twinge of pity for them before shrugging it\noff. You don’t have to fix every problem that comes to you.\n-------\nYou later find out the town’s people eventually got their\nroblem fixed. Their town is in shambles now because it took\nso long. You feel a bit guilty for saying no but hey, a\nchimera is not your problem to deal with. Besides,it ended\nwell anyways. So what if some commoners hold a bit of a\ngrudge against you right now. You’ll gladly watch their\nworld crumble later when you finish your mission.");
 			cutSceneTracker = true;
 			declineScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 6's.
 		if(cutSceneTracker == false && questCounter == 6){
 			game.add.text(30,50,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 7's.
 		if(cutSceneTracker == false && questCounter == 7){
 			game.add.text(30,50,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 8's.
 		if(cutSceneTracker == false && questCounter == 8){
 			game.add.text(30,50,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		} 
 		//quest 9's.
 		if(cutSceneTracker == false && questCounter == 9){
 			game.add.text(30,50,"Some more textD");
 			cutSceneTracker = true;
 			declineScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 10 shouldn't have a cutscene since the game will end.
 		if(cutSceneTracker == false && questCounter == 10){
 			game.add.text(30,50,"You really shouldn't be here. Something went wrong if you're here");
 			cutSceneTracker = true;
 			declineScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 	}
 }
@@ -626,60 +704,100 @@ CutSceneKill.prototype = {
 			game.add.text(30,50,"Text");
 			cutSceneTracker = true;
 			killScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
 			game.add.text(30,50,"new Text");
 			cutSceneTracker = true;
 			killScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
 			game.add.text(30,50,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 4's.
 		if(cutSceneTracker == false && questCounter == 4){
 			game.add.text(30,50,"You watch them die and realize you may have enjoyed that\na bit too much. Oh well. They were a noble, part of the\nreason you came into this kingdom. They indirectly had a\n hand inkidnapping and killing your brother. So they\nprobably deserved it. But god…the blood was getting\neverywhere. You’ll have to deal with that later. You dig\naround his pockets to find a piece of paper that seemed\nto have a plan scrawled on it. “So they were a spy after all”\nYou mutter. You’re even more thankful you killed them.\nAs for the blood…You do have men who could take care\nof the dead body. You’ll make them do it.");
 			cutSceneTracker = true;
 			killScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 5's.
 		if(cutSceneTracker == false && questCounter == 5){
 			game.add.text(30,50,"You stare at the dead body before you. Unfortunately for\nyou,blood is now everywhere and that’s always just a pain\nto clean up. You’ll have to come up with a better way to kill\npeople.The knife is effective but messy and something\ncleaner might be nicer. As you dispose of the body, some\npeople wonder what that loud scream was coming from\nyour place.They also notice you covered in what\nsuspiciously looks like blood. Most are smart enough not to confront\nyou about his as you are the leader of the mercenaries\nand nobody wants them on their bad sides. They still can’t\nhelp but be curious though.");
 			cutSceneTracker = true;
 			killScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 6's.
 		if(cutSceneTracker == false && questCounter == 6){
 			game.add.text(30,50,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 7's.
 		if(cutSceneTracker == false && questCounter == 7){
 			game.add.text(30,50,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 8's.
 		if(cutSceneTracker == false && questCounter == 8){
 			game.add.text(30,50,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 9's.
 		if(cutSceneTracker == false && questCounter == 9){
 			game.add.text(30,50,"Some more textK");
 			cutSceneTracker = true;
 			killScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 		//quest 10 shouldn't have a cutscene since the game will end
 		if(cutSceneTracker == false && questCounter == 10){
 			game.add.text(30,50,"You really shouldn't be here. Something went wrong if you're here");
 			cutSceneTracker = true;
 			killScene = false;
+			questCheck = false;
+			playedAccept = true;
+			playedKill = true;
+			playedDecline = true;
 		}
 	}
 }
@@ -794,19 +912,20 @@ function newGame(){
 	suspicion = 0; 
 	comPoints = 0; 
 	noblePoints = 0;
-	questStatus = false;
+	questStatus = true;
 	wordIndex = 0;
 	lineIndex = 0;
 	wordDelay = 140;
 	lineDelay = 400;
 	questCounter = 0;
-	playedKill = false;
-	playedDecline = false;
-	playedAccept = false;
+	playedKill = true;
+	playedDecline = true;
+	playedAccept = true;
 	cutSceneTracker = true;	
 	acceptScene = false;
 	declineScene = false;
 	killScene = false;
+	questCheck = false;
 }
 
 function newNPC(){
@@ -866,7 +985,13 @@ function acceptQuest(){
 	acceptMusic.play('', 0, 1, false);
 	playedAccept = true;
 	}
-
+	if(questCheck == false){
+		console.log(questCheck);
+	game.add.text(60,game.world.height-100,"don't forget to read the quest first.",{font: "23px Fira Sans", fill: "#eed7a1"});
+	}else{
+		console.log(questCheck);
+		game.add.text(0,0,' ');
+	}
 	//if (questStatus == true){
 	//	game.add.text(60,game.world.height-100,"don't forget to read the quest first.",{font: "23px Fira Sans", fill: "#eed7a1"});
 	//}
@@ -954,6 +1079,14 @@ function declineQuest(){
 	declineMusic.play('', 0, 1, false);
 	playedDecline = true;
 	}
+	
+	if(questCheck == false){
+		console.log(questCheck);
+	game.add.text(60,game.world.height-100,"don't forget to read the quest first.",{font: "23px Fira Sans", fill: "#eed7a1"});
+	}else{
+		console.log(questCheck);
+		game.add.text(0,0,' ');
+	}
 //checks to see if you've already done an action, if you haven't, it checks which quest you're on and subtracts influence from the correct group and displays correct person
 	if (questStatus == false){
 		questStatus = true;
@@ -1002,6 +1135,13 @@ function killMessenger(){
 	if(playedKill == false){
 	killMusic.play('', 0, 1, false);
 	playedKill = true;
+	}
+	if(questCheck == false){
+		console.log(questCheck);
+	game.add.text(60,game.world.height-100,"don't forget to read the quest first.",{font: "23px Fira Sans", fill: "#eed7a1"});
+	}else{
+		console.log(questCheck);
+		game.add.text(0,0,' ');
 	}
 //checks to see if you've already done an action, if you haven't, it checks which quest you're on and adds suspicion and displays correct person
 	if (questStatus == false){
