@@ -260,6 +260,7 @@ GamePlay.prototype = {
 
 		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8){
 			if (haveRead == false){
+				character = game.add.tween(commoner).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
 				scrollAnimation = game.add.tween(scroll).to({y: 460, alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
 				character.chain(scrollAnimation);
 			}else{
@@ -805,16 +806,18 @@ function newGame(){
 
 function newNPC(){
 	//NPC constructor parameters(game, x, y, key, frame, aD, dD, kD, noblePoints, comPoints, negNoblePts, negComPts, men, susp, money);
+	// Create commner object
 	commoner = new NPC(game, 400, -500,'npc', 19, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
 	game.add.existing(commoner);
 	commoner.scale.set(.9);
 	commoner.body.setSize(100, 270, 135, 120);
 	commoner.alpha = 0;
 
+	// Create noble object
 	noble = new NPC(game, 400, -500,'npc', 0, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
 	//game.physics.enable(noble, Phaser.Physics.ARCADE);
 	game.add.existing(noble);
-	noble.scale.set(.80);
+	noble.scale.set(.8);
 	noble.body.setSize(100, 400, 120, 80);
 	noble.alpha = 0;
 
