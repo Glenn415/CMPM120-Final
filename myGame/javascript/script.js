@@ -13,7 +13,7 @@ var killScene = false;
 var menArg = [5,0,0,5,4,0,7,0,5,0]; 
 var suspArg = [7,0,0,10,12,0,20,0,15,0]; 
 var comPtsArg = [10,0,0,0,15,0,0,0,30,0]; 
-var nobPtsArg = [0,2,0,0,0,0,0,0,0,0];
+var nobPtsArg = [0,0,0,0,0,0,0,0,0,0];
 var negNobPtsArg = [0,2,0,4,0,0,20,0,0,0]; 
 var negComPtsArg = [5,0,0,10,5,0,3,0,7,0]; 
 var moneyArg = [20,0,0,0,15,0,0,0,30,0];
@@ -87,11 +87,13 @@ var aD = [
 ["quest 2"],
 ["quest 3"],
 ["Excellent!",
-"I greatly look forward to your success."],
+"I greatly look forward to your success.",
+"Thank you so very much for dealing with these commoners"],
 ["“Oh thanks so much!",
 "This means so much that you’ll help us calm it down."],
 ["quest 6"],
-["Oh thank you so much!"],
+["Oh thank you so much!",
+"These pesky merchants will finally get what they deserve"],
 ["quest 8"],
 ["Oh-Oh thank you kind sir!",
 "I knew your reputation wouldn’t fail us!",
@@ -297,7 +299,6 @@ GamePlay.prototype = {
 		printSusp = game.add.text(715, 140, suspicion);
 
 		game.input.mouse.capture = true;
-
 	},
 
 	// update, run the game loop =====================
@@ -323,7 +324,6 @@ GamePlay.prototype = {
 		}else{
 			candle.alpha = 0.5;
 		}
-
 		//if moused over scroll and click left button, go to READ state
 		if(game.input.activePointer.leftButton.isDown && scroll.input.pointerOver()){
 			game.state.start('Read');
@@ -331,32 +331,35 @@ GamePlay.prototype = {
 
 		// Game over conditions
 		if(comPoints >= 100 || noblePoints >=100){
+			//taken from nathan's paddle parkour example
+			//start
 			bgMusic.fadeOut(4500);
 		game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverG')});
 		}else if(suspicion >= 100) {
-			bgMusic.fadeOut(4500)
+			bgMusic.fadeOut(4999)
 		game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverB1')});
 		}else if(men <= 0){
-			bgMusic.fadeOut(4500)
+			bgMusic.fadeOut(4999)
 		game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverB2')});
 		}else if(questCounter == 10){
-			bgMusic.fadeOut(4500);
+			bgMusic.fadeOut(4999);
 		game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverN')});
+		//end
 		}
 		
 		//cutscene conditions
 		if(acceptScene == true){
-			//taken from nathan's paddle pakour example
+			//taken from nathan's paddle parkour example
 			//start
 			bgMusic.fadeOut(4999)
 		game.time.events.add(Phaser.Timer.SECOND * 7, function() { game.state.start('CutSceneAccept')});
 		}
 		if(declineScene == true){
-			bgMusic.fadeOut(4999)
+			bgMusic.fadeOut(6999)
 		game.time.events.add(Phaser.Timer.SECOND * 7, function() { game.state.start('CutSceneDecline')});
 		}
 		if(killScene == true){
-			bgMusic.fadeOut(4999)
+			bgMusic.fadeOut(6999)
 		game.time.events.add(Phaser.Timer.SECOND * 7, function() { game.state.start('CutSceneKill')});
 		//end
 		}
@@ -365,11 +368,11 @@ GamePlay.prototype = {
 
 	// debugging method ===============================
 	render: function(){
-		//game.debug.bodyInfo(scroll, 32, 32);
-		//game.debug.body(scroll);
-		//game.debug.text("Over: " + scroll.input.pointerOver(), 32, 32);
-		//game.debug.bodyInfo(commoner, 32, 32);
-		//game.debug.body(commoner);
+	//	game.debug.bodyInfo(scroll, 32, 32);
+	//	game.debug.body(scroll);
+	//	game.debug.text("Over: " + scroll.input.pointerOver(), 32, 32);
+	//	game.debug.bodyInfo(commoner, 32, 32);
+	//	game.debug.body(commoner);
 	}
 }
 
@@ -815,9 +818,9 @@ function acceptQuest(){
 		//commoner accept quests
 		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8 ){
 		commoner.frameName = "Peasant004";
-		//commoner spy accept quests. 
+		//commoner spy accept quests. Noble influence goes down because commoner spy wanted to cause problems for the nobles
 		if(questCounter == 6){
-		comPoints -= commoner.negComPoints;
+			noblePoints -= noble.negNoblePts;
 		}
 		comPoints += commoner.comPoints;
 		moneyPoints += commoner.moneyPoints;
@@ -829,9 +832,9 @@ function acceptQuest(){
 		//noble accept quests
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
 			noble.frameName = "Noble004";
-			//noble spy accept quests.
+			//noble spy accept quests. Commoner influence goes down because noble spy wanted to cause problems for the commoners
 			if(questCounter == 3){
-			noblePoints -= noble.negNoblePts;
+			comPoints -= commoner.negComPoints;
 			}
 			noblePoints +=  noble.noblePoints;
 			moneyPoints += noble.moneyPoints;
@@ -887,7 +890,6 @@ function declineQuest(){
 		//noble decline
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
 			noble.frameName = "Noble003";
-			console.log(noble.negNoblePts);
 			noblePoints -= noble.negNoblePts;
 			game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 			game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);	
