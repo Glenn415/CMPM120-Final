@@ -343,13 +343,13 @@ GamePlay.prototype = {
 			bgMusic.fadeOut(4500);
 		game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverG')});
 		}else if(suspicion >= 100) {
-			bgMusic.fadeOut(4999)
+			bgMusic.fadeOut(4500)
 		game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverB1')});
 		}else if(men <= 0){
-			bgMusic.fadeOut(4999)
+			bgMusic.fadeOut(4500)
 		game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverB2')});
 		}else if(questCounter == 10){
-			bgMusic.fadeOut(4999);
+			bgMusic.fadeOut(4500);
 		game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverN')});
 		//end
 		}
@@ -362,11 +362,11 @@ GamePlay.prototype = {
 		game.time.events.add(Phaser.Timer.SECOND * 7, function() { game.state.start('CutSceneAccept')});
 		}
 		if(declineScene == true){
-			bgMusic.fadeOut(6999)
+			bgMusic.fadeOut(4999)
 		game.time.events.add(Phaser.Timer.SECOND * 7, function() { game.state.start('CutSceneDecline')});
 		}
 		if(killScene == true){
-			bgMusic.fadeOut(6999)
+			bgMusic.fadeOut(4999)
 		game.time.events.add(Phaser.Timer.SECOND * 7, function() { game.state.start('CutSceneKill')});
 		//end
 		}
