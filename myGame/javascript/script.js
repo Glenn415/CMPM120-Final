@@ -258,22 +258,27 @@ GamePlay.prototype = {
 
 		//create npc depending on questNumber
 		//NPC constructor parameters(game, x, y, key, frame, aD, dD, kD, noblePoints, comPoints, negNoblePts, negComPts, men, susp, money);
-		commoner = new NPC(game, 400, 240,'npc', 4, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
+		commoner = new NPC(game, 400, -500,'npc', 19, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
 		game.add.existing(commoner);
 		commoner.scale.set(.9);
 		commoner.body.setSize(100, 270, 135, 120);
 		commoner.alpha = 0;
-		noble = new NPC(game, 400, 220,'npc', 0, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
-		game.physics.enable(noble, Phaser.Physics.ARCADE);
+
+		noble = new NPC(game, 400, -500,'npc', 0, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
+		//game.physics.enable(noble, Phaser.Physics.ARCADE);
 		game.add.existing(noble);
-		noble.scale.set(.85);
+		noble.scale.set(.80);
+		noble.body.setSize(100, 400, 120, 80);
 		noble.alpha = 0;
-			if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8){
-		character = game.add.tween(commoner).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
-		character.chain(scrollAnimation);
+
+		newNPC();
+
+		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8){
+			character = game.add.tween(commoner).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
+			character.chain(scrollAnimation);
 		}else{
-		character = game.add.tween(noble).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
-		character.chain(scrollAnimation);	
+			character = game.add.tween(noble).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
+			character.chain(scrollAnimation);	
 		}
 		//create objects
 		knife = new Item(game, 200, 530, 'obj', 'Knife'); // (680, 530)
@@ -303,6 +308,7 @@ GamePlay.prototype = {
 	// update, run the game loop =====================
 	update: function(){
 		game.physics.arcade.collide(knife, commoner, killMessenger, null, this);
+		game.physics.arcade.collide(knife, noble, killMessenger, null, this);
 		game.physics.arcade.collide(stamp, scroll, acceptQuest, null, this);
 		game.physics.arcade.collide(candle, scroll, declineQuest, null, this);
 		
@@ -334,7 +340,6 @@ GamePlay.prototype = {
 		if(game.input.activePointer.leftButton.isDown && scroll.input.pointerOver()){
 			game.state.start('Read');
 		}
-//end
 		
 		// Game over conditions
 		if(comPoints >= 100 || noblePoints >=100){
@@ -376,10 +381,12 @@ GamePlay.prototype = {
 	// debugging method ===============================
 	render: function(){
 	//	game.debug.bodyInfo(scroll, 32, 32);
-	//	game.debug.body(scroll);
+		game.debug.body(scroll);
 	//	game.debug.text("Over: " + scroll.input.pointerOver(), 32, 32);
 	//	game.debug.bodyInfo(commoner, 32, 32);
-	//	game.debug.body(commoner);
+		game.debug.body(commoner);
+	// game.debug.bodyInfo(noble, 32, 32);
+	 game.debug.body(noble);
 	}
 }
 
@@ -799,11 +806,37 @@ function newGame(){
 	killScene = false;
 }
 
-function newQuest(){
-	questStatus = false;
-	// if(questCounter % 2 == 0){
+function newNPC(){
+	if(questCounter%2 == 0){
+		moveComIn();
+		moveNobleOut();
+		// Pick a commer NPC
+		if (Math.random() <= .33) {
+			commoner.frameName = "Peasant001";
+			console.log("commoner 1");
+		} else if (Math.random() <= .66) {
+			commoner.frameName = "Peasant005";
+			console.log("commoner 2");
+		} else {
+			commoner.frameName = "Peasant009";
+			console.log("commoner 3");
+		}
 
-	// }
+	} else {
+		moveNobleIn();
+		moveComOut();
+		// Pick a noble NPC
+		if (Math.random() <= .33) {
+			noble.frameName = "Noble001";
+			console.log("noble 1");
+		} else if (Math.random() <= .66) {
+			noble.frameName = "Noble005";
+			console.log("noble 2");
+		} else {
+			noble.frameName = "Noble009";
+			console.log("noble 3");
+		}
+	}
 }
 
 //player choice functions
@@ -822,48 +855,63 @@ function acceptQuest(){
 	
 	if (questStatus == false){
 		questStatus = true;
+
 		//commoner accept quests
-		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8 ){
-		commoner.frameName = "Peasant004";
-		//commoner spy accept quests. Noble influence goes down because commoner spy wanted to cause problems for the nobles
-		if(questCounter == 6){
-			noblePoints -= noble.negNoblePts;
+		if (questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8 ){
+			if (commoner.frameName = "Peasant001"){
+				commoner.frameName = "Peasant004";
+				console.log("should be com 1");
+			} else if (commoner.frameName = "Peasant005"){
+				commoner.frameName = "Peasant008";
+				console.log("should be com 2");
+			} else {
+				commoner.frameName = "Peasant012";
+				console.log("should be com 3");
+			}
+			//commoner spy accept quests. Noble influence goes down because commoner spy wanted to cause problems for the nobles
+			if(questCounter == 6){
+				noblePoints -= noble.negNoblePts;
+			}
+			comPoints += commoner.comPoints;
+			moneyPoints += commoner.moneyPoints;
+			men -= commoner.men;
+			game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
+			game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);	
+			game.time.events.add(5000, moveComOut, this);	
 		}
-		comPoints += commoner.comPoints;
-		moneyPoints += commoner.moneyPoints;
-		men -= commoner.men;
-		game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
-		game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);	
-		game.time.events.add(5000, moveAssets, this);	
-		}
+
 		//noble accept quests
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
 			noble.frameName = "Noble004";
 			//noble spy accept quests. Commoner influence goes down because noble spy wanted to cause problems for the commoners
 			if(questCounter == 3){
-			comPoints -= commoner.negComPoints;
+				comPoints -= commoner.negComPoints;
 			}
 			noblePoints +=  noble.noblePoints;
 			moneyPoints += noble.moneyPoints;
 			men -= noble.men
 			game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 			game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);
-			game.time.events.add(5000, moveAssets, this);
+			game.time.events.add(5000, moveNobleOut, this);
 		}
+
 		printCP.text = comPoints;
 		printNP.text = noblePoints;
 		printMoney.text = moneyPoints;
 		printMen.text = men;
 		story = commoner.aD;
+
 		//makes sure THE GAME DOESN'T BREAK AFTER READING THE QUEST
 		wordIndex = 0;
-	lineIndex = 0;
-	wordDelay = 140;
-	lineDelay = 400;
-	//loads in the text to scroll
+		lineIndex = 0;
+		wordDelay = 140;
+		lineDelay = 400;
+
+		//loads in the text to scroll
 		text = game.add.text(50, game.world.height - 100, '', {font: "23px Fira Sans", fill: "#eed7a1"});
 		nextLine();
 		questCounter++;
+
 		//checks to see if any end conditions have been met, if they have not then the next cutscene will be shown
 		if(questCounter != 10 && men != 0 && comPoints != 100 && noblePoints != 100 && suspicion != 100){
 			cutSceneTracker = false;
@@ -875,7 +923,9 @@ function acceptQuest(){
 			acceptScene = false;
 		}
 	}
+
 }
+
 //holds everything for declining any quest
 function declineQuest(){
 	//makes sure the sound effect doesn't repeat 
@@ -892,7 +942,7 @@ function declineQuest(){
 		comPoints -= commoner.negComPoints;	
 		game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 		game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);	
-		game.time.events.add(5000, moveAssets, this);		
+		game.time.events.add(5000, moveComOut, this);		
 		}
 		//noble decline
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
@@ -900,7 +950,7 @@ function declineQuest(){
 			noblePoints -= noble.negNoblePts;
 			game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 			game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);	
-			game.time.events.add(5000, moveAssets, this);			
+			game.time.events.add(5000, moveNobleOut, this);			
 		}
 		printCP.text = comPoints;
 		printNP.text = noblePoints;
@@ -940,7 +990,7 @@ function killMessenger(){
 			suspicion += commoner.susp;
 			game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 			game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);		
-			game.time.events.add(5000, moveAssets, this);
+			game.time.events.add(5000, moveComOut, this);
 		}
 		//noble kill
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
@@ -948,7 +998,7 @@ function killMessenger(){
 			suspicion += noble.susp;
 			game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 			game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);		
-			game.time.events.add(5000, moveAssets, this);
+			game.time.events.add(5000, moveNobleOut, this);
 		}
 		printSusp.text = suspicion;
 		story = commoner.kD;
@@ -1002,25 +1052,49 @@ function nextWord() {
 
 	}
 }
-//end
+
+// Helper function for game button to go to GamePlay state
 function gotoGame(){
 	game.state.start('GamePlay');
 }
 
+// Helper function for game button to go to Menu state
 function gotoMenu(){
 	game.state.start('Menu');
 }
 
+// Helper function for game button to go to Prologue state
 function gotoPrologue(){
 	game.state.start('Prologue');
 }
 
+// Helper function for game button to go to Tutorial state
 function gotoTutorial(){
 	game.state.start('Tutorial');	
 }
 
-function moveAssets(){
+// Moves the commoner NPC out of the screen
+function moveComOut(){
 	commoner.y = -500;
+	scroll.y = -500;
+}
+
+// Moves the commoner NPC into of the screen
+function moveComIn(){
+	commoner.y = 240;
+	scroll.y = 400;
+}
+
+// Moves the noble NPC out of the screen
+function moveNobleOut(){
 	noble.y = -500;
 	scroll.y = -500;
 }
+
+// Moves the noble NPC into of the screen
+function moveNobleIn(){
+	noble.y = 240;
+	scroll.y = 400;
+}
+
+
