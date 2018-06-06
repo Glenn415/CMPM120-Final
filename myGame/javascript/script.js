@@ -1,6 +1,6 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO);
 //status variables
-var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 0;
+var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 8;
 var commoner, noble;
 var playedKill = true;
 var playedDecline = true;
@@ -522,7 +522,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 7's.
 		if(cutSceneTracker == false && questCounter == 7){
-			game.add.text(30,50,"Some more textA");
+			game.add.text(30,50,"The man grinned a bit too widely for your liking. You realize\nthe more you stare at them, the more that something seems\noff about them. You don’t know why but something is\ndefinitely off. But maybe you’re looking too much into it.\n-----\nYou later find out that the quest was a horrible failure.\nRemember when you thought something was off about\nthem? You were right to think that but you realize it too late\nTurns out they were a spy and all they wanted was to\ncause some chaos and ruin your reputation. Well it\nworked.The nobles are now pissed at you for messing\nwith their stuff. All the men you sent out all got arrested.\nAnd remember that reward they promised? Well that\nwas a lie too.");
 			cutSceneTracker = true;
 			acceptScene = false;
 			questCheck = false;
@@ -544,7 +544,7 @@ CutSceneAccept.prototype = {
 		} 
 		//quest 9's.
 		if(cutSceneTracker == false && questCounter == 9){
-			game.add.text(30,50,"Some more textA");
+			game.add.text(30,50,"The man smiles widely and looked about ready to\nhug you but, luckily for you,he doesn’t actually do it.\n---\nSome of your men come back but several others also come\nback. You’re told that they’re so thankful to not be cannon\nfodder that they’re hoping to join the guild. You could\nalways use some more men to help continue your plan. So\nyou let them join. They also paid you a decent amount for\nwhat commoners could pay. That’s always nice.");
 			cutSceneTracker = true;
 			acceptScene = false;
 			men += 10;
@@ -641,7 +641,7 @@ CutSceneDecline.prototype = {
 		}
 		//quest 7's.
 		if(cutSceneTracker == false && questCounter == 7){
-			game.add.text(30,50,"Some more textD");
+			game.add.text(30,50,"The man looked rather pitifully at you but you feel no\nremorse for them. You don’t have to take it if you don’t want\nto. Besides… Something seems off about him. You don’t\nlike it so you send them on their way.\n----\nYou find out later that same commoner is now dead.\nApparently they were a spy and when he tried to do the task\nhimself,a merchant had killed him. A couple commoners\nbeing unhappy with you for letting him die is nothing\ncompared to the trouble accepting the quest would\nhave brought.");
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
@@ -661,7 +661,7 @@ CutSceneDecline.prototype = {
 		} 
 		//quest 9's.
 		if(cutSceneTracker == false && questCounter == 9){
-			game.add.text(30,50,"Some more textD");
+			game.add.text(30,50,"The man looks incredibly pitiful at you before leaving. You\nfeel slightly bad afterwards but...war always demands\nsacrifice. In one way or another, it’ll always take it.\n----\nYou find out later that most of those commoners are now\ndead or severely injured. The commoners are rather angry\nwith you for allowing this to happen. In times like these, you\nthink about your brother and he ended up in a similar\nposition. You miss him greatly...");
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
@@ -761,7 +761,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 7's.
 		if(cutSceneTracker == false && questCounter == 7){
-			game.add.text(30,50,"Some more textK");
+			game.add.text(30,50,"You watch them squirm a bit with the blood pouring out. It\namuses you slightly to watch them like this. You realize\nthis probably makes you a sadist but honestly,\nyou really don’t care. Everyone here silently,inadvertently\nhad a hand in kidnapping and killing of your brother.\nYou don’t care for these people. So watching them squirm\nwhen they die is considered a bit fun to you. Once they’re\ndead you tell your men to clean up the blood and go to get\nrid of the body.Some people look at you suspiciously\nas the bag you’re carrying is a bit blood soaked but\nnobody approaches you. You leave to finish getting rid of\nthis pesky body. You find out later that they were a spy.");
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
@@ -781,7 +781,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 9's.
 		if(cutSceneTracker == false && questCounter == 9){
-			game.add.text(30,50,"Some more textK");
+			game.add.text(30,50,"As he said this, you felt a rush of rage come over you. How\ndare he say that. Those same nobles killed your brother\nand pushed you to become who you are now. You remind\nyourself that they are, however indirectly, related to what\nhappened to him and now you’re feeling quite indifferent,\nand maybe a little sadistic, about this group of commoners\nabout to be used as live fodder. Oh well. They’re going to\ndie anyways in one way or another. You look down at the\nmess you made and leave the room to have your men go\nand clean the mess up.");
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
@@ -917,7 +917,7 @@ function newGame(){
 	lineIndex = 0;
 	wordDelay = 140;
 	lineDelay = 400;
-	questCounter = 0;
+	questCounter = 8;
 	playedKill = true;
 	playedDecline = true;
 	playedAccept = true;
@@ -992,9 +992,6 @@ function acceptQuest(){
 		console.log(questCheck);
 		game.add.text(0,0,' ');
 	}
-	//if (questStatus == true){
-	//	game.add.text(60,game.world.height-100,"don't forget to read the quest first.",{font: "23px Fira Sans", fill: "#eed7a1"});
-	//}
 	
 	//checks to see if you've already done an action, if you haven't, it checks which quest you're on and adds influence for the correct group,adds money and subtracts men for the given quest and displays correct person
 	
