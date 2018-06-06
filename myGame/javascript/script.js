@@ -139,7 +139,6 @@ var wordIndex = 0;
 var lineIndex = 0;
 var wordDelay = 140;
 var lineDelay = 400;
-//end
 var questStatus = false;
 var haveRead = false;
 
@@ -254,32 +253,32 @@ GamePlay.prototype = {
 		scroll.scale.set( .1, .1);
 		scroll.alpha = 0;
 		scroll.body.collideWorldBounds = false;
-		scrollAnimation = game.add.tween(scroll).to({y: 460, alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
+		
 
 		//create npc depending on questNumber
-		//NPC constructor parameters(game, x, y, key, frame, aD, dD, kD, noblePoints, comPoints, negNoblePts, negComPts, men, susp, money);
-		commoner = new NPC(game, 400, -500,'npc', 19, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
-		game.add.existing(commoner);
-		commoner.scale.set(.9);
-		commoner.body.setSize(100, 270, 135, 120);
-		commoner.alpha = 0;
-
-		noble = new NPC(game, 400, -500,'npc', 0, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
-		//game.physics.enable(noble, Phaser.Physics.ARCADE);
-		game.add.existing(noble);
-		noble.scale.set(.80);
-		noble.body.setSize(100, 400, 120, 80);
-		noble.alpha = 0;
-
 		newNPC();
 
 		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8){
-			character = game.add.tween(commoner).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
-			character.chain(scrollAnimation);
+			if (haveRead == false){
+				scrollAnimation = game.add.tween(scroll).to({y: 460, alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
+				character.chain(scrollAnimation);
+			}else{
+				commoner.alpha = 1;
+				scroll.alpha = 1;
+				scroll.y = 460;
+			}
 		}else{
-			character = game.add.tween(noble).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
-			character.chain(scrollAnimation);	
+			if (haveRead == false){
+				character = game.add.tween(noble).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
+				scrollAnimation = game.add.tween(scroll).to({y: 460, alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
+				character.chain(scrollAnimation);	
+			}else{
+				noble.alpha = 1;
+				scroll.alpha = 1;
+				scroll.y = 460;
+			}
 		}
+
 		//create objects
 		knife = new Item(game, 200, 530, 'obj', 'Knife'); // (680, 530)
 		game.add.existing(knife);	
@@ -346,16 +345,16 @@ GamePlay.prototype = {
 			//taken from nathan's paddle parkour example
 			//start
 			bgMusic.fadeOut(4500);
-		game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverG')});
+			game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverG')});
 		}else if(suspicion >= 100) {
 			bgMusic.fadeOut(4500)
-		game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverB1')});
+			game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverB1')});
 		}else if(men <= 0){
 			bgMusic.fadeOut(4500)
-		game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverB2')});
+			game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverB2')});
 		}else if(questCounter == 10){
 			bgMusic.fadeOut(4500);
-		game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverN')});
+			game.time.events.add(Phaser.Timer.SECOND * 5, function() { game.state.start('GameOverN')});
 		//end
 		}
 		
@@ -364,18 +363,17 @@ GamePlay.prototype = {
 			//taken from nathan's paddle parkour example
 			//start
 			bgMusic.fadeOut(4999)
-		game.time.events.add(Phaser.Timer.SECOND * 7, function() { game.state.start('CutSceneAccept')});
+			game.time.events.add(Phaser.Timer.SECOND * 7, function() { game.state.start('CutSceneAccept')});
 		}
 		if(declineScene == true){
 			bgMusic.fadeOut(4999)
-		game.time.events.add(Phaser.Timer.SECOND * 7, function() { game.state.start('CutSceneDecline')});
+			game.time.events.add(Phaser.Timer.SECOND * 7, function() { game.state.start('CutSceneDecline')});
 		}
 		if(killScene == true){
 			bgMusic.fadeOut(4999)
-		game.time.events.add(Phaser.Timer.SECOND * 7, function() { game.state.start('CutSceneKill')});
+			game.time.events.add(Phaser.Timer.SECOND * 7, function() { game.state.start('CutSceneKill')});
 		//end
 		}
-		haveRead = false;;
 	},
 
 	// debugging method ===============================
@@ -423,7 +421,6 @@ Read.prototype = {
 
 	// update, run the game loop =====================
 	update: function(){
-		//haveRead = true;
 		game.sound.stopAll();
 		// load 'GamePlay' state when user pressed DELETE key
 		if(game.input.keyboard.isDown(Phaser.Keyboard.BACKSPACE)) {
@@ -807,6 +804,20 @@ function newGame(){
 }
 
 function newNPC(){
+	//NPC constructor parameters(game, x, y, key, frame, aD, dD, kD, noblePoints, comPoints, negNoblePts, negComPts, men, susp, money);
+	commoner = new NPC(game, 400, -500,'npc', 19, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
+	game.add.existing(commoner);
+	commoner.scale.set(.9);
+	commoner.body.setSize(100, 270, 135, 120);
+	commoner.alpha = 0;
+
+	noble = new NPC(game, 400, -500,'npc', 0, aD[questCounter], dD[questCounter], kD[questCounter], nobPtsArg[questCounter], comPtsArg[questCounter], negNobPtsArg[questCounter], negComPtsArg[questCounter], menArg[questCounter], suspArg[questCounter], moneyArg[questCounter]);
+	//game.physics.enable(noble, Phaser.Physics.ARCADE);
+	game.add.existing(noble);
+	noble.scale.set(.80);
+	noble.body.setSize(100, 400, 120, 80);
+	noble.alpha = 0;
+
 	if(questCounter%2 == 0){
 		moveComIn();
 		moveNobleOut();
@@ -841,6 +852,7 @@ function newNPC(){
 
 //player choice functions
 function acceptQuest(){
+	haveRead = false;
 	//makes sure the sound effect doesn't repeat 
 	if(playedAccept == false){
 	acceptMusic.play('', 0, 1, false);
@@ -928,6 +940,7 @@ function acceptQuest(){
 
 //holds everything for declining any quest
 function declineQuest(){
+	haveRead = false;
 	//makes sure the sound effect doesn't repeat 
 	if(playedDecline == false){
 	declineMusic.play('', 0, 1, false);
@@ -976,6 +989,7 @@ function declineQuest(){
 }
 //holds everything killing the messenger for any quest
 function killMessenger(){
+	haveRead = false;
 	//makes sure the sound effect doesn't repeat 
 	if(playedKill == false){
 	killMusic.play('', 0, 1, false);
@@ -1076,7 +1090,7 @@ function gotoTutorial(){
 // Moves the commoner NPC out of the screen
 function moveComOut(){
 	commoner.y = -500;
-	scroll.y = -500;
+	//scroll.y = -500;
 }
 
 // Moves the commoner NPC into of the screen
@@ -1088,7 +1102,7 @@ function moveComIn(){
 // Moves the noble NPC out of the screen
 function moveNobleOut(){
 	noble.y = -500;
-	scroll.y = -500;
+	//scroll.y = -500;
 }
 
 // Moves the noble NPC into of the screen
