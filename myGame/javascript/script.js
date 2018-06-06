@@ -275,7 +275,6 @@ GamePlay.prototype = {
 		character = game.add.tween(noble).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
 		character.chain(scrollAnimation);	
 		}
-
 		//create objects
 		knife = new Item(game, 200, 530, 'obj', 'Knife'); // (680, 530)
 		game.add.existing(knife);	
@@ -306,6 +305,9 @@ GamePlay.prototype = {
 		game.physics.arcade.collide(knife, commoner, killMessenger, null, this);
 		game.physics.arcade.collide(stamp, scroll, acceptQuest, null, this);
 		game.physics.arcade.collide(candle, scroll, declineQuest, null, this);
+		
+		//taken from  https://phaser.io/examples/v2/input/pointer-over
+		//start
 		//dimmed color if mouse isn't over it
 		if(knife.input.pointerOver()){
 			knife.alpha = 1;
@@ -324,11 +326,16 @@ GamePlay.prototype = {
 		}else{
 			candle.alpha = 0.5;
 		}
+		//end
+		
+		//taken from https://phaser.io/examples/v2/input/down-duration
+		//start
 		//if moused over scroll and click left button, go to READ state
 		if(game.input.activePointer.leftButton.isDown && scroll.input.pointerOver()){
 			game.state.start('Read');
 		}
-
+//end
+		
 		// Game over conditions
 		if(comPoints >= 100 || noblePoints >=100){
 			//taken from nathan's paddle parkour example
