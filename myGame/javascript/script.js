@@ -179,6 +179,11 @@ Menu.prototype = {
 		game.add.sprite(0, 0, "background", "GameTitle");
 		game.add.button(150, 400, "btnPlay", gotoGame, this);
 		game.add.button(450, 400, "btnTutorial", gotoPrologue, this);
+		goodEndingMusic = game.add.audio('goodEndingMusic');
+		neutralEndingMusic = game.add.audio('neutralEndingMusic');
+		badEndingMusic = game.add.audio('badEndingMusic');
+		titleMusic = game.add.audio('titleMusic');
+		titleMusic.play('', 0, 0.5, true);
 	},
 
 	// update, run game loop =========================
@@ -449,7 +454,9 @@ CutSceneAccept.prototype = {
 	create: function(){
 		console.log("CutSceneAccept: create");
 		game.stage.backgroundColor = "#707070";
-		game.add.button(590, 520, "btnNext", gotoGame, this);
+		game.add.button(590, 520, "btnNext", gotoGameC, this);
+		cutSceneMusic = game.add.audio('cutSceneMusic');
+		cutSceneMusic.play('', 0, 0.5, true);
 	},
 
 	//checks to see which accept cutscene to display depending on the the current questNumber
@@ -578,7 +585,9 @@ CutSceneDecline.prototype = {
 	create: function(){
 		console.log("CutSceneDecline: create");
 		game.stage.backgroundColor = "#707070";
-		game.add.button(590, 520, "btnNext", gotoGame, this);
+		game.add.button(590, 520, "btnNext", gotoGameC, this);
+		cutSceneMusic = game.add.audio('cutSceneMusic');
+		cutSceneMusic.play('', 0, 0.5, true);
 	},
 
 //checks to see which decline cutscene to display depending on the the current questNumber
@@ -694,7 +703,9 @@ CutSceneKill.prototype = {
 	create: function(){
 		console.log("CutSceneKill: create");
 		game.stage.backgroundColor = "#707070";
-		game.add.button(590, 520, "btnNext", gotoGame, this);
+		game.add.button(590, 520, "btnNext", gotoGameC, this);
+		cutSceneMusic = game.add.audio('cutSceneMusic');
+		cutSceneMusic.play('', 0, 0.5, true);
 	},
 
 	//checks to see which kill cutscene to display depending on the the current questNumber
@@ -815,7 +826,8 @@ GameOverG.prototype = {
 		console.log("GameOverG: create");
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
-		text = game.add.text(0, 75, "You smile sadistically as you hear news of everything slowly\nfalling into chaos. Serves them right for murdering your\nbrother.They deserved this,this slow and painful demise of\nthis kingdom. And nobody will ever know it was your doing.\nYou decide to start packing up to leave soon.\nYou’re work here is done and you’re grown weary\nwith all the hard work your revenge took.\nYou yawn and decide on a nap before packing.\nYou can sleep happily knowing your plan was successful\nand you’ve finally avenged your brother.",{fill: "#ffffff"});
+		goodEndingMusic.play('', 0, 0.5, true);
+		text = game.add.text(25,85, "You smile sadistically as you hear news of everything slowly\nfalling into chaos. Serves them right for murdering your\nbrother.They deserved this,this slow and painful demise of\nthis kingdom. And nobody will ever know it was your doing.\nYou decide to start packing up to leave soon.\nYou’re work here is done and you’re grown weary\nwith all the hard work your revenge took.\nYou yawn and decide on a nap before packing.\nYou can sleep happily knowing your plan was successful\nand you’ve finally avenged your brother.",{fill: "#ffffff"});
 	},
 
 	// update, run the game loop =====================
@@ -837,7 +849,8 @@ GameOverN.prototype = {
 		console.log("GameOverN: create");
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
-		text = game.add.text(25, 85, "You look at the papers and curse yourself quietly.\nYou’ve done some damage, but not enough.\nThey need to pay, they have to pay.\nBut despite your exhaustive efforts, you haven’t completed\nyour task yet.You crumple up the paper and throw it on the\nground before slumping in your seat tiredly.\nYou miss your home but you must avenge him first.\nYou decide to take a small nap first,\nmaybe some new ideas will come up during it.\n\nClick the retry button to try and fully complete your mission.");
+		neutralEndingMusic.play('', 0, 0.5, true);
+		text = game.add.text(25, 85, "You look at the papers and curse yourself quietly.\nYou’ve done some damage, but not enough.\nThey need to pay, they have to pay.\nBut despite your exhaustive efforts, you haven’t completed\nyour task yet.You crumple up the paper and throw it on the\nground before slumping in your seat tiredly.\nYou miss your home but you must avenge him first.\nYou decide to take a small nap first,\nmaybe some new ideas will come up during it.\n\nClick the play again button to try and fully complete\nyour mission.");
 	},
 
 	// update, run the game loop =====================
@@ -858,7 +871,8 @@ GameOverB1.prototype = {
 		console.log("GameOverB1: create");
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
-		text = game.add.text(20, 35, "You hear news that people are coming for you.\nThey’ve figured you out.\nThey know you’ve been planning their demise and now\nthey’re coming to arrest and likely kill you.\nYour plan has failed but least you caused some chaos\nbefore it failed. Besides, you’ve grown tired\nwithout your brother around. But now\nyou’ll get to be with him soon enough.\nYou hear pounding on the door and you’re ready for them.\nYou’re done with this life anyways,\nnothing is holding you here anyways.\nThat was taken from you long ago.\n\nClick the retry button to reattempt your mission without getting caught\n this time");
+		badEndingMusic.play('', 0, 0.5, true);
+		text = game.add.text(25, 85, "You hear news that people are coming for you.\nThey’ve figured you out. They know you’ve been planning\ntheir demise and now they’re coming to arrest and\nlikely kill you. Your plan has failed but least you caused\nsome chaos before it failed. Besides, you’ve grown tired\nwithout your brother around. But now you’ll get to be with\nhim soon enough. You hear pounding on the door and\nyou’re ready for them. You’re done with this life anyways,\nnothing is holding you here anyways. That was taken\nfrom you long ago.\n\nClick the play again button to reattempt your mission");
 	},
 
 	// update, run the game loop =====================
@@ -881,7 +895,8 @@ GameOverB2.prototype = {
 		game.stage.backgroundColor = "#707070";
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
-		text = game.add.text(0, 0, "Bad ending, lost all men.");
+		badEndingMusic.play('', 0, 0.5, true);
+		text = game.add.text(25, 85, "Bad ending, lost all men.");
 	},
 
 	// update, run the game loop =====================
@@ -1214,16 +1229,27 @@ function nextWord() {
 
 // Helper function for game button to go to GamePlay state
 function gotoGame(){
+	titleMusic.stop();
+	game.state.start('GamePlay');
+}
+
+//goes back to game from cutScenes
+function gotoGameC(){
+	cutSceneMusic.stop();
 	game.state.start('GamePlay');
 }
 
 // Helper function for game button to go to Menu state
 function gotoMenu(){
+	goodEndingMusic.stop();
+	neutralEndingMusic.stop();
+	badEndingMusic.stop();
 	game.state.start('Menu');
 }
 
 // Helper function for game button to go to Prologue state
 function gotoPrologue(){
+	titleMusic.stop();
 	game.state.start('Prologue');
 }
 
