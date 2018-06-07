@@ -1,7 +1,7 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO);
 //status variables
 var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 0;
-var commoner, noble;
+var commoner, noble, selector;
 var playedKill = true;
 var playedDecline = true;
 var playedAccept = true;
@@ -415,7 +415,6 @@ Read.prototype = {
 		//set story content;
 		story = storyBase[questCounter];
 		//	Place ReadScroll
-		//game.add.sprite(0, 0, 'obj', 'ReadScroll');
 		game.add.sprite(0, 0, "background", "ReadScroll");
 		if(haveRead == true){
 			lineIndex = 0;
@@ -961,36 +960,78 @@ function newNPC(){
 	noble.body.setSize(100, 400, 120, 80);
 	noble.alpha = 0;
 
+	if (haveRead == false){
+		randomNumber();
+		//console.log(selector);
+	} 
 	if(questCounter%2 == 0){
 		moveComIn();
 		moveNobleOut();
 		// Pick a commer NPC
-		if (Math.random() <= .33) {
+		if (selector <= .33) {
 			commoner.frameName = "Peasant001";
-			console.log(commoner.frameName);
-		} else if (Math.random() <= .66) {
+			//console.log(commoner.frameName);
+		} else if (selector <= .66) {
 			commoner.frameName = "Peasant005";
-			console.log(commoner.frameName);
+			//console.log(commoner.frameName);
 		} else {
 			commoner.frameName = "Peasant009";
-			console.log(commoner.frameName);
+			//console.log(commoner.frameName);
 		}
 
 	} else {
 		moveNobleIn();
 		moveComOut();
 		// Pick a noble NPC
-		if (Math.random() <= .33) {
+		if (selector <= .33) {
 			noble.frameName = "Noble001";
-			console.log("noble 1");
-		} else if (Math.random() <= .66) {
+			//console.log("noble 1");
+		} else if (selector <= .66) {
 			noble.frameName = "Noble005";
-			console.log("noble 2");
+			//console.log("noble 2");
 		} else {
 			noble.frameName = "Noble009";
-			console.log("noble 3");
+			//console.log("noble 3");
 		}
 	}
+
+	if (haveRead == true) {
+		if(questCounter%2 == 0){
+			moveComIn();
+			moveNobleOut();
+			// Pick a commer NPC
+			if (selector <= .33) {
+				commoner.frameName = "Peasant001";
+				//console.log(commoner.frameName);
+			} else if (selector <= .66) {
+				commoner.frameName = "Peasant005";
+				//console.log(commoner.frameName);
+			} else {
+				commoner.frameName = "Peasant009";
+				//console.log(commoner.frameName);
+			}
+
+		} else {
+			moveNobleIn();
+			moveComOut();
+			// Pick a noble NPC
+			if (selector <= .33) {
+				noble.frameName = "Noble001";
+				//console.log("noble 1");
+			} else if (selector <= .66) {
+				noble.frameName = "Noble005";
+				//console.log("noble 2");
+			} else {
+				noble.frameName = "Noble009";
+				//console.log("noble 3");
+			}
+		}		
+	}
+}
+
+//
+function randomNumber(){
+	selector = Math.random();
 }
 
 //player choice functions
