@@ -11,13 +11,13 @@ var declineScene = false;
 var killScene = false;
 var questCheck = false;
 //====Below is a series of arrays holding input values for NPC object creation====
-var menArg = [5,0,0,5,4,0,7,0,5,0]; 
-var suspArg = [7,0,0,10,12,0,20,0,15,0]; 
+var menArg = [5,4,5,5,4,6,7,6,5,5]; 
+var suspArg = [7,10,12,10,12,14,20,25,15,50]; 
 var comPtsArg = [10,0,0,0,15,0,0,0,30,0]; 
-var nobPtsArg = [0,0,0,0,0,0,0,0,0,0];
-var negNobPtsArg = [0,2,0,4,0,0,20,0,0,0]; 
-var negComPtsArg = [5,0,0,10,5,0,3,0,7,0]; 
-var moneyArg = [20,0,0,0,15,0,0,0,30,0];
+var nobPtsArg = [0,10,20,0,0,20,0,25,0,35];
+var negNobPtsArg = [0,3,0,4,0,20,20,30,0,40]; 
+var negComPtsArg = [5,0,10,10,5,0,3,0,7,0]; 
+var moneyArg = [20,30,20,0,15,35,0,70,30,85];
 //================================
 var story = []; //empty array variable, will later be used to temporarily store scrolling texts
 
@@ -477,7 +477,7 @@ CutSceneAccept.prototype = {
 			game.add.text(30,50,"new TextA");
 			cutSceneTracker = true;
 			acceptScene = false;
-			//add men
+			men += 0;
 			questCheck = false;
 			playedAccept = true;
 			playedKill = true;
@@ -488,7 +488,7 @@ CutSceneAccept.prototype = {
 			game.add.text(30,50,"Some more textA");
 			cutSceneTracker = true;
 			acceptScene = false;
-			//add men
+			men += 10;
 			questCheck = false;
 			playedAccept = true;
 			playedKill = true;
@@ -525,7 +525,7 @@ CutSceneAccept.prototype = {
 			playedAccept = true;
 			playedKill = true;
 			playedDecline = true;
-			//add men
+			men += 3;
 		}
 		//quest 7's.
 		if(cutSceneTracker == false && questCounter == 7){
@@ -547,7 +547,7 @@ CutSceneAccept.prototype = {
 			playedAccept = true;
 			playedKill = true;
 			playedDecline = true;
-			//add men
+			men += 5;
 		} 
 		//quest 9's.
 		if(cutSceneTracker == false && questCounter == 9){
