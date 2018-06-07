@@ -151,7 +151,7 @@ Menu.prototype = {
 		console.log("Menu: preload");
 
 		game.load.path = "../myGame/assets/img/";
-		game.load.atlas("obj", "Items.png", "Items.json");
+		game.load.atlas("obj", "objects.png", "objects.json");
 		game.load.atlas("npc", "npc_atlas.png", "npc_atlas.json");
 		game.load.atlas("background", "background.png", "background.json");
 		game.load.image("btnPlay", "btnPlay.png");
@@ -248,7 +248,7 @@ GamePlay.prototype = {
 	create: function(){
 		console.log("GamePlay: create");
 		//spin up physics
-		game.add.sprite(0, 0, "background", "GamePlay");
+		game.add.sprite(0, 0, "background", "GamePlay_BG");
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 
 		//add sound
@@ -259,9 +259,9 @@ GamePlay.prototype = {
 		bgMusic.play('', 0, 0.5, true); //loops
 
 		//scroll obj is also quest obj, it acts as a double
-		scroll = new Item(game, 370, 400, 'obj', 'ReadScroll');
+		scroll = new Item(game, 370, 400, 'obj', 'scroll');
 		game.add.existing(scroll);
-		scroll.scale.set( .1, .1);
+		scroll.scale.set( 1.4, 1.4);
 		scroll.alpha = 0;
 		scroll.body.collideWorldBounds = false;
 		
@@ -292,17 +292,17 @@ GamePlay.prototype = {
 		}
 
 		//create objects
-		knife = new Item(game, 200, 530, 'obj', 'Knife'); // (680, 530)
-		game.add.existing(knife);	
-		knife.alpha = 0.5; //set to be darkened
+		knife = new Item(game, 200, 530, 'obj', 'knife'); // (680, 530)
+		game.add.existing(knife);
+		knife.scale.set(1.3);
 
-		stamp = new Item(game, 600, 450, 'obj', 'Stamp');
+		stamp = new Item(game, 500, 450, 'obj', 'stamp');
 		game.add.existing(stamp);	
-		stamp.alpha = 0.5;
+		stamp.scale.set(1.3);
 
-		candle = new Item(game, 710, 560, 'obj', 'Candle');
+		candle = new Item(game, 610, 400, 'obj', 'candle');
 		game.add.existing(candle);
-		candle.alpha = 0.5;
+		candle.scale.set(1.3);
 
 		// UI score
 		printCP = game.add.text(135, 58, comPoints);
@@ -329,19 +329,19 @@ GamePlay.prototype = {
 		if(knife.input.pointerOver()){
 			knife.alpha = 1;
 		}else{
-			knife.alpha = 0.5;
+			knife.alpha = 0.6;
 		}
 
 		if(stamp.input.pointerOver()){
 			stamp.alpha = 1;
 		}else{
-			stamp.alpha = 0.5;
+			stamp.alpha = 0.6;
 		}
 
 		if(candle.input.pointerOver()){
 			candle.alpha = 1;
 		}else{
-			candle.alpha = 0.5;
+			candle.alpha = 0.6;
 		}
 		//end
 		
@@ -391,11 +391,11 @@ GamePlay.prototype = {
 	// debugging method ===============================
 	render: function(){
 	//	game.debug.bodyInfo(scroll, 32, 32);
-	//	game.debug.body(scroll);
-	//	game.debug.text("Over: " + scroll.input.pointerOver(), 32, 32);
+	//  game.debug.body(scroll);
+		game.debug.text("Over: " + scroll.input.pointerOver(), 32, 32);
 	//	game.debug.bodyInfo(commoner, 32, 32);
 	//	game.debug.body(commoner);
-	// game.debug.bodyInfo(noble, 32, 32);
+	//  game.debug.bodyInfo(noble, 32, 32);
 	//  game.debug.body(noble);
 	}
 }
@@ -415,14 +415,15 @@ Read.prototype = {
 		//set story content;
 		story = storyBase[questCounter];
 		//	Place ReadScroll
-		game.add.sprite(0, 0, 'obj', 'ReadScroll');
+		//game.add.sprite(0, 0, 'obj', 'ReadScroll');
+		game.add.sprite(0, 0, "background", "ReadScroll");
 		if(haveRead == true){
 			lineIndex = 0;
 			wordIndex = 0;
 		}
 		text = game.add.text(350,350,"");
 		text.anchor.set(0.5);
-		game.add.button(590, 530, "btnBack", gotoGame, this);
+		game.add.button(590, 520, "btnBack", gotoGame, this);
 		text = game.add.text(45,55, '', {font: "28px Papyrus", fill: "#8a3324"});
 		nextLine();
 		questStatus = false;
@@ -1038,7 +1039,16 @@ function acceptQuest(){
 
 		//noble accept quests
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
-			noble.frameName = "Noble004";
+			if (noble.frameName == "Noble001"){
+				noble.frameName = "Noble004";
+				console.log("should be com 1");
+			} else if (noble.frameName == "Noble005"){
+				noble.frameName = "Noble008";
+				console.log("should be com 2");
+			} else {
+				noble.frameName = "Noble012";
+				console.log("should be com 3");
+			}
 			//noble spy accept quests. Commoner influence goes down because noble spy wanted to cause problems for the commoners
 			if(questCounter == 3){
 				comPoints -= commoner.negComPoints;
@@ -1101,17 +1111,37 @@ function declineQuest(){
 //checks to see if you've already done an action, if you haven't, it checks which quest you're on and subtracts influence from the correct group and displays correct person
 	if (questStatus == false){
 		questStatus = true;
+
 		//commoner decline
 		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8 ){
-			commoner.frameName = "Peasant003";
+			if (commoner.frameName == "Peasant001"){
+				commoner.frameName = "Peasant003";
+				console.log("should be com 1");
+			} else if (commoner.frameName == "Peasant005"){
+				commoner.frameName = "Peasant007";
+				console.log("should be com 2");
+			} else {
+				commoner.frameName = "Peasant011";
+				console.log("should be com 3");
+			}
 			comPoints -= commoner.negComPoints;	
 			game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 			game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);	
 			game.time.events.add(5000, moveComOut, this);		
 		}
+
 		//noble decline
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
-			noble.frameName = "Noble003";
+			if (noble.frameName == "Noble001"){
+				noble.frameName = "Noble003";
+				console.log("should be com 1");
+			} else if (noble.frameName == "Noble005"){
+				noble.frameName = "Noble007";
+				console.log("should be com 2");
+			} else {
+				noble.frameName = "Noble011";
+				console.log("should be com 3");
+			}
 			noblePoints -= noble.negNoblePts;
 			game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 			game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);	
@@ -1157,17 +1187,37 @@ function killMessenger(){
 //checks to see if you've already done an action, if you haven't, it checks which quest you're on and adds suspicion and displays correct person
 	if (questStatus == false){
 		questStatus = true;
+
 		//commoner kill
 		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8 ){
-			commoner.frameName = "Peasant002";
+			if (commoner.frameName == "Peasant001"){
+				commoner.frameName = "Peasant002";
+				console.log("should be com 1");
+			} else if (commoner.frameName == "Peasant005"){
+				commoner.frameName = "Peasant006";
+				console.log("should be com 2");
+			} else {
+				commoner.frameName = "Peasant010";
+				console.log("should be com 3");
+			}
 			suspicion += commoner.susp;
 			game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 			game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);		
 			game.time.events.add(5000, moveComOut, this);
 		}
+
 		//noble kill
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
-			noble.frameName = "Noble002";
+			if (noble.frameName == "Noble001"){
+				noble.frameName = "Noble002";
+				console.log("should be com 1");
+			} else if (noble.frameName == "Noble005"){
+				noble.frameName = "Noble006";
+				console.log("should be com 2");
+			} else {
+				noble.frameName = "Noble010";
+				console.log("should be com 3");
+			}
 			suspicion += noble.susp;
 			game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
 			game.add.tween(scroll).to({alpha: 0}, 3000, Phaser.Easing.Linear.None, true, 1000);		
