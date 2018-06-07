@@ -11,10 +11,10 @@ var declineScene = false;
 var killScene = false;
 var questCheck = false;
 //====Below is a series of arrays holding input values for NPC object creation====
-var menArg = [5,4,5,5,4,6,7,6,5,5]; 
+var menArg = [5,4,5,5,4,6,7,6,5,5]; //balance. maybe earn less in the cut scenes and increase these slightly
 var suspArg = [7,10,12,10,12,14,20,25,15,50]; 
-var comPtsArg = [10,0,0,0,15,0,0,0,30,0]; 
-var nobPtsArg = [0,10,20,0,0,20,0,25,0,35];
+var comPtsArg = [10,0,0,0,15,0,0,0,30,0]; //increase these. they never make it to 100. even accepting all but the spies.
+var nobPtsArg = [0,10,20,0,0,20,0,25,0,35]; //increase these. they never make it to 100. even accepting all but the spies. 
 var negNobPtsArg = [0,3,0,4,0,20,20,30,0,40]; 
 var negComPtsArg = [5,0,10,10,5,0,3,0,7,0]; 
 var moneyArg = [20,30,20,0,15,35,0,70,30,85];
@@ -453,7 +453,7 @@ CutSceneAccept.prototype = {
 	// place assets ==================================
 	create: function(){
 		console.log("CutSceneAccept: create");
-		game.stage.backgroundColor = "#707070";
+		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(590, 520, "btnNext", gotoGameC, this);
 		cutSceneMusic = game.add.audio('cutSceneMusic');
 		cutSceneMusic.play('', 0, 0.5, true);
@@ -584,7 +584,7 @@ CutSceneDecline.prototype = {
 	// place assets ==================================
 	create: function(){
 		console.log("CutSceneDecline: create");
-		game.stage.backgroundColor = "#707070";
+		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(590, 520, "btnNext", gotoGameC, this);
 		cutSceneMusic = game.add.audio('cutSceneMusic');
 		cutSceneMusic.play('', 0, 0.5, true);
@@ -702,7 +702,7 @@ CutSceneKill.prototype = {
 	// place assets ==================================
 	create: function(){
 		console.log("CutSceneKill: create");
-		game.stage.backgroundColor = "#707070";
+		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(590, 520, "btnNext", gotoGameC, this);
 		cutSceneMusic = game.add.audio('cutSceneMusic');
 		cutSceneMusic.play('', 0, 0.5, true);
@@ -1009,16 +1009,15 @@ function acceptQuest(){
 	}
 	
 	//checks to see if you've already done an action, if you haven't, it checks which quest you're on and adds influence for the correct group,adds money and subtracts men for the given quest and displays correct person
-	
 	if (questStatus == false){
 		questStatus = true;
 
 		//commoner accept quests
 		if (questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8 ){
-			if (commoner.frameName = "Peasant001"){
+			if (commoner.frameName == "Peasant001"){
 				commoner.frameName = "Peasant004";
 				console.log("should be com 1");
-			} else if (commoner.frameName = "Peasant005"){
+			} else if (commoner.frameName == "Peasant005"){
 				commoner.frameName = "Peasant008";
 				console.log("should be com 2");
 			} else {
