@@ -473,7 +473,7 @@ CutSceneAccept.prototype = {
 			game.add.text(30,50," He smile brightly at you as they leave. You think about\nthe times you were that happy and you realize all of\nthem were from when your brother was alive. You sigh\nheavily and leave to find your men.\n----\nMost come back as well as few more. They were so excited\nthat you helped them that they came to join you. It’s still\nearly so you’ll need all the men you can get. So they join\nand pay you a pitiful amount in reward but it doesn’t matter.\nYou don’t need it anyways.");
 			cutSceneTracker = true;
 			acceptScene = false;
-			men += 10;
+			//men += 10;
 			questCheck = false;
 			playedAccept = true;
 			playedKill = true;
@@ -495,7 +495,7 @@ CutSceneAccept.prototype = {
 			game.add.text(30,50,"Some more textA");
 			cutSceneTracker = true;
 			acceptScene = false;
-			men += 10;
+			//men += 10;
 			questCheck = false;
 			playedAccept = true;
 			playedKill = true;
@@ -902,8 +902,8 @@ GameOverB2.prototype = {
 		game.stage.backgroundColor = "#707070";
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
-		badEndingMusic.play('', 0, 0.5, true);
-		text = game.add.text(25, 85, "Bad ending, lost all men.");
+		badEndingMusic.play('', 0, 0.75, true);
+		text = game.add.text(25, 85, "You look around the guild and sigh heavily. All your men\nhave either been killed or arrested. You slump exhaustively \nin your chair. You did cause a little bit of chaos before you\nran out of men. But it wasn’t nearly enough to be satisfied\nwith. You wanted to avenge your brother but now you have\nnobody left. You’re completely and utterly alone. And you\nhate that. You’ve never liked being alone. You close your\neyes and fall asleep. You need some sleep before recruiting\nmore men so you can finish your plan.\n\nClick the play again button to reattempt your mission.");
 	},
 
 	// update, run the game loop =====================
