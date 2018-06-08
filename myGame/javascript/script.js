@@ -90,7 +90,7 @@ var aD = [
 ["Excellent!",
 "I greatly look forward to your success.",
 "Thank you so very much for dealing with these commoners"],
-["“Oh thanks so much!",
+["Oh thanks so much!",
 "This means so much that you’ll help us calm it down."],
 ["quest 6"],
 ["Oh thank you so much!",
@@ -102,9 +102,9 @@ var aD = [
 ["quest 10"]
 ]; //accept dialogue array of array of strings :D
 var dD = [
-["Oh. I’m sorry to have bothered you then. I was just really hoping for help.",
-"We really need these pirates gone before they destroy our town.",
-"Guess I’ll keep looking."],
+["Oh. I’m sorry to have bothered you then. I was just really hoping",
+"for help. We really need these pirates gone before they destroy our",
+"town. Guess I’ll keep looking."],
 ["quest 2"],
 ["quest 3"],
 ["Decline will you? I see... Well a piece of parting advice.", 
@@ -200,8 +200,8 @@ Prologue.prototype = {
 	// place assets ==================================
 	create: function(){
 		console.log("Prologue: create");
-		game.stage.backgroundColor = "#39aeb2";
-		text = game.add.text(0, 0, "Prologue:\n\nYou sigh and sit exhaustively on the bloodied chair.\nYou killed the current leader of the mercenary guild,\nwhile the floor is covered in blood. You’ve gotten into this\nkingdom unnoticed and now you’ll become valuable to them.\nYou can’t wait for it all to come crumbling down.\nFor this kingdom has kidnapped and killed your brother,\nand you want revenge. So naturally you’ve decided to\ninfiltrate the kingdom, gain the people’s trust and then\ndestroy the entire kingdom from the inside out.\nYou’ve grown a bit sadistic since your brother’s death\nbut everyone here, no matter how indirectly, was involved.\nBut this is the only way to avenge your brother and you’ll do\nwhatever it takes.\nHit the next button to go to the tutorial.");
+		game.add.sprite(0, 0, "background", "GameOver");
+		text = game.add.text(5, 0, "Prologue:\n\nYou sigh and sit exhaustively on the bloodied chair.\nYou killed the current leader of the mercenary guild,\nwhile the floor is covered in blood. You’ve gotten into this\nkingdom unnoticed and now you’ll become valuable to them.\nYou can’t wait for it all to come crumbling down.\nFor this kingdom has kidnapped and killed your brother,\nand you want revenge. So naturally you’ve decided to\ninfiltrate the kingdom, gain the people’s trust and then\ndestroy the entire kingdom from the inside out.\nYou’ve grown a bit sadistic since your brother’s death\nbut everyone here, no matter how indirectly, was involved.\nBut this is the only way to avenge your brother and you’ll do\nwhatever it takes.\nHit the next button to go to the tutorial.",{fill: "#eed7a1"});
 		game.add.button(590, 520, "btnNext", gotoTutorial, this);
 	},                                                                
 
@@ -224,8 +224,8 @@ Tutorial.prototype = {
 	// place assets ==================================
 	create: function(){
 		console.log("Tutorial: create");
-		game.stage.backgroundColor = "#39aeb2";
-		text = game.add.text(0, 0, "Tutorial:\nThere are several interactable objects within the game:\n\nThe quest scroll: This is the first thing that should be clicked on \neach quest iteration. It’ll explain the problem and what\n the person asks of you.\n\nThe stamp: Allows you to accept the given quest.\nPlayers click and drag it onto the scroll to see\nhow it affected them.\n\nThe candle: Allows you to deny the given quest.\nPlayers click and drag it onto the scroll to see\nhow it affected them.\n\nThe knife: Allows you to kill the messenger.\nPlayers click and drag it onto the person to see how\nit affected them.\nHit the next button to go to the tutorial.",{font: "23px"});
+		game.add.sprite(0, 0, "background", "GameOver");
+		text = game.add.text(5, 0, "Tutorial:\nThere are several interactable objects within the game:\n\nThe quest scroll: This is the first thing that should be clicked on each quest\niteration. It’ll explain the problem and what the person asks of you.\n\nThe stamp: Allows you to accept the given quest.\nPlayers click and drag it onto the scroll to see how it affected them.\n\nThe candle: Allows you to deny the given quest.\nPlayers click and drag it onto the scroll to see how it affected them.\n\nThe knife: Allows you to kill the messenger.\nPlayers click and drag it onto the person to see how it affected them.\n\nHit the next button to go to the tutorial.",{font: "23px",fill: "#eed7a1"});
 		game.add.button(590, 520, "btnNext", gotoGame, this);
 	},                                                                
 
@@ -1051,7 +1051,7 @@ function acceptQuest(){
 	}
 	if(questCheck == false){
 		console.log(questCheck);
-	game.add.text(60,game.world.height-100,"don't forget to read the quest first.",{font: "23px Fira Sans", fill: "#eed7a1"});
+	game.add.text(93,game.world.height-100,"don't forget to read the quest first.",{font: "23px Fira Sans", fill: "#eed7a1"});
 	}else{
 		console.log(questCheck);
 		game.add.text(0,0,' ');
@@ -1122,7 +1122,7 @@ function acceptQuest(){
 		lineDelay = 400;
 
 		//loads in the text to scroll
-		text = game.add.text(50, game.world.height - 100, '', {font: "23px Fira Sans", fill: "#eed7a1"});
+		text = game.add.text(93, game.world.height - 100, '', {font: "23px Fira Sans", fill: "#eed7a1"});
 		nextLine();
 		questCounter++;
 
@@ -1151,7 +1151,7 @@ function declineQuest(){
 	
 	if(questCheck == false){
 		console.log(questCheck);
-	game.add.text(60,game.world.height-100,"don't forget to read the quest first.",{font: "23px Fira Sans", fill: "#eed7a1"});
+	game.add.text(93,game.world.height-100,"don't forget to read the quest first.",{font: "23px Fira Sans", fill: "#eed7a1"});
 	}else{
 		console.log(questCheck);
 		game.add.text(0,0,' ');
@@ -1204,7 +1204,7 @@ function declineQuest(){
 		wordDelay = 140;
 		lineDelay = 400;
 		//loads in the text to scroll
-		text = game.add.text(50, game.world.height - 100, '', {font: "23px Fira Sans", fill: "#eed7a1"});
+		text = game.add.text(93, game.world.height - 100, '', {font: "23px Fira Sans", fill: "#eed7a1"});
 		nextLine();
 		questCounter++;
 		if(questCounter != 10 && men != 0 && comPoints != 100 && noblePoints != 100 && suspicion != 100){
@@ -1227,7 +1227,7 @@ function killMessenger(){
 	}
 	if(questCheck == false){
 		console.log(questCheck);
-	game.add.text(60,game.world.height-100,"don't forget to read the quest first.",{font: "23px Fira Sans", fill: "#eed7a1"});
+	game.add.text(93,game.world.height-100,"don't forget to read the quest first.",{font: "23px Fira Sans", fill: "#eed7a1"});
 	}else{
 		console.log(questCheck);
 		game.add.text(0,0,' ');
@@ -1279,7 +1279,7 @@ function killMessenger(){
 		wordDelay = 140;
 		lineDelay = 400;
 		//loads in the text to scroll
-		text = game.add.text(55, game.world.height - 100, '', {font: "23px Fira Sans", fill: "#eed7a1"});
+		text = game.add.text(93, game.world.height - 100, '', {font: "23px Fira Sans", fill: "#eed7a1"});
 		nextLine();	
 		questCounter++;
 		if(questCounter != 10 && men != 0 && comPoints != 100 && noblePoints != 100 && suspicion != 100){
