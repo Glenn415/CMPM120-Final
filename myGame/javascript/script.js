@@ -473,7 +473,7 @@ CutSceneAccept.prototype = {
 			game.add.text(30,50," He smile brightly at you as they leave. You think about\nthe times you were that happy and you realize all of\nthem were from when your brother was alive. You sigh\nheavily and leave to find your men.\n----\nMost come back as well as few more. They were so excited\nthat you helped them that they came to join you. It’s still\nearly so you’ll need all the men you can get. So they join\nand pay you a pitiful amount in reward but it doesn’t matter.\nYou don’t need it anyways.");
 			cutSceneTracker = true;
 			acceptScene = false;
-			//men += 10;
+			men += 10;
 			questCheck = false;
 			playedAccept = true;
 			playedKill = true;
@@ -495,7 +495,7 @@ CutSceneAccept.prototype = {
 			game.add.text(30,50,"Some more textA");
 			cutSceneTracker = true;
 			acceptScene = false;
-			//men += 10;
+			men += 10;
 			questCheck = false;
 			playedAccept = true;
 			playedKill = true;
