@@ -259,10 +259,14 @@ GamePlay.prototype = {
 		bgMusic.play('', 0, 0.5, true); //loops
 
 		//scroll obj is also quest obj, it acts as a double
-		scroll = new Item(game, 370, 400, 'obj', 'scroll');
-		game.add.existing(scroll);
+		//scroll = new Item(game, 370, 400, 'obj', 'scroll');
+		//game.add.existing(scroll);
+		scroll = game.add.sprite(355,400,'obj','scroll');
 		scroll.scale.set( 1.4, 1.4);
 		scroll.alpha = 0;
+		game.physics.enable(scroll);
+		scroll.inputEnabled = true;
+		scroll.enableBody = true;
 		scroll.body.collideWorldBounds = false;
 		
 
@@ -272,22 +276,22 @@ GamePlay.prototype = {
 		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8){
 			if (haveRead == false){
 				character = game.add.tween(commoner).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
-				scrollAnimation = game.add.tween(scroll).to({y: 460, alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
+				scrollAnimation = game.add.tween(scroll).to({y: 450, alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
 				character.chain(scrollAnimation);
 			}else{
 				commoner.alpha = 1;
 				scroll.alpha = 1;
-				scroll.y = 460;
+				scroll.y = 450;
 			}
 		}else{
 			if (haveRead == false){
 				character = game.add.tween(noble).to({alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
-				scrollAnimation = game.add.tween(scroll).to({y: 460, alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
+				scrollAnimation = game.add.tween(scroll).to({y: 450, alpha: 1}, 1000, Phaser.Easing.Linear.None, true, 2000);
 				character.chain(scrollAnimation);	
 			}else{
 				noble.alpha = 1;
 				scroll.alpha = 1;
-				scroll.y = 460;
+				scroll.y = 450;
 			}
 		}
 
@@ -391,8 +395,11 @@ GamePlay.prototype = {
 	// debugging method ===============================
 	render: function(){
 	//	game.debug.bodyInfo(scroll, 32, 32);
-	//  game.debug.body(scroll);
+		//game.debug.body(scroll);
 		game.debug.text("Over: " + scroll.input.pointerOver(), 32, 32);
+		//game.debug.body(stamp);
+		//game.debug.body(knife);
+		//game.debug.body(candle);
 	//	game.debug.bodyInfo(commoner, 32, 32);
 	//	game.debug.body(commoner);
 	//  game.debug.bodyInfo(noble, 32, 32);
