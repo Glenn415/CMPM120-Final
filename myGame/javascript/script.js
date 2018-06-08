@@ -1,6 +1,6 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO);
 //status variables
-var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 0;
+var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 9;
 var commoner, noble, selector;
 var playedKill = true;
 var playedDecline = true;
@@ -677,7 +677,7 @@ CutSceneDecline.prototype = {
 		} 
 		//quest 9's.
 		if(cutSceneTracker == false && questCounter == 9){
-			game.add.text(30,50,"The man looks incredibly pitiful at you before leaving. You\nfeel slightly bad afterwards but...war always demands\nsacrifice. In one way or another, it’ll always take it.\n----\nYou find out later that most of those commoners are now\ndead or severely injured. The commoners are rather angry\nwith you for allowing this to happen. In times like these, you\nthink about your brother and he ended up in a similar\nposition. You miss him greatly...");
+			game.add.text(30,50,"The man looks incredibly pitiful at you before leaving. You\nfeel slightly bad afterwards but...war always demands\nsacrifice. In one way or another, it’ll always take it.\n----\nYou find out later that most of those commoners are now\ndead or severely injured. The commoners are rather angry\nwith you for allowing this to happen. In times like these, you\nthink about your brother and how he ended up in a similar\nposition. You miss him greatly...");
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
@@ -759,7 +759,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 5's.
 		if(cutSceneTracker == false && questCounter == 5){
-			game.add.text(30,50,"You stare at the dead body before you. Unfortunately for\nyou,blood is now everywhere and that’s always just a pain\nto clean up. You’ll have to come up with a better way to kill\npeople.The knife is effective but messy and something\ncleaner might be nicer. As you dispose of the body, some\npeople wonder what that loud scream was coming from\nyour place.They also notice you covered in what\nsuspiciously looks like blood. Most are smart enough not to confront\nyou about his as you are the leader of the mercenaries\nand nobody wants them on their bad sides. They still can’t\nhelp but be curious though.");
+			game.add.text(30,50,"You stare at the dead body before you. Unfortunately for\nyou,blood is now everywhere and that’s always just a pain\nto clean up. You’ll have to come up with a better way to kill\npeople.The knife is effective but messy and something\ncleaner might be nicer. As you dispose of the body, some\npeople wonder what that loud scream was coming from\nyour place.They also notice you covered in what\nsuspiciously looks like blood. Most are smart enough not to\nconfront you about this as you are the leader of the\nmercenaries and nobody wants them on their bad sides.\nThey still can’t help but be curious though.");
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
