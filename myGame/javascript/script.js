@@ -11,10 +11,10 @@ var declineScene = false;
 var killScene = false;
 var questCheck = false;
 //====Below is a series of arrays holding input values for NPC object creation====
-var menArg = [5,4,5,5,4,6,7,6,5,5]; //balance. maybe earn less in the cut scenes and increase these slightly
-var suspArg = [7,10,12,10,12,14,20,25,15,50]; 
-var comPtsArg = [10,0,0,0,15,0,0,0,30,0]; //increase these. they never make it to 100. even accepting all but the spies.
-var nobPtsArg = [0,10,20,0,0,20,0,25,0,35]; //increase these. they never make it to 100. even accepting all but the spies. 
+var menArg = [5,4,5,5,6,6,5,6,7,8]; //balance. maybe earn less in the cut scenes and increase these slightly
+var suspArg = [10,10,12,10,12,14,20,25,15,50]; 
+var comPtsArg = [15,0,20,0,30,0,0,0,40,0]; //increase these. they never make it to 100. even accepting all but the spies.
+var nobPtsArg = [0,12,0,0,0,25,0,30,0,35]; //increase these. they never make it to 100. even accepting all but the spies. 
 var negNobPtsArg = [0,3,0,4,0,20,20,30,0,40]; 
 var negComPtsArg = [5,0,10,10,5,0,3,0,7,0]; 
 var moneyArg = [20,30,20,0,15,35,0,70,30,85];
@@ -37,18 +37,18 @@ var storyBase = [
 ["Greetings,",
 "I am a nobleman of the town of Loueyville my",
 "request for you is simple enough for men of your",
-"skills. I bequethed a small portion of wealth",
+"skills. I bequeathed a small portion of wealth",
 "to a commoner as a loan. The person in question has",
 "fled to the ghetto home to crime lords and the",
 "destitute alike. The officers fear the place and",
-"shirk from their duty refusing my demands. The",
+"shirk from their duty, refusing my demands. The",
 "mercenaries on the other hand aren't easily scared.",
 "I need you to bring the commoner in so I can",
 "collect on his debt he owes to me.",
 ],
 ["Hello",
 "I am the mayor from the the town of Heaton", 
-"I am in desperate need of your assistance the pirates which",
+"I am in desperate need of your assistance. The pirates which",
 "you drove off before, have returned. The pirates didn’t take", 
 "you seriously and soon after you left they staged an attack on", 
 "the village and… and they captured my daughter… please I need",
@@ -83,7 +83,7 @@ var storyBase = [
 "I am a messenger representing the merchants of Belltonia",
 "We’ve been having a run in with bandits reeking havoc",
 "in the markets. These bandits are a very persistent",
-"bunch their numbers keep growing and now we have",
+"bunch, their numbers keep growing and now we have",
 "need of your assistance. You will be given full",
 "compensation for your services. We ask tht you dispose",
 "of this nuisance and cleanse the streets of these pests.",
@@ -104,7 +104,7 @@ var storyBase = [
 ["I am a messenger from the king himself",
 "By his majesties decree the nation is requesting",
 "The services of the mercenaries guild to supply",
-"Much needed troops to bolster the armies numbers",
+"much needed troops to bolster the armies numbers",
 "In the war. As you reside in this land of his majesty,",
 "you are hereby required to provide sufficient",
 "reinforcements to the nation's war efforts.The king",
@@ -140,10 +140,11 @@ var storyBase = [
 var aD = [
 ["Oh thank you so much! I don’t really care if you kill them", 
 "or scare them off. Just make sure they don’t come back!"],
-["Ah ha, I see my sources were right. It's good to see that I can depend on",
-"your services. I will await the news of your success."],
-["Oh thank you so much! My daughter means everything to me. I would",
-"forever be indebted to you for saving her from the pirates clutches."],
+["Ah ha, I see my sources were right. It's good to see that I can",
+"depend on your services. I will await the news of your success."],
+["Oh thank you so much! My daughter means everything to me. I",
+"would forever be indebted to you for saving her from the pirates",
+"clutches."],
 ["Excellent!",
 "I greatly look forward to your success.",
 "Thank you so very much for dealing with these commoners"],
@@ -164,16 +165,19 @@ var dD = [
 "for help. We really need these pirates gone before they destroy our",
 "town. Guess I’ll keep looking."],
 ["Well it's your loss really I would have offered a small fortune for the",
-"capture of that person. What a waste of time, now I must find someone else."],
-["You... You won't help me? You were my only hope there is nobody else to,",
-"turn to. Is there anybody in this world who cares about our town?."],
+"capture of that person. What a waste of time, now I must find someone",
+"else."],
+["You... You won't help me? You were my only hope there is nobody",
+"else to turn to. Is there anybody in this world who cares about",
+"our town?"],
 ["Decline will you? I see... Well a piece of parting advice.", 
 "Watch your back in Baystone"],
-["“Y-You don’t want to help us?",
+["Y-You don’t want to help us?",
 "I-I really thought the leader of the mercenary guild would care.",
 "Guess I was wrong...Sorry I bothered you with this then"],
 ["Heh, I see how it is. You guys probably don’t have what it takes to",
-"handle the mission anyways. I’ll find someone else who is up for the task."],
+"handle the mission anyways. I’ll find someone else who is up for the",
+"task."],
 ["Y-You don’t wanna help me? B-But why?"],
 ["The king will be very displeased that you have refused him."],
 ["You don’t want to help us…You do realize we’ll be turned into",
@@ -238,8 +242,8 @@ Menu.prototype = {
 		console.log("Menu: create");
 		newGame();
 		game.add.sprite(0, 0, "background", "GameTitle");
-		game.add.button(150, 400, "btnPlay", gotoGame, this);
-		game.add.button(450, 400, "btnTutorial", gotoPrologue, this);
+		game.add.button(150, 400, "btnPlay", gotoPrologue, this);
+		game.add.button(450, 400, "btnTutorial", gotoTutorial, this);
 		goodEndingMusic = game.add.audio('goodEndingMusic');
 		neutralEndingMusic = game.add.audio('neutralEndingMusic');
 		badEndingMusic = game.add.audio('badEndingMusic');
@@ -262,8 +266,8 @@ Prologue.prototype = {
 	create: function(){
 		console.log("Prologue: create");
 		game.add.sprite(0, 0, "background", "GameOver");
-		text = game.add.text(5, 0, "Prologue:\n\nYou sigh and sit exhaustively on the bloodied chair.\nYou killed the current leader of the mercenary guild,\nwhile the floor is covered in blood. You’ve gotten into this\nkingdom unnoticed and now you’ll become valuable to them.\nYou can’t wait for it all to come crumbling down.\nFor this kingdom has kidnapped and killed your brother,\nand you want revenge. So naturally you’ve decided to\ninfiltrate the kingdom, gain the people’s trust and then\ndestroy the entire kingdom from the inside out.\nYou’ve grown a bit sadistic since your brother’s death\nbut everyone here, no matter how indirectly, was involved.\nBut this is the only way to avenge your brother and you’ll do\nwhatever it takes.\nHit the next button to go to the tutorial.",{fill: "#eed7a1"});
-		game.add.button(590, 520, "btnNext", gotoTutorial, this);
+		text = game.add.text(5, 0, "Prologue:\n\nYou sigh and sit exhaustively on the bloodied chair.\nYou killed the current leader of the mercenary guild,\nwhile the floor is covered in blood. You’ve gotten into this\nkingdom unnoticed and now you’ll become valuable to them.\nYou can’t wait for it all to come crumbling down.\nFor this kingdom has kidnapped and killed your brother,\nand you want revenge. So naturally you’ve decided to\ninfiltrate the kingdom, gain the people’s trust and then\ndestroy the entire kingdom from the inside out.\nYou’ve grown a bit sadistic since your brother’s death\nbut everyone here, no matter how indirectly, was involved.\nBut this is the only way to avenge your brother and you’ll do\nwhatever it takes.",{font: "28px Fira Sans", fill: "#eed7a1"});
+		game.add.button(590, 520, "btnNext", gotoGame, this);
 	},                                                                
 
 	// update, run the game loop =====================
@@ -531,10 +535,10 @@ CutSceneAccept.prototype = {
 	update: function(){
 		//quest 1's
 		if(cutSceneTracker == false && questCounter == 1){
-			game.add.text(30,50," He smile brightly at you as they leave. You think about\nthe times you were that happy and you realize all of\nthem were from when your brother was alive. You sigh\nheavily and leave to find your men.\n----\nMost come back as well as few more. They were so excited\nthat you helped them that they came to join you. It’s still\nearly so you’ll need all the men you can get. So they join\nand pay you a pitiful amount in reward but it doesn’t matter.\nYou don’t need it anyways.");
+			game.add.text(30,50,"He smiles brightly at you as he leaves. You think about\nthe times you were that happy and you realize all of\nthem were from when your brother was alive. You sigh\nheavily and leave to find your men.\n----\nMost come back as well as few more. They were so excited\nthat you helped them that they came to join you. It’s still\nearly so you’ll need all the men you can get. So they join\nand pay you a pitiful amount in reward but it doesn’t matter.\nYou don’t need it anyways.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
-			men += 10;
+			men += 7;
 			questCheck = false;
 			playedAccept = true;
 			playedKill = true;
@@ -542,7 +546,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
-			game.add.text(30,50,"new TextA");
+			game.add.text(30,50,"new TextA",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
 			men += 0;
@@ -553,10 +557,10 @@ CutSceneAccept.prototype = {
 		}
 		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
-			game.add.text(30,50,"Some more textA");
+			game.add.text(30,50,"Some more textA",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
-			men += 10;
+			men += 6;
 			questCheck = false;
 			playedAccept = true;
 			playedKill = true;
@@ -564,7 +568,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 4's.
 		if(cutSceneTracker == false && questCounter == 4){
-			game.add.text(30,50,"The guy smiles a bit too suspiciously for your taste\nbut you already accepted. No backing out now.\nStrangely enough the guy refuses to meet your eyes.\n ----\nYou later find out that the quest was a failure.\nRemember when you thought they seemed a bit\nsuspicious after you accepted their request? Yea, it’s\nbecause they were suspicious.You believe they were\nlikely a spy. You lost all the men you sent out as well,\nthe compensation was a lie and some commoners are now\nalso angry with you for taking the package. Apparently\nit never belonged to the damn spy in the first place.");
+			game.add.text(30,50,"The guy smiles a bit too suspiciously for your taste\nbut you already accepted. No backing out now.\nStrangely enough the guy refuses to meet your eyes.\n ----\nYou later find out that the quest was a failure.\nRemember when you thought they seemed a bit\nsuspicious after you accepted their request? Yea, it’s\nbecause they were suspicious.You believe they were\nlikely a spy. You lost all the men you sent out as well,\nthe compensation was a lie and some commoners are now\nalso angry with you for taking the package. Apparently\nit never belonged to the damn spy in the first place.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
 			//spy. no men are gained
@@ -575,10 +579,10 @@ CutSceneAccept.prototype = {
 		}
 		//quest 5's.
 		if(cutSceneTracker == false && questCounter == 5){
-			game.add.text(30,50,"You see them smile happily as they leave. You sigh a bit\nin your seat and get ready to tell your men about this\nquest for them to do.\n-----\nMost of your men come back as well as some more.They\ntell you that they were so thankful that you got rid of their\nchimera problem that they came to join you. They also\n hand you a bag with some money. It was a pitiful amount\nbut you guess you shouldn’t expect much more from a\ngroup of commoners. Least you got more men into your\nguild. Easier to plot revenge with more men to send out.");
+			game.add.text(30,50,"You see them smile happily as they leave. You sigh a bit\nin your seat and get ready to tell your men about this\nquest for them to do.\n-----\nMost of your men come back as well as some more.They\ntell you that they were so thankful that you got rid of their\nchimera problem that they came to join you. They also\n hand you a bag with some money. It was a pitiful amount\nbut you guess you shouldn’t expect much more from a\ngroup of commoners. Least you got more men into your\nguild. Easier to plot revenge with more men to send out.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
-			men += 15;
+			men += 8;
 			questCheck = false;
 			playedAccept = true;
 			playedKill = true;
@@ -586,7 +590,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 6's.
 		if(cutSceneTracker == false && questCounter == 6){
-			game.add.text(30,50,"Some more textA");
+			game.add.text(30,50,"Some more textA",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
 			questCheck = false;
@@ -597,7 +601,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 7's.
 		if(cutSceneTracker == false && questCounter == 7){
-			game.add.text(30,50,"The man grinned a bit too widely for your liking. You realize\nthe more you stare at them, the more that something seems\noff about them. You don’t know why but something is\ndefinitely off. But maybe you’re looking too much into it.\n-----\nYou later find out that the quest was a horrible failure.\nRemember when you thought something was off about\nthem? You were right to think that but you realize it too late\nTurns out they were a spy and all they wanted was to\ncause some chaos and ruin your reputation. Well it\nworked.The nobles are now pissed at you for messing\nwith their stuff. All the men you sent out all got arrested.\nAnd remember that reward they promised? Well that\nwas a lie too.");
+			game.add.text(30,50,"The man grinned a bit too widely for your liking. You realize\nthe more you stare at them, the more that something seems\noff about them. You don’t know why but something is\ndefinitely off. But maybe you’re looking too much into it.\n-----\nYou later find out that the quest was a horrible failure.\nRemember when you thought something was off about\nthem? You were right to think that but you realize it too late\nTurns out they were a spy and all they wanted was to\ncause some chaos and ruin your reputation. Well it\nworked.The nobles are now pissed at you for messing\nwith their stuff. All the men you sent out all got arrested.\nAnd remember that reward they promised? Well that\nwas a lie too.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
 			questCheck = false;
@@ -608,21 +612,21 @@ CutSceneAccept.prototype = {
 		}
 		//quest 8's.
 		if(cutSceneTracker == false && questCounter == 8){
-			game.add.text(30,50,"Some more textA");
+			game.add.text(30,50,"Some more textA",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
 			questCheck = false;
 			playedAccept = true;
 			playedKill = true;
 			playedDecline = true;
-			men += 5;
+			men += 3;
 		} 
 		//quest 9's.
 		if(cutSceneTracker == false && questCounter == 9){
-			game.add.text(30,50,"The man smiles widely and looked about ready to\nhug you but, luckily for you,he doesn’t actually do it.\n---\nSome of your men come back but several others also come\nback. You’re told that they’re so thankful to not be cannon\nfodder that they’re hoping to join the guild. You could\nalways use some more men to help continue your plan. So\nyou let them join. They also paid you a decent amount for\nwhat commoners could pay. That’s always nice.");
+			game.add.text(30,50,"The man smiles widely and looked about ready to\nhug you but, luckily for you,he doesn’t actually do it.\n---\nSome of your men come back but several others also come\nback. You’re told that they’re so thankful to not be cannon\nfodder that they’re hoping to join the guild. You could\nalways use some more men to help continue your plan. So\nyou let them join. They also paid you a decent amount for\nwhat commoners could pay. That’s always nice.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
-			men += 10;
+			men += 8;
 			questCheck = false;
 			playedAccept = true;
 			playedKill = true;
@@ -630,7 +634,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 10 shouldn't have a cutscene since the game will end.
 		if(cutSceneTracker == false && questCounter == 10){
-			game.add.text(30,50,"You really shouldn't be here. Something went wrong if you're here");
+			game.add.text(30,50,"You really shouldn't be here. Something went wrong if you're here",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
 			questCheck = false;
@@ -662,7 +666,7 @@ CutSceneDecline.prototype = {
 	update: function(){
 		//quest 1's.
 		if(cutSceneTracker == false && questCounter == 1){
-			game.add.text(30,50,"They shuffle a bit sadly out of the place and you shrug.\nWho said you had to help everyone? Besides, when you\nwere younger, your brother used to joke about the two of\nyou being pirates together. You sit in your chair and silently\nreminisce about the past.\n----\nYou find out that he eventually got some help. The town\nwas a bit destroyed but hey, it was fixed in the end. Some\nof the commoners were a bit miffed with you for not\nhelping but oh well. It’s still early.");
+			game.add.text(30,50,"They shuffle a bit sadly out of the place and you shrug.\nWho said you had to help everyone? Besides, when you\nwere younger, your brother used to joke about the two of\nyou being pirates together. You sit in your chair and silently\nreminisce about the past.\n----\nYou find out that he eventually got some help. The town\nwas a bit destroyed but hey, it was fixed in the end. Some\nof the commoners were a bit miffed with you for not\nhelping but oh well. It’s still early.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
@@ -672,13 +676,13 @@ CutSceneDecline.prototype = {
 		}
 		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
-			game.add.text(30,50,"new TextD");
+			game.add.text(30,50,"new TextD",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			declineScene = false;
 		}
 		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
-			game.add.text(30,50,"Some more textD");
+			game.add.text(30,50,"Some more textD",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
@@ -688,7 +692,7 @@ CutSceneDecline.prototype = {
 		}
 		//quest 4's.
 		if(cutSceneTracker == false && questCounter == 4){
-			game.add.text(30,50,"The guy storms out of the place and you shrug.\nSomething seemed fishy about him.\nMaybe it was the fidgetiness or maybe it was\nthe fact that they never looked you in the eye.\nYou’ll get more requests later anyways.\n-----\nYou find out later that some trouble was going on in\na nearby town to the one the noble came from...You suspect\nthe noble probably hired someone else to do the task.\nLooks like you’ll probably be cleaning up that mess.");
+			game.add.text(30,50,"The guy storms out of the place and you shrug.\nSomething seemed fishy about him.\nMaybe it was the fidgetiness or maybe it was\nthe fact that they never looked you in the eye.\nYou’ll get more requests later anyways.\n-----\nYou find out later that some trouble was going on in\na nearby town to the one the noble came from...You suspect\nthe noble probably hired someone else to do the task.\nLooks like you’ll probably be cleaning up that mess.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
@@ -698,7 +702,7 @@ CutSceneDecline.prototype = {
 		}
 		//quest 5's.
 		if(cutSceneTracker == false && questCounter == 5){
-			game.add.text(30,50,"You see them look away and slowly slink away. You feel\na slight twinge of pity for them before shrugging it\noff. You don’t have to fix every problem that comes to you.\n-------\nYou later find out the town’s people eventually got their\nroblem fixed. Their town is in shambles now because it took\nso long. You feel a bit guilty for saying no but hey, a\nchimera is not your problem to deal with. Besides,it ended\nwell anyways. So what if some commoners hold a bit of a\ngrudge against you right now. You’ll gladly watch their\nworld crumble later when you finish your mission.");
+			game.add.text(30,50,"You see them look away and slowly slink away. You feel\na slight twinge of pity for them before shrugging it\noff. You don’t have to fix every problem that comes to you.\n-------\nYou later find out the town’s people eventually got their\nproblem fixed. Their town is in shambles now because it took\nso long. You feel a bit guilty for saying no but hey, a\nchimera is not your problem to deal with. Besides,it ended\nwell anyways. So what if some commoners hold a bit of a\ngrudge against you right now. You’ll gladly watch their\nworld crumble later when you finish your mission.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
@@ -708,7 +712,7 @@ CutSceneDecline.prototype = {
 		}
 		//quest 6's.
 		if(cutSceneTracker == false && questCounter == 6){
-			game.add.text(30,50,"Some more textD");
+			game.add.text(30,50,"Some more textD",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
@@ -718,7 +722,7 @@ CutSceneDecline.prototype = {
 		}
 		//quest 7's.
 		if(cutSceneTracker == false && questCounter == 7){
-			game.add.text(30,50,"The man looked rather pitifully at you but you feel no\nremorse for them. You don’t have to take it if you don’t want\nto. Besides… Something seems off about him. You don’t\nlike it so you send them on their way.\n----\nYou find out later that same commoner is now dead.\nApparently they were a spy and when he tried to do the task\nhimself,a merchant had killed him. A couple commoners\nbeing unhappy with you for letting him die is nothing\ncompared to the trouble accepting the quest would\nhave brought.");
+			game.add.text(30,50,"The man looked rather pitifully at you but you feel no\nremorse for them. You don’t have to take it if you don’t want\nto. Besides… Something seems off about him. You don’t\nlike it so you send them on their way.\n----\nYou find out later that same commoner is now dead.\nApparently they were a spy and when he tried to do the task\nhimself,a merchant had killed him. A couple commoners\nbeing unhappy with you for letting him die is nothing\ncompared to the trouble accepting the quest would\nhave brought.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
@@ -728,7 +732,7 @@ CutSceneDecline.prototype = {
 		}
 		//quest 8's.
 		if(cutSceneTracker == false && questCounter == 8){
-			game.add.text(30,50,"Some more textD");
+			game.add.text(30,50,"Some more textD",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
@@ -738,7 +742,7 @@ CutSceneDecline.prototype = {
 		} 
 		//quest 9's.
 		if(cutSceneTracker == false && questCounter == 9){
-			game.add.text(30,50,"The man looks incredibly pitiful at you before leaving. You\nfeel slightly bad afterwards but...war always demands\nsacrifice. In one way or another, it’ll always take it.\n----\nYou find out later that most of those commoners are now\ndead or severely injured. The commoners are rather angry\nwith you for allowing this to happen. In times like these, you\nthink about your brother and how he ended up in a similar\nposition. You miss him greatly...");
+			game.add.text(30,50,"The man looks incredibly pitiful at you before leaving. You\nfeel slightly bad afterwards but...war always demands\nsacrifice. In one way or another, it’ll always take it.\n----\nYou find out later that most of those commoners are now\ndead or severely injured. The commoners are rather angry\nwith you for allowing this to happen. In times like these, you\nthink about your brother and how he ended up in a similar\nposition. You miss him greatly...",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
@@ -748,7 +752,7 @@ CutSceneDecline.prototype = {
 		}
 		//quest 10 shouldn't have a cutscene since the game will end.
 		if(cutSceneTracker == false && questCounter == 10){
-			game.add.text(30,50,"You really shouldn't be here. Something went wrong if you're here");
+			game.add.text(30,50,"You really shouldn't be here. Something went wrong if you're here",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
@@ -780,7 +784,7 @@ CutSceneKill.prototype = {
 	update: function(){;
 		//quest 1's.
 		if(cutSceneTracker == false && questCounter == 1){
-			game.add.text(30,50,"As the person dies, you wonder how you’ll clean up all\nthis mess. You sigh and set the knife down. You’ll have\nto clean this all up later. But first, disposing of the body.\nAs you leave to get rid of the body, some people take\nnote of the blood on your clothes and the bloody bag\nyou’re carrying with you. Some whisper about not\ngetting close as they heard a loud scream come from\ninside your guild recently. People are slightly suspicious\nof something going on but are far too afraid to say\nanything about it.");
+			game.add.text(30,50,"As the person dies, you wonder how you’ll clean up all\nthis mess. You sigh and set the knife down. You’ll have\nto clean this all up later. But first, disposing of the body.\nAs you leave to get rid of the body, some people take\nnote of the blood on your clothes and the bloody bag\nyou’re carrying with you. Some whisper about not\ngetting close as they heard a loud scream come from\ninside your guild recently. People are slightly suspicious\nof something going on but are far too afraid to say\nanything about it.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
@@ -790,7 +794,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
-			game.add.text(30,50,"new Text");
+			game.add.text(30,50,"new Text",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
@@ -800,7 +804,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
-			game.add.text(30,50,"Some more textK");
+			game.add.text(30,50,"Some more textK",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
@@ -810,7 +814,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 4's.
 		if(cutSceneTracker == false && questCounter == 4){
-			game.add.text(30,50,"You watch them die and realize you may have enjoyed that\na bit too much. Oh well. They were a noble, part of the\nreason you came into this kingdom. They indirectly had a\n hand inkidnapping and killing your brother. So they\nprobably deserved it. But god…the blood was getting\neverywhere. You’ll have to deal with that later. You dig\naround his pockets to find a piece of paper that seemed\nto have a plan scrawled on it. “So they were a spy after all”\nYou mutter. You’re even more thankful you killed them.\nAs for the blood…You do have men who could take care\nof the dead body. You’ll make them do it.");
+			game.add.text(30,50,"You watch them die and realize you may have enjoyed that\na bit too much. Oh well. They were a noble, part of the\nreason you came into this kingdom. They indirectly had a\nhand inkidnapping and killing your brother. So they\nprobably deserved it. But god…the blood was getting\neverywhere. You’ll have to deal with that later. You dig\naround his pockets to find a piece of paper that seemed\nto have a plan scrawled on it. “So they were a spy after all”\nYou mutter. You’re even more thankful you killed them.\nAs for the blood…You do have men who could take care\nof the dead body. You’ll make them do it.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
@@ -820,7 +824,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 5's.
 		if(cutSceneTracker == false && questCounter == 5){
-			game.add.text(30,50,"You stare at the dead body before you. Unfortunately for\nyou,blood is now everywhere and that’s always just a pain\nto clean up. You’ll have to come up with a better way to kill\npeople.The knife is effective but messy and something\ncleaner might be nicer. As you dispose of the body, some\npeople wonder what that loud scream was coming from\nyour place.They also notice you covered in what\nsuspiciously looks like blood. Most are smart enough not to\nconfront you about this as you are the leader of the\nmercenaries and nobody wants them on their bad sides.\nThey still can’t help but be curious though.");
+			game.add.text(30,50,"You stare at the dead body before you. Unfortunately for\nyou,blood is now everywhere and that’s always just a pain\nto clean up. You’ll have to come up with a better way to kill\npeople.The knife is effective but messy and something\ncleaner might be nicer. As you dispose of the body, some\npeople wonder what that loud scream was coming from\nyour place.They also notice you covered in what\nsuspiciously looks like blood. Most are smart enough not to\nconfront you about this as you are the leader of the\nmercenaries and nobody wants them on their bad sides.\nThey still can’t help but be curious though.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
@@ -830,7 +834,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 6's.
 		if(cutSceneTracker == false && questCounter == 6){
-			game.add.text(30,50,"Some more textK");
+			game.add.text(30,50,"Some more textK",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
@@ -840,7 +844,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 7's.
 		if(cutSceneTracker == false && questCounter == 7){
-			game.add.text(30,50,"You watch them squirm a bit with the blood pouring out. It\namuses you slightly to watch them like this. You realize\nthis probably makes you a sadist but honestly,\nyou really don’t care. Everyone here silently,inadvertently\nhad a hand in kidnapping and killing of your brother.\nYou don’t care for these people. So watching them squirm\nwhen they die is considered a bit fun to you. Once they’re\ndead you tell your men to clean up the blood and go to get\nrid of the body.Some people look at you suspiciously\nas the bag you’re carrying is a bit blood soaked but\nnobody approaches you. You leave to finish getting rid of\nthis pesky body. You find out later that they were a spy.");
+			game.add.text(30,50,"You watch them squirm a bit with the blood pouring out. It\namuses you slightly to watch them like this. You realize\nthis probably makes you a sadist but honestly,\nyou really don’t care. Everyone here silently,inadvertently\nhad a hand in kidnapping and killing of your brother.\nYou don’t care for these people. So watching them squirm\nwhen they die is considered a bit fun to you. Once they’re\ndead you tell your men to clean up the blood and go to get\nrid of the body.Some people look at you suspiciously\nas the bag you’re carrying is a bit blood soaked but\nnobody approaches you. You leave to finish getting rid of\nthis pesky body. You find out later that they were a spy.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
@@ -850,7 +854,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 8's.
 		if(cutSceneTracker == false && questCounter == 8){
-			game.add.text(30,50,"Some more textK");
+			game.add.text(30,50,"Some more textK",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
@@ -860,7 +864,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 9's.
 		if(cutSceneTracker == false && questCounter == 9){
-			game.add.text(30,50,"As he said this, you felt a rush of rage come over you. How\ndare he say that. Those same nobles killed your brother\nand pushed you to become who you are now. You remind\nyourself that they are, however indirectly, related to what\nhappened to him and now you’re feeling quite indifferent,\nand maybe a little sadistic, about this group of commoners\nabout to be used as live fodder. Oh well. They’re going to\ndie anyways in one way or another. You look down at the\nmess you made and leave the room to have your men go\nand clean the mess up.");
+			game.add.text(30,50,"As he said this, you felt a rush of rage come over you. How\ndare he say that. Those same nobles killed your brother\nand pushed you to become who you are now. You remind\nyourself that they are, however indirectly, related to what\nhappened to him and now you’re feeling quite indifferent,\nand maybe a little sadistic, about this group of commoners\nabout to be used as live fodder. Oh well. They’re going to\ndie anyways in one way or another. You look down at the\nmess you made and leave the room to have your men go\nand clean the mess up.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
@@ -870,7 +874,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 10 shouldn't have a cutscene since the game will end
 		if(cutSceneTracker == false && questCounter == 10){
-			game.add.text(30,50,"You really shouldn't be here. Something went wrong if you're here");
+			game.add.text(30,50,"You really shouldn't be here. Something went wrong if you're here",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
@@ -895,7 +899,7 @@ GameOverG.prototype = {
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
 		goodEndingMusic.play('', 0, 0.5, true);
-		text = game.add.text(25,85, "You smile sadistically as you hear news of everything slowly\nfalling into chaos. Serves them right for murdering your\nbrother.They deserved this,this slow and painful demise of\nthis kingdom. And nobody will ever know it was your doing.\nYou decide to start packing up to leave soon.\nYou’re work here is done and you’re grown weary\nwith all the hard work your revenge took.\nYou yawn and decide on a nap before packing.\nYou can sleep happily knowing your plan was successful\nand you’ve finally avenged your brother.",{fill: "#ffffff"});
+		text = game.add.text(25,85, "You smile sadistically as you hear news of everything slowly\nfalling into chaos. Serves them right for murdering your\nbrother.They deserved this,this slow and painful demise of\nthis kingdom. And nobody will ever know it was your doing.\nYou decide to start packing up to leave soon.\nYou’re work here is done and you’re grown weary\nwith all the hard work your revenge took.\nYou yawn and decide on a nap before packing.\nYou can sleep happily knowing your plan was successful\nand you’ve finally avenged your brother.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 	},
 
 	// update, run the game loop =====================
@@ -918,7 +922,7 @@ GameOverN.prototype = {
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
 		neutralEndingMusic.play('', 0, 0.5, true);
-		text = game.add.text(25, 85, "You look at the papers and curse yourself quietly.\nYou’ve done some damage, but not enough.\nThey need to pay, they have to pay.\nBut despite your exhaustive efforts, you haven’t completed\nyour task yet.You crumple up the paper and throw it on the\nground before slumping in your seat tiredly.\nYou miss your home but you must avenge him first.\nYou decide to take a small nap first,\nmaybe some new ideas will come up during it.\n\nClick the play again button to try and fully complete\nyour mission.");
+		text = game.add.text(25, 85, "You look at the papers and curse yourself quietly.\nYou’ve done some damage, but not enough.\nThey need to pay, they have to pay.\nBut despite your exhaustive efforts, you haven’t completed\nyour task yet.You crumple up the paper and throw it on the\nground before slumping in your seat tiredly.\nYou miss your home but you must avenge him first.\nYou decide to take a small nap first,\nmaybe some new ideas will come up during it.\n\nClick the play again button to try and fully complete\nyour mission.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 	},
 
 	// update, run the game loop =====================
@@ -940,7 +944,7 @@ GameOverB1.prototype = {
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
 		badEndingMusic.play('', 0, 0.5, true);
-		text = game.add.text(25, 85, "You hear news that people are coming for you.\nThey’ve figured you out. They know you’ve been planning\ntheir demise and now they’re coming to arrest and\nlikely kill you. Your plan has failed but least you caused\nsome chaos before it failed. Besides, you’ve grown tired\nwithout your brother around. But now you’ll get to be with\nhim soon enough. You hear pounding on the door and\nyou’re ready for them. You’re done with this life anyways,\nnothing is holding you here anyways. That was taken\nfrom you long ago.\n\nClick the play again button to reattempt your mission");
+		text = game.add.text(25, 85, "You hear news that people are coming for you.\nThey’ve figured you out. They know you’ve been planning\ntheir demise and now they’re coming to arrest and\nlikely kill you. Your plan has failed but least you caused\nsome chaos before it failed. Besides, you’ve grown tired\nwithout your brother around. But now you’ll get to be with\nhim soon enough. You hear pounding on the door and\nyou’re ready for them. You’re done with this life anyways,\nnothing is holding you here anyways. That was taken\nfrom you long ago.\n\nClick the play again button to reattempt your mission",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 	},
 
 	// update, run the game loop =====================
@@ -964,7 +968,7 @@ GameOverB2.prototype = {
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
 		badEndingMusic.play('', 0, 0.75, true);
-		text = game.add.text(25, 85, "You look around the guild and sigh heavily. All your men\nhave either been killed or arrested. You slump exhaustively \nin your chair. You did cause a little bit of chaos before you\nran out of men. But it wasn’t nearly enough to be satisfied\nwith. You wanted to avenge your brother but now you have\nnobody left. You’re completely and utterly alone. And you\nhate that. You’ve never liked being alone. You close your\neyes and fall asleep. You need some sleep before recruiting\nmore men so you can finish your plan.\n\nClick the play again button to reattempt your mission.");
+		text = game.add.text(25, 85, "You look around the guild and sigh heavily. All your men\nhave either been killed or arrested. You slump exhaustively \nin your chair. You did cause a little bit of chaos before you\nran out of men. But it wasn’t nearly enough to be satisfied\nwith. You wanted to avenge your brother but now you have\nnobody left. You’re completely and utterly alone. And you\nhate that. You’ve never liked being alone. You close your\neyes and fall asleep. You need some sleep before recruiting\nmore men so you can finish your plan.\n\nClick the play again button to reattempt your mission.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 	},
 
 	// update, run the game loop =====================
