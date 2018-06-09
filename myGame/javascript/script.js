@@ -290,7 +290,7 @@ Tutorial.prototype = {
 	create: function(){
 		console.log("Tutorial: create");
 		game.add.sprite(0, 0, "background", "GameOver");
-		text = game.add.text(5, 0, "Tutorial:\nThere are several interactable objects within the game:\n\nThe quest scroll: This is the first thing that should be clicked on each quest\niteration. It’ll explain the problem and what the person asks of you.\n\nThe stamp: Allows you to accept the given quest.\nPlayers click and drag it onto the scroll to see how it affected them.\n\nThe candle: Allows you to deny the given quest.\nPlayers click and drag it onto the scroll to see how it affected them.\n\nThe knife: Allows you to kill the messenger.\nPlayers click and drag it onto the person to see how it affected them.\n\nHit the next button to go to the tutorial.",{font: "23px",fill: "#eed7a1"});
+		text = game.add.text(5, 0, "Tutorial:\nThere are several interactable objects within the game:\n\nThe quest scroll: This is the first thing that should be clicked on each quest\niteration. It’ll explain the problem and what the person asks of you.\n\nThe stamp: Allows you to accept the given quest.\nPlayers click and drag it onto the scroll to see how it affected them.\n\nThe candle: Allows you to deny the given quest.\nPlayers click and drag it onto the scroll to see how it affected them.\n\nThe knife: Allows you to kill the messenger.\nPlayers click and drag it onto the person to see how it affected them.\n\nHit the next button to go to the game",{font: "23px",fill: "#eed7a1"});
 		game.add.button(590, 520, "btnNext", gotoGame, this);
 	},                                                                
 
@@ -1411,7 +1411,6 @@ function gotoMenu(){
 
 // Helper function for game button to go to Prologue state
 function gotoPrologue(){
-	titleMusic.stop();
 	game.state.start('Prologue');
 }
 
