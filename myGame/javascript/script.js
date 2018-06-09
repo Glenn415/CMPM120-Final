@@ -224,6 +224,7 @@ Menu.prototype = {
 		game.load.image("btnPlayAgain", "btnPlayAgain.png");
 		game.load.image("btnNext", "btnNext.png");
 		game.load.image("btnBack", "btnBack.png");
+		game.load.image("btnHire", "btnHire.png");
 		
 		game.load.path = 'assets/audio/';
 		game.load.audio('bgMusic', ['bgmusic.wav']);
@@ -372,6 +373,9 @@ GamePlay.prototype = {
 		candle = new Item(game, 610, 400, 'obj', 'candle');
 		game.add.existing(candle);
 		candle.scale.set(1.3);
+
+		// Button for buying a mercenary
+		game.add.button(580, 250, "btnHire", buyMercenary, this);
 
 		// UI score
 		printCP = game.add.text(135, 58, comPoints);
@@ -1419,6 +1423,16 @@ function gotoTutorial(){
 	game.state.start('Tutorial');	
 }
 
+// Helper function for game button to add more mercenaries
+function buyMercenary(){
+	if(moneyPoints >= 50){
+		men += 1;
+		moneyPoints -=10;
+		printMen.text = men;
+		printMoney.text = moneyPoints;
+		console.log("mercenaries");
+	}
+}
 // Moves the commoner NPC out of the screen
 function moveComOut(){
 	commoner.y = -500;
