@@ -123,7 +123,18 @@ var storyBase = [
 "We’ve raised a good amount of money to ask this of",
 "you! Please...We’re good people and we don’t want",
 "to die being live fodder. Please help us…."],
-["quest 10"],
+ ["Sorry to be so blunt but we have an emergency.",
+"The king himself is requesting your expertise in a",
+"very important matter. The prince secretly joined the",
+"war and has gotten himself captured by the enemy.",
+"Since the mercenaries aren’t recognized as part of the,",
+"nations army, we believe that you can use this to your",
+"advantage and slip undercover into enemy territory and",
+"rescue the prince from their clutches. This will most",
+"definitely be a very risky and dangerous mission however,",
+"the king is ready to throw in quite a fortune upon the safe",
+"return of his son the prince.",
+],
 ["You're done. Please leave the scroll and await the transition to the end screen."]
 ]; //an array of strings for quest description
 var aD = [
@@ -146,7 +157,7 @@ var aD = [
 ["Oh-Oh thank you kind sir!",
 "I knew your reputation wouldn’t fail us!",
 "Thank you so much!"],
-["quest 10"]
+["The king can’t express his gratitude in your help rescuing his reckless son "]
 ]; //accept dialogue array of array of strings :D
 var dD = [
 ["Oh. I’m sorry to have bothered you then. I was just really hoping",
@@ -168,7 +179,7 @@ var dD = [
 ["You don’t want to help us…You do realize we’ll be turned into",
 "basically live ammunition right? We’ll just be sacrifices to this war...",
 "and you still don’t wanna help us...I’m sorry to even have asked"],
-["quest 10"]
+["You have just made yourself an enemy of the king"]
 ]; //decline dialogue
 var kD = [
 ["I should’ve just stayed home… "], 
@@ -180,7 +191,7 @@ var kD = [
 ["I hate you."],
 ["You’ll live to regret this."],
 ["You’re no better than the nobles."],
-["quest 10"]
+["The king will find out about this, and when he does you will wish you were never born"]
 ]; //kill dialogue
 
 //borrowed from https://stackoverflow.com/questions/31849667/how-to-type-word-by-word-or-line-by-line-in-phaser-js
