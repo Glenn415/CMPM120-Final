@@ -215,6 +215,7 @@ Menu.prototype = {
 	preload: function(){
 		console.log("Menu: preload");
 
+		// Loading art as atlases and images
 		game.load.path = "../myGame/assets/img/";
 		game.load.atlas("obj", "objects.png", "objects.json");
 		game.load.atlas("npc", "npc_atlas.png", "npc_atlas.json");
@@ -224,7 +225,10 @@ Menu.prototype = {
 		game.load.image("btnPlayAgain", "btnPlayAgain.png");
 		game.load.image("btnNext", "btnNext.png");
 		game.load.image("btnBack", "btnBack.png");
-		
+		game.load.image("btnHire", "btnHire.png");
+		game.load.image("btnCredits", "btnCredits.png");
+
+		// Loading all audio files
 		game.load.path = 'assets/audio/';
 		game.load.audio('bgMusic', ['bgmusic.wav']);
 		game.load.audio('acceptMusic', ['stamp.wav']);
@@ -240,10 +244,14 @@ Menu.prototype = {
 	// place assets =========================================
 	create: function(){
 		console.log("Menu: create");
+		// Reset values and add background
 		newGame();
 		game.add.sprite(0, 0, "background", "GameTitle");
+		// Button options
 		game.add.button(150, 400, "btnPlay", gotoPrologue, this);
 		game.add.button(450, 400, "btnTutorial", gotoTutorial, this);
+		game.add.button(308, 500, "btnCredits", gotoCredits, this);
+		// Start the music
 		goodEndingMusic = game.add.audio('goodEndingMusic');
 		neutralEndingMusic = game.add.audio('neutralEndingMusic');
 		badEndingMusic = game.add.audio('badEndingMusic');
@@ -278,6 +286,20 @@ Prologue.prototype = {
 		}
 	}
 }
+
+var Credits = function(game){};
+Credits.prototype = {
+	preload: function(){
+		console.log("Credits: preload");
+	},
+	create: function(){
+		console.log("Credits: create");
+		game.add.sprite(0, 0, "background", "GameOver");
+		game.add.button(590, 520, "btnNext", gotoMenu, this);
+	},
+	update: function(){}
+}
+
 // Tutorial State ==============================================
 var Tutorial = function(game){};
 Tutorial.prototype = {
@@ -373,6 +395,9 @@ GamePlay.prototype = {
 		game.add.existing(candle);
 		candle.scale.set(1.3);
 
+		// Button for buying a mercenary
+		game.add.button(580, 250, "btnHire", buyMercenary, this);
+
 		// UI score
 		printCP = game.add.text(135, 58, comPoints);
 		printNP = game.add.text(113, 87, noblePoints);
@@ -461,7 +486,7 @@ GamePlay.prototype = {
 	render: function(){
 	//	game.debug.bodyInfo(scroll, 32, 32);
 		//game.debug.body(scroll);
-		game.debug.text("Over: " + scroll.input.pointerOver(), 32, 32);
+		//game.debug.text("Over: " + scroll.input.pointerOver(), 32, 32);
 		//game.debug.body(stamp);
 		//game.debug.body(knife);
 		//game.debug.body(candle);
@@ -979,6 +1004,7 @@ GameOverB2.prototype = {
 
 // Add the states to the StateManager and start in Menu
 game.state.add("Menu", Menu);
+game.state.add("Credits", Credits);
 game.state.add('Prologue',Prologue);
 game.state.add("Tutorial", Tutorial);
 game.state.add("GamePlay", GamePlay);
@@ -1419,6 +1445,21 @@ function gotoTutorial(){
 	game.state.start('Tutorial');	
 }
 
+// Helper function for game button to go to Credits state
+function gotoCredits(){
+	game.state.start('Credits');	
+}
+
+// Helper function for game button to add more mercenaries
+function buyMercenary(){
+	if(moneyPoints >= 50){
+		men += 1;
+		moneyPoints -=10;
+		printMen.text = men;
+		printMoney.text = moneyPoints;
+		console.log("mercenaries");
+	}
+}
 // Moves the commoner NPC out of the screen
 function moveComOut(){
 	commoner.y = -500;
