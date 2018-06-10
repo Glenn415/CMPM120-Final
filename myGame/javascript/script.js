@@ -738,7 +738,7 @@ CutSceneDecline.prototype = {
 		}
 		//quest 6's.
 		if(cutSceneTracker == false && questCounter == 6){
-			game.add.text(30,50,"Some more textD",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"The man glares at you as he leaves. You roll your eyes at him\nonce he's gone. So what if the king is mad at you for this?\nYou're also mad at him for kidnapping and killing your brother.\nYou have no sympathy for him. Your sympathy is reserved for\npeople who didn’t murder your only family.\n----\nYou find out later that they eventually got enough men for\nwhat they wanted. They had to take more of the town’s people\nto do it but, you have no sympathy for anyone involved. They’re\nall silently involved with your brother’s murder. Only fair that\nthey get dragged into the war. Plus, you despise the king for\nmurdering your brother.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
