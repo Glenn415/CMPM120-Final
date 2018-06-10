@@ -860,7 +860,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 6's.
 		if(cutSceneTracker == false && questCounter == 6){
-			game.add.text(30,50,"Some more textK",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"You laugh loudly and smirk. “The merchants can’t hear about it if\nyou’re dead.” The man dies in in front of you and you shrug.\nYou have no feelings towards them as die in front of you. How\nfunny that the guy thought the merchants would hear about his\ndeath. Too late now. You notice you got blood all over you as\nyou killed him and you sigh. Now you’re going to have to change\ninto new clothes while you make your men deal with the dead\nbody. Should you feel something about the death? Probably.\nDo you? Nope. They’re unimportant in your mind. Who cares if a\nfew people have to die along the way. Vengeance for your\nbrother is worth it all.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
