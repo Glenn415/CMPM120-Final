@@ -1,6 +1,6 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO);
 //status variables
-var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 9;
+var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 5;
 var commoner, noble, selector;
 var playedKill = true;
 var playedDecline = true;
@@ -150,7 +150,7 @@ var aD = [
 "Thank you so very much for dealing with these commoners"],
 ["Oh thanks so much!",
 "This means so much that you’ll help us calm it down."],
-["Good, we expect to be kept constantly updated on your progreess",
+["Good, we expect to be kept constantly updated on your progress",
 "My superiors will be greatly pleased with your professional assistance."],
 ["Oh thank you so much!",
 "These pesky merchants will finally get what they deserve"],
@@ -616,7 +616,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 6's.
 		if(cutSceneTracker == false && questCounter == 6){
-			game.add.text(30,50,"Some more textA",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"The man smiles before leaving. You sigh exhausted and rest\nyour eyes for a minute. You’re really tired of having to be nice to\nthese people but you’re stuck with them till you fulfill your plan.\nSo you suck it up and leave to go tell your men about the quest.\n----\nMost of your men come back, and surprisingly a few nobles as\nwell. They tell you they were sick of their lives and wanted\nsomething new to do. So they decided to come join the guild.\nYou accept them after taking the reward because you still need\nmore men to help your revenge plans. You can’t wait till you’re\nall done and can leave this place in ruins.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
 			questCheck = false;
@@ -1031,7 +1031,7 @@ function newGame(){
 	lineIndex = 0;
 	wordDelay = 140;
 	lineDelay = 400;
-	questCounter = 0;
+	questCounter = 5;
 	playedKill = true;
 	playedDecline = true;
 	playedAccept = true;
