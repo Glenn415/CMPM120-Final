@@ -11,10 +11,10 @@ var declineScene = false;
 var killScene = false;
 var questCheck = false;
 //====Below is a series of arrays holding input values for NPC object creation====
-var menArg = [5,4,5,5,6,6,5,6,7,8]; //balance. maybe earn less in the cut scenes and increase these slightly
+var menArg = [5,4,5,5,6,6,5,6,7,8];
 var suspArg = [10,10,12,10,12,14,20,25,15,50]; 
-var comPtsArg = [15,0,20,0,30,0,0,0,40,0]; //increase these. they never make it to 100. even accepting all but the spies.
-var nobPtsArg = [0,12,0,0,0,25,0,30,0,35]; //increase these. they never make it to 100. even accepting all but the spies. 
+var comPtsArg = [15,0,20,0,30,0,0,0,40,0]; 
+var nobPtsArg = [0,12,0,0,0,25,0,30,0,35]; 
 var negNobPtsArg = [0,3,0,4,0,20,20,30,0,40]; 
 var negComPtsArg = [5,0,10,10,5,0,3,0,7,0]; 
 var moneyArg = [20,30,20,0,15,35,0,70,30,85];
@@ -296,6 +296,7 @@ Credits.prototype = {
 		console.log("Credits: create");
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(590, 520, "btnNext", gotoMenu, this);
+		game.add.text(50,10,"Contributors to the game:\n\nSummer Gadsby: Programmer, Writer\nLisa Moua: Sound\nMuhammad Al-Suwaidi: Writer, Artist\nRoberto G Ortiz: Programmer, Artist\nZuola Guoerluoti: Programmer\nFound the Gameplay music: 'medieval introductions' by\n'Tristan_Lohengrin', on Freesound.org.\nAnd all other music we used from freesound.org");
 	},
 	update: function(){}
 }
@@ -313,7 +314,7 @@ Tutorial.prototype = {
 		console.log("Tutorial: create");
 		game.add.sprite(0, 0, "background", "GameOver");
 		text = game.add.text(5, 0, "Tutorial:\nThere are several interactable objects within the game:\n\nThe quest scroll: This is the first thing that should be clicked on each quest\niteration. It’ll explain the problem and what the person asks of you.\n\nThe stamp: Allows you to accept the given quest.\nPlayers click and drag it onto the scroll to see how it affected them.\n\nThe candle: Allows you to deny the given quest.\nPlayers click and drag it onto the scroll to see how it affected them.\n\nThe knife: Allows you to kill the messenger.\nPlayers click and drag it onto the person to see how it affected them.\n\nHit the next button to go to the game",{font: "23px",fill: "#eed7a1"});
-		game.add.button(590, 520, "btnNext", gotoGame, this);
+		game.add.button(590, 520, "btnNext",gotoPrologue, this);
 	},                                                                
 
 	// update, run the game loop =====================
@@ -571,7 +572,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
-			game.add.text(30,50,"The man smirks in delight as he reaches over to shake hands\nwith you concluding the meeting. You can’t help but notice a sheen\nin his eyes... similar to your own, eyes hungry for revenge.\nYou can’t hope but think maybe there is more to the story than\nthe man is letting on. As the man exits the room you lean back\nin your chair, your resolve strengthened, whatever the noble’s\nquarrel with the commoner is merely a trifle next to yours. \n-----\n You find out later in a report that the commoner was\n successfully detained. Unable to pay off his debts\nthe man was sentenced to life enslavement as a labor worker\nfor the noble who hired you.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"The man smirks in delight as he reaches over to shake hands\nwith you concluding the meeting. You can’t help but notice a\nsheen in his eyes... similar to your own, eyes hungry for revenge.\nYou can’t hope but think maybe there is more to the story than\nthe man is letting on. As the man exits the room you lean back\nin your chair, your resolve strengthened, whatever the noble’s\nquarrel with the commoner is merely a trifle next to yours. \n-----\nYou find out later in a report that the commoner was\nsuccessfully detained. Unable to pay off his debts\nthe man was sentenced to life enslavement as a labor worker\nfor the noble who hired you.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
 			men += 0;
@@ -819,7 +820,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
-			game.add.text(30,50,"Well since he asked you decided to oblige him the answer.\n\"Simple you annoy me, and I couldn’t stand to hear you anymore.\nSo you’ve been silenced, that's one less winny noble in this\n world\" You lean over him as he gasped his last breaths. \"Oh\ndon’t worry you won’t be missed there are plenty more\njust like you to come\". Studying the man you realize that you\n didn’t even feel anything for his death, you just killed a man in\ncold blood and you weren’t even fazed. Deciding that you didn’t\nwant to deal with the mess you send for someone to come\nclean it up. When they arrive they stop at the door stunned by\nthe sight of the man, blood pooling around his crumpled body.\nNoticing  you they just nod their heads and discreetly get\nto work.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"Well since he asked you decided to oblige him the answer.\n\"Simple. you annoy me, and I couldn’t stand to hear you anymore.\nSo you’ve been silenced, that's one less winny noble in this\nworld\" You lean over him as he gasped his last breaths. \"Oh\ndon’t worry you won’t be missed. There are plenty more\njust like you to come\". Studying the man you realize that you\ndidn’t even feel anything for his death, you just killed a man in\ncold blood and you weren’t even fazed. Deciding that you didn’t\nwant to deal with the mess you send for someone to come\nclean it up. When they arrive they stop at the door stunned by\nthe sight of the man, blood pooling around his crumpled body.\nNoticing you, they just nod their heads and discreetly get\nto work.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
@@ -1437,16 +1438,19 @@ function gotoMenu(){
 
 // Helper function for game button to go to Prologue state
 function gotoPrologue(){
+	titleMusic.stop();
 	game.state.start('Prologue');
 }
 
 // Helper function for game button to go to Tutorial state
 function gotoTutorial(){
+	titleMusic.stop();
 	game.state.start('Tutorial');	
 }
 
 // Helper function for game button to go to Credits state
 function gotoCredits(){
+	titleMusic.stop();
 	game.state.start('Credits');	
 }
 
@@ -1454,7 +1458,7 @@ function gotoCredits(){
 function buyMercenary(){
 	if(moneyPoints >= 50){
 		men += 1;
-		moneyPoints -=10;
+		moneyPoints -=50;
 		printMen.text = men;
 		printMoney.text = moneyPoints;
 		console.log("mercenaries");
