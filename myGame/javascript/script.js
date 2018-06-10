@@ -167,7 +167,7 @@ var dD = [
 ["Well it's your loss really I would have offered a small fortune for the",
 "capture of that person. What a waste of time, now I must find someone",
 "else."],
-["You... You won't help me? You were my only hope there is nobody",
+["You... You won't help me? You were my only hope, there is nobody",
 "else to turn to. Is there anybody in this world who cares about",
 "our town?"],
 ["Decline will you? I see... Well a piece of parting advice.", 
@@ -296,7 +296,7 @@ Credits.prototype = {
 		console.log("Credits: create");
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(590, 520, "btnNext", gotoMenu, this);
-		game.add.text(50,10,"Contributors to the game:\n\nSummer Gadsby: Programmer, Writer\nLisa Moua: Sound\nMuhammad Al-Suwaidi: Writer, Artist\nRoberto G Ortiz: Programmer, Artist\nZuola Guoerluoti: Programmer\nFound the Gameplay music: 'medieval introductions' by\n'Tristan_Lohengrin', on Freesound.org.\nAnd all other music we used from freesound.org");
+		game.add.text(50,10,"Contributors to the game:\n\nSummer Gadsby: Programmer, Writer\nLisa Moua: Sound\nMuhammad Al-Suwaidi: Writer, Artist\nRoberto G Ortiz: Programmer, Artist\nZuola Guoerluoti: Programmer\nFound the Gameplay music: 'medieval introductions' by\n'Tristan_Lohengrin', on Freesound.org.\nAnd all other music we used from freesound.org",{fill: "#eed7a1"});
 	},
 	update: function(){}
 }
@@ -708,7 +708,7 @@ CutSceneDecline.prototype = {
 		}
 		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
-			game.add.text(30,50,"Some more textD",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"The man looks rather heartbroken at you as he turns away to\nleave. You feel no need to go help. You already considered\nhelping with pirates once. That was enough.\n----\nYou eventually find out that the man did get his daughter back.\nCost the city a fortune but they did it. The commoners there\nare a bit miffed with you but oh well. You have time to regain\ntheir trust. Besides, it’s almost a bit of petty revenge for not\nhelping. They lost someone important to them but unlike you,\nleast they got them back.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
