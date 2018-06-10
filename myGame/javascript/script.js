@@ -214,7 +214,7 @@ var Menu = function(game){};
 Menu.prototype = {
 	// preload assets ================================
 	preload: function(){
-		console.log("Menu: preload");
+		//console.log("Menu: preload");
 
 		// Loading art as atlases and images
 		game.load.path = "../myGame/assets/img/";
@@ -244,7 +244,7 @@ Menu.prototype = {
 
 	// place assets =========================================
 	create: function(){
-		console.log("Menu: create");
+		//console.log("Menu: create");
 		// Reset values and add background
 		newGame();
 		game.add.sprite(0, 0, "background", "GameTitle");
@@ -268,12 +268,12 @@ var Prologue = function(game){};
 Prologue.prototype = {
 	// preload assets ================================
 	preload: function(){
-		console.log("Prologue: preload");
+		//console.log("Prologue: preload");
 	},
 
 	// place assets ==================================
 	create: function(){
-		console.log("Prologue: create");
+		//console.log("Prologue: create");
 		game.add.sprite(0, 0, "background", "GameOver");
 		text = game.add.text(5, 0, "Prologue:\n\nYou sigh and slump onto the bloodied chair.\nYou killed the current leader of the mercenary guild,\nleaving a bloody mess in your wake. You’ve gotten into this\nkingdom unnoticed and now you’ll become valuable to them.\nYou can’t wait for it all to come crumbling down.\nFor this kingdom has kidnapped and killed your brother,\nand you want revenge. So naturally you’ve decided to\ninfiltrate the kingdom, gain the people’s trust and then\ndestroy the entire kingdom from the inside out.\nEveryone here, no matter how indirectly, was involved.\nThis is the only way to avenge your brother that will satisfy you.\nYou'll bathe in their blood if that's what it takes.",{font: "28px Fira Sans", fill: "#eed7a1"});
 		game.add.button(590, 520, "btnNext", gotoGame, this);
@@ -291,10 +291,10 @@ Prologue.prototype = {
 var Credits = function(game){};
 Credits.prototype = {
 	preload: function(){
-		console.log("Credits: preload");
+		//console.log("Credits: preload");
 	},
 	create: function(){
-		console.log("Credits: create");
+		//console.log("Credits: create");
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(590, 520, "btnNext", gotoMenu, this);
 		game.add.text(50,10,"Contributors to the game:\n\nSummer Gadsby: Programmer, Writer\nLisa Moua: Sound\nMuhammad Al-Suwaidi: Writer, Artist\nRoberto G Ortiz: Programmer, Artist\nZuola Guoerluoti: Programmer\nFound the Gameplay music: 'medieval introductions' by\n'Tristan_Lohengrin', on Freesound.org.\nAnd all other music we used from freesound.org and\nopengameart.org",{fill: "#eed7a1"});
@@ -307,12 +307,12 @@ var Tutorial = function(game){};
 Tutorial.prototype = {
 	// preload assets ================================
 	preload: function(){
-		console.log("Tutorial: preload");
+		//console.log("Tutorial: preload");
 	},
 
 	// place assets ==================================
 	create: function(){
-		console.log("Tutorial: create");
+		//console.log("Tutorial: create");
 		game.add.sprite(0, 0, "background", "GameOver");
 		text = game.add.text(5, 0, "Tutorial:\n\nThere are several interactable objects within the game:\n\nThe quest scroll: This is the first thing that should be clicked on each quest\nIt’ll explain the problem and what the person asks of you.\n\nThe stamp: Allows you to accept the given quest. Players click and\ndrag it onto the scroll to see how it affected them.\n\nThe candle: Allows you to deny the given quest. Players click and\ndrag it onto the scroll to see how it affected them.\n\nThe knife: Allows you to kill the messenger. Players click and\ndrag it onto the person to see how it affected them.\n\nPlayers may buy 1 mercenary at a time for 50 gold.",{font: "23px",fill: "#eed7a1"});
 		game.add.button(590, 520, "btnNext",gotoPrologue, this);
@@ -335,7 +335,7 @@ GamePlay.prototype = {
 
 	// place assets ==================================
 	create: function(){
-		console.log("GamePlay: create");
+		//console.log("GamePlay: create");
 		//spin up physics
 		game.add.sprite(0, 0, "background", "GamePlay_BG");
 		game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -502,12 +502,12 @@ var Read = function(game){};
 Read.prototype = {
 	// preload assets ================================
 	preload: function(){
-		console.log("Read: preload");
+		//console.log("Read: preload");
 	},
 
 	// place assets ==================================
 	create: function(){
-		console.log("Read: create");
+	//	console.log("Read: create");
 		haveRead = true;
 		//set story content;
 		story = storyBase[questCounter];
@@ -544,12 +544,12 @@ var CutSceneAccept = function(game){};
 CutSceneAccept.prototype = {
 	// preload assets ================================
 	preload: function(){
-		console.log("CutSceneAccept: preload");
+		//console.log("CutSceneAccept: preload");
 	},
 
 	// place assets ==================================
 	create: function(){
-		console.log("CutSceneAccept: create");
+		//console.log("CutSceneAccept: create");
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(590, 520, "btnNext", gotoGameC, this);
 		cutSceneMusic = game.add.audio('cutSceneMusic');
@@ -675,12 +675,12 @@ var CutSceneDecline = function(game){};
 CutSceneDecline.prototype = {
 	// preload assets ================================
 	preload: function(){
-		console.log("CutSceneDecline: preload");
+		//console.log("CutSceneDecline: preload");
 	},
 
 	// place assets ==================================
 	create: function(){
-		console.log("CutSceneDecline: create");
+		//console.log("CutSceneDecline: create");
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(590, 520, "btnNext", gotoGameC, this);
 		cutSceneMusic = game.add.audio('cutSceneMusic');
@@ -793,12 +793,12 @@ var CutSceneKill = function(game){};
 CutSceneKill.prototype = {
 	// preload assets ================================
 	preload: function(){
-		console.log("CutSceneKill: preload");
+		//console.log("CutSceneKill: preload");
 	},
 
 	// place assets ==================================
 	create: function(){
-		console.log("CutSceneKill: create");
+		//console.log("CutSceneKill: create");
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(590, 520, "btnNext", gotoGameC, this);
 		cutSceneMusic = game.add.audio('cutSceneMusic');
@@ -915,12 +915,12 @@ var GameOverG = function(game){};
 GameOverG.prototype = {
 	// preload assets ================================
 	preload: function(){
-		console.log("GameOverG: preload");
+		//console.log("GameOverG: preload");
 	},
 
 	// place assets ==================================
 	create: function(){
-		console.log("GameOverG: create");
+		//console.log("GameOverG: create");
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
 		goodEndingMusic.play('', 0, 0.5, true);
@@ -938,12 +938,12 @@ var GameOverN = function(game){};
 GameOverN.prototype = {
 	// preload assets ================================
 	preload: function(){
-		console.log("GameOverN: preload");
+		//console.log("GameOverN: preload");
 	},
 
 	// place assets ==================================
 	create: function(){
-		console.log("GameOverN: create");
+		//console.log("GameOverN: create");
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
 		neutralEndingMusic.play('', 0, 0.5, true);
@@ -960,12 +960,12 @@ var GameOverB1 = function(game){};
 GameOverB1.prototype = {
 	// preload assets ================================
 	preload: function(){
-		console.log("GameOverB1: preload");
+		//console.log("GameOverB1: preload");
 	},
 
 	// place assets ==================================
 	create: function(){
-		console.log("GameOverB1: create");
+		//console.log("GameOverB1: create");
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
 		badEndingMusic.play('', 0, 0.5, true);
@@ -983,12 +983,12 @@ var GameOverB2 = function(game){};
 GameOverB2.prototype = {
 	// preload assets ================================
 	preload: function(){
-		console.log("GameOverB2: preload");
+		//console.log("GameOverB2: preload");
 	},
 
 	// place assets ==================================
 	create: function(){
-		console.log("GameOverB2: create");
+		//console.log("GameOverB2: create");
 		game.stage.backgroundColor = "#707070";
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(0, 0, "btnPlayAgain", gotoMenu ,this);
@@ -1141,10 +1141,10 @@ function acceptQuest(){
 	playedAccept = true;
 	}
 	if(questCheck == false){
-		console.log(questCheck);
+		//console.log(questCheck);
 	game.add.text(93,game.world.height-100,"don't forget to read the quest first.",{font: "23px Fira Sans", fill: "#eed7a1"});
 	}else{
-		console.log(questCheck);
+		//console.log(questCheck);
 		game.add.text(0,0,' ');
 	}
 	
@@ -1156,13 +1156,13 @@ function acceptQuest(){
 		if (questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8 ){
 			if (commoner.frameName == "Peasant001"){
 				commoner.frameName = "Peasant004";
-				console.log("should be com 1");
+				//console.log("should be com 1");
 			} else if (commoner.frameName == "Peasant005"){
 				commoner.frameName = "Peasant008";
-				console.log("should be com 2");
+				//console.log("should be com 2");
 			} else {
 				commoner.frameName = "Peasant012";
-				console.log("should be com 3");
+				//console.log("should be com 3");
 			}
 			//commoner spy accept quests. Noble influence goes down because commoner spy wanted to cause problems for the nobles
 			if(questCounter == 6){
@@ -1180,13 +1180,13 @@ function acceptQuest(){
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
 			if (noble.frameName == "Noble001"){
 				noble.frameName = "Noble004";
-				console.log("should be com 1");
+				//console.log("should be com 1");
 			} else if (noble.frameName == "Noble005"){
 				noble.frameName = "Noble008";
-				console.log("should be com 2");
+				//console.log("should be com 2");
 			} else {
 				noble.frameName = "Noble012";
-				console.log("should be com 3");
+				//console.log("should be com 3");
 			}
 			//noble spy accept quests. Commoner influence goes down because noble spy wanted to cause problems for the commoners
 			if(questCounter == 3){
@@ -1241,10 +1241,10 @@ function declineQuest(){
 	}
 	
 	if(questCheck == false){
-		console.log(questCheck);
+		//console.log(questCheck);
 	game.add.text(93,game.world.height-100,"don't forget to read the quest first.",{font: "23px Fira Sans", fill: "#eed7a1"});
 	}else{
-		console.log(questCheck);
+		//console.log(questCheck);
 		game.add.text(0,0,' ');
 	}
 //checks to see if you've already done an action, if you haven't, it checks which quest you're on and subtracts influence from the correct group and displays correct person
@@ -1255,13 +1255,13 @@ function declineQuest(){
 		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8 ){
 			if (commoner.frameName == "Peasant001"){
 				commoner.frameName = "Peasant003";
-				console.log("should be com 1");
+				//console.log("should be com 1");
 			} else if (commoner.frameName == "Peasant005"){
 				commoner.frameName = "Peasant007";
-				console.log("should be com 2");
+				//console.log("should be com 2");
 			} else {
 				commoner.frameName = "Peasant011";
-				console.log("should be com 3");
+				//console.log("should be com 3");
 			}
 			comPoints -= commoner.negComPoints;	
 			game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
@@ -1273,13 +1273,13 @@ function declineQuest(){
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
 			if (noble.frameName == "Noble001"){
 				noble.frameName = "Noble003";
-				console.log("should be com 1");
+				//console.log("should be com 1");
 			} else if (noble.frameName == "Noble005"){
 				noble.frameName = "Noble007";
-				console.log("should be com 2");
+				//console.log("should be com 2");
 			} else {
 				noble.frameName = "Noble011";
-				console.log("should be com 3");
+				//console.log("should be com 3");
 			}
 			noblePoints -= noble.negNoblePts;
 			game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
@@ -1317,10 +1317,10 @@ function killMessenger(){
 	playedKill = true;
 	}
 	if(questCheck == false){
-		console.log(questCheck);
+		//console.log(questCheck);
 	game.add.text(93,game.world.height-100,"don't forget to read the quest first.",{font: "23px Fira Sans", fill: "#eed7a1"});
 	}else{
-		console.log(questCheck);
+		//console.log(questCheck);
 		game.add.text(0,0,' ');
 	}
 //checks to see if you've already done an action, if you haven't, it checks which quest you're on and adds suspicion and displays correct person
@@ -1331,13 +1331,13 @@ function killMessenger(){
 		if(questCounter == 0 || questCounter == 2 || questCounter == 4 || questCounter == 6 || questCounter == 8 ){
 			if (commoner.frameName == "Peasant001"){
 				commoner.frameName = "Peasant002";
-				console.log("should be com 1");
+				//console.log("should be com 1");
 			} else if (commoner.frameName == "Peasant005"){
 				commoner.frameName = "Peasant006";
-				console.log("should be com 2");
+				//console.log("should be com 2");
 			} else {
 				commoner.frameName = "Peasant010";
-				console.log("should be com 3");
+				//console.log("should be com 3");
 			}
 			suspicion += commoner.susp;
 			game.add.tween(commoner).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
@@ -1349,13 +1349,13 @@ function killMessenger(){
 		if(questCounter == 1 || questCounter == 3 || questCounter == 5 || questCounter == 7 || questCounter == 9){
 			if (noble.frameName == "Noble001"){
 				noble.frameName = "Noble002";
-				console.log("should be com 1");
+				//console.log("should be com 1");
 			} else if (noble.frameName == "Noble005"){
 				noble.frameName = "Noble006";
-				console.log("should be com 2");
+				//console.log("should be com 2");
 			} else {
 				noble.frameName = "Noble010";
-				console.log("should be com 3");
+				//console.log("should be com 3");
 			}
 			suspicion += noble.susp;
 			game.add.tween(noble).to({alpha: 0}, 2500, Phaser.Easing.Linear.None, true, 2000);
@@ -1460,7 +1460,7 @@ function buyMercenary(){
 		moneyPoints -=50;
 		printMen.text = men;
 		printMoney.text = moneyPoints;
-		console.log("mercenaries");
+		//console.log("mercenaries");
 	}
 }
 // Moves the commoner NPC out of the screen
