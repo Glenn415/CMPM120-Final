@@ -638,7 +638,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 8's.
 		if(cutSceneTracker == false && questCounter == 8){
-			game.add.text(30,50,"Some more textA",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"The king's messenger breaths a huge sigh of relief, seems that\nhe had doubts as to the king's summons would go so smoothly.\nExcusing himself he rushes off to report back to the king.\nMusing to yourself, wars are very chaotic messy things,\nif you were to play your cards right you could use this war to\nyour advantage. A plan is starting to hatch in your mind, this war\ncould be very useful in achieving your goals indeed. ",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
 			questCheck = false;
@@ -738,7 +738,7 @@ CutSceneDecline.prototype = {
 		}
 		//quest 6's.
 		if(cutSceneTracker == false && questCounter == 6){
-			game.add.text(30,50,"You lounge out towards him frightening the living daylights of the\nnobleman. The man stumbles from leaning to far back and falls to\nthe ground. Quickly picking himself up, he brushes down his clothes\nbefore dashing out through the door. Heh, servers him right\nthe impertinent fool. You think you yourself, Nobles are so easily\nspooked when they think their lives are endangered. All that they are\nuseful for is their wealth and not much else. Having to deal with\nthem is such a bother but you have to do everything\nyou can on your road  to revenge, even if it means associating\nwith snobby noblemen who are so full of themselves.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"You lounge out towards him frightening the living daylights of the\nnobleman. The man stumbles from leaning to far back and falls to\nthe ground. Picking himself up, he quickly brushes down his\nclothes before dashing out through the door. Heh, servers him\nright the impertinent fool. You think you yourself, Nobles are so\neasily spooked when they think their lives are endangered. All\nthat they are useful for is their wealth and not much else.\nHaving to deal with them is such a bother. You sigh to yourself,\nbut you have to do everything you can on your road to revenge.\nEven if it means associating with snobby noblemen\nwho are so full of themselves.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
@@ -1031,7 +1031,7 @@ function newGame(){
 	lineIndex = 0;
 	wordDelay = 140;
 	lineDelay = 400;
-	questCounter = 5;
+	questCounter = 7;
 	playedKill = true;
 	playedDecline = true;
 	playedAccept = true;
