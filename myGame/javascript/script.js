@@ -275,7 +275,7 @@ Prologue.prototype = {
 	create: function(){
 		console.log("Prologue: create");
 		game.add.sprite(0, 0, "background", "GameOver");
-		text = game.add.text(5, 0, "Prologue:\n\nYou sigh and sit exhaustively on the bloodied chair.\nYou killed the current leader of the mercenary guild,\nwhile the floor is covered in blood. You’ve gotten into this\nkingdom unnoticed and now you’ll become valuable to them.\nYou can’t wait for it all to come crumbling down.\nFor this kingdom has kidnapped and killed your brother,\nand you want revenge. So naturally you’ve decided to\ninfiltrate the kingdom, gain the people’s trust and then\ndestroy the entire kingdom from the inside out.\nYou’ve grown a bit sadistic since your brother’s death\nbut everyone here, no matter how indirectly, was involved.\nBut this is the only way to avenge your brother and you’ll do\nwhatever it takes.",{font: "28px Fira Sans", fill: "#eed7a1"});
+		text = game.add.text(5, 0, "Prologue:\n\nYou sigh and slump onto the bloodied chair.\nYou killed the current leader of the mercenary guild,\nleaving a bloody mess in your wake. You’ve gotten into this\nkingdom unnoticed and now you’ll become valuable to them.\nYou can’t wait for it all to come crumbling down.\nFor this kingdom has kidnapped and killed your brother,\nand you want revenge. So naturally you’ve decided to\ninfiltrate the kingdom, gain the people’s trust and then\ndestroy the entire kingdom from the inside out.\nEveryone here, no matter how indirectly, was involved.\nThis is the only way to avenge your brother that will satisfy you.\nYou'll bathe in their blood if that's what it takes.",{font: "28px Fira Sans", fill: "#eed7a1"});
 		game.add.button(590, 520, "btnNext", gotoGame, this);
 	},                                                                
 
@@ -314,7 +314,7 @@ Tutorial.prototype = {
 	create: function(){
 		console.log("Tutorial: create");
 		game.add.sprite(0, 0, "background", "GameOver");
-		text = game.add.text(5, 0, "Tutorial:\nThere are several interactable objects within the game:\n\nThe quest scroll: This is the first thing that should be clicked on each quest\nIt’ll explain the problem and what the person asks of you.\n\nThe stamp: Allows you to accept the given quest. Players click and\ndrag it onto the scroll to see how it affected them.\n\nThe candle: Allows you to deny the given quest. Players click and\ndrag it onto the scroll to see how it affected them.\n\nThe knife: Allows you to kill the messenger. Players click and\ndrag it onto the person to see how it affected them.\n\nPlayers may buy 1 mercenary at a time for 50 gold.",{font: "23px",fill: "#eed7a1"});
+		text = game.add.text(5, 0, "Tutorial:\n\nThere are several interactable objects within the game:\n\nThe quest scroll: This is the first thing that should be clicked on each quest\nIt’ll explain the problem and what the person asks of you.\n\nThe stamp: Allows you to accept the given quest. Players click and\ndrag it onto the scroll to see how it affected them.\n\nThe candle: Allows you to deny the given quest. Players click and\ndrag it onto the scroll to see how it affected them.\n\nThe knife: Allows you to kill the messenger. Players click and\ndrag it onto the person to see how it affected them.\n\nPlayers may buy 1 mercenary at a time for 50 gold.",{font: "23px",fill: "#eed7a1"});
 		game.add.button(590, 520, "btnNext",gotoPrologue, this);
 	},                                                                
 
@@ -348,8 +348,6 @@ GamePlay.prototype = {
 		bgMusic.play('', 0, 0.5, true); //loops
 
 		//scroll obj is also quest obj, it acts as a double
-		//scroll = new Item(game, 370, 400, 'obj', 'scroll');
-		//game.add.existing(scroll);
 		scroll = game.add.sprite(355,400,'obj','scroll');
 		scroll.scale.set( 1.4, 1.4);
 		scroll.alpha = 0;
@@ -584,7 +582,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
-			game.add.text(30,50,"The mayors red rimmed eyes glow with hope, it seems that the\nman has gone through a lot of hardships in quick succession.\nIn fact he’d probably be tearing up with joy if he had any tears\nleft from all the sorrow and despair he has endured. You decide\nto give into helping him since he has already suffered so much no\npoint in distressing him any further. The man leaves the room\nfull of hope that he has found help amongst the mercenaries.\n------\n With the success of the mission you gained a lot of trust\nfrom the town of Heaton and more people came back your with\nmen wanting to join up with and become part of the\nmercenaries guild.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"The mayors red rimmed eyes glow with hope, it seems that the\nman has gone through a lot of hardships in quick succession.\nIn fact he’d probably be tearing up with joy if he had any tears\nleft from all the sorrow and despair he has endured. You decide\nto give into helping him since he has already suffered so much,\nno point in distressing him any further. The man leaves the room\nfull of hope that he has found help amongst the mercenaries.\n------\nWith the success of the mission you gained a lot of trust\nfrom the town of Heaton and more people came back your with\nmen wanting to join up with and become part of the\nmercenaries guild.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
 			men += 6;
@@ -595,7 +593,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 4's.
 		if(cutSceneTracker == false && questCounter == 4){
-			game.add.text(30,50,"The guy smiles a bit too suspiciously for your taste\nbut you already accepted. No backing out now.\nStrangely enough the guy refuses to meet your eyes.\n ----\nYou later find out that the quest was a failure.\nRemember when you thought they seemed a bit\nsuspicious after you accepted their request? Yea, it’s\nbecause they were suspicious.You believe they were\nlikely a spy. You lost all the men you sent out as well,\nthe compensation was a lie and some commoners are now\nalso angry with you for taking the package. Apparently\nit never belonged to the damn spy in the first place.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"The guy smiles a bit too suspiciously for your taste\nbut you already accepted. No backing out now.\nStrangely enough the guy refuses to meet your eyes.\n ----\nYou later find out that the quest was a failure.\nDamn, you should've seen the signs. The lack of eye contact,\nthe secrecy in their explanation...You believe they were\nlikely a spy. You lost all the men you sent out and\nthe compensation was a lie. Some commoners are now\nalso angry with you for taking the package too. Apparently\nit never belonged to the damn spy in the first place.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
 			//spy. no men are gained
@@ -628,7 +626,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 7's.
 		if(cutSceneTracker == false && questCounter == 7){
-			game.add.text(30,50,"The man grinned a bit too widely for your liking. You realize\nthe more you stare at them, the more that something seems\noff about them. You don’t know why but something is\ndefinitely off. But maybe you’re looking too much into it.\n-----\nYou later find out that the quest was a horrible failure.\nRemember when you thought something was off about\nthem? You were right to think that but you realize it too late\nTurns out they were a spy and all they wanted was to\ncause some chaos and ruin your reputation. Well it\nworked.The nobles are now pissed at you for messing\nwith their stuff. All the men you sent out all got arrested.\nAnd remember that reward they promised? Well that\nwas a lie too.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"The man grinned a bit too widely for your liking. You realize\nthe more you stare at them, the more that something seems\noff about them. You don’t know why but something is\ndefinitely off. But maybe you’re looking too much into it.\n-----\nYou later find out that the quest was a horrible failure.\nRemember when you thought something was off about\nthem? You were right to think that but you realize it too late\nTurns out they were a spy and all they wanted was to cause some\nchaos and ruin your reputation. Well it worked.The nobles are\nnow pissed at you for messing with their stuff. All the men\nyou sent out all got arrested. And remember that reward they\npromised? Well that was a lie too.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
 			questCheck = false;
@@ -851,7 +849,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 5's.
 		if(cutSceneTracker == false && questCounter == 5){
-			game.add.text(30,50,"You stare at the dead body before you. Unfortunately for\nyou,blood is now everywhere and that’s always just a pain\nto clean up. You’ll have to come up with a better way to kill\npeople.The knife is effective but messy and something\ncleaner might be nicer. As you dispose of the body, some\npeople wonder what that loud scream was coming from\nyour place.They also notice you covered in what\nsuspiciously looks like blood. Most are smart enough not to\nconfront you about this as you are the leader of the\nmercenaries and nobody wants them on their bad sides.\nThey still can’t help but be curious though.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"You stare at the dead body before you. Unfortunately for\nyou,blood is now everywhere and that’s always just a pain\nto clean up. You’ll have to come up with a better way to kill\npeople.The knife is effective but messy and something\ncleaner might be nicer. As you dispose of the body, some\npeople wonder what that loud scream was coming from\nyour place.They seem to notice the blood you're covered in.\nMost are smart enough not to confront you about this\nas the leader of the mercenaries and nobody wants them\non their bad sides.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
@@ -871,7 +869,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 7's.
 		if(cutSceneTracker == false && questCounter == 7){
-			game.add.text(30,50,"You watch them squirm a bit with the blood pouring out. It\namuses you slightly to watch them like this. You realize\nthis probably makes you a sadist but honestly,\nyou really don’t care. Everyone here silently,inadvertently\nhad a hand in kidnapping and killing of your brother.\nYou don’t care for these people. So watching them squirm\nwhen they die is considered a bit fun to you. Once they’re\ndead you tell your men to clean up the blood and go to get\nrid of the body.Some people look at you suspiciously\nas the bag you’re carrying is a bit blood soaked but\nnobody approaches you. You leave to finish getting rid of\nthis pesky body. You find out later that they were a spy.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"You watch them squirm a bit with the blood pouring out. It\namuses you slightly to watch them like this. You realize\nthis probably makes you a sadist but honestly,\nyou really don’t care. Everyone here silently,inadvertently\nhad a hand in kidnapping and killing of your brother.\nYou don’t care for these people. So watching them squirm\nwhen they die is a bit fun to you. Once they’re dead,\nyou tell your men to clean up the blood and go to get rid\nof the body. Some people look at you suspiciously\nas the bag you’re carrying is a bit blood soaked but nobody\napproaches you. You leave to finish getting rid of\nthis annoyance. You find out later that they were a spy.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
