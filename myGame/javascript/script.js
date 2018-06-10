@@ -701,7 +701,7 @@ CutSceneDecline.prototype = {
 		}
 		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
-			game.add.text(30,50,"The man frowns in disappointment, “It would seem that the\nmercenaries aren’t as formidable as my sources would have me\nthink. To shirk away from a simple task... all I want is a simple\ncapture of a single person. Is that too much to ask?” He retorts \nfuriously. Well good day to you sir he hrmphs, and rushes out\n and slams the door shut behind him. You glare at the space he\nwas at a moment ago, thinking to yourself of what a prat\nthe man was. So you were only too glad to see him leave.\n----\n You later find out that the noble still hasn’t found someone\nwilling to go after his man. You can’t help but take satisfaction\nin the nobles frustrations at his failed attempts to find someone\nfor his mission.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"The man frowns in disappointment, \“It would seem that the\nmercenaries aren’t as formidable as my sources would have me\nthink. To shirk away from a simple task... all I want is a simple\ncapture of a single person. Is that too much to ask?\” He retorts \nfuriously. Well good day to you sir he hrmphs, and rushes out\n and slams the door shut behind him. You glare at the space he\nwas at a moment ago, thinking to yourself of what a prat\nthe man was. So you were only too glad to see him leave.\n----\n You later find out that the noble still hasn’t found someone\nwilling to go after his man. You can’t help but take satisfaction\nin the nobles frustrations at his failed attempts to find someone\nfor his mission.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			declineScene = false;
 		}
@@ -819,7 +819,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
-			game.add.text(30,50,"new Text",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"Well since he asked you decided to oblige him the answer.\n\"Simple you annoy me, and I couldn’t stand to hear you anymore.\nSo you’ve been silenced, that's one less winny noble in this\n world\" You lean over him as he gasped his last breaths. \"Oh\ndon’t worry you won’t be missed there are plenty more\njust like you to come\". Studying the man you realize that you\n didn’t even feel anything for his death, you just killed a man in\ncold blood and you weren’t even fazed. Deciding that you didn’t\nwant to deal with the mess you send for someone to come\nclean it up. When they arrive they stop at the door stunned by\nthe sight of the man, blood pooling around his crumpled body.\nNoticing  you they just nod their heads and discreetly get\nto work.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
