@@ -880,7 +880,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 8's.
 		if(cutSceneTracker == false && questCounter == 8){
-			game.add.text(30,50,"Some more textK",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"Right now your only regret, is not being able to bring him back to\nlife only to kill him again. Anyway you don’t have time for regrets,\nyour starting to get restless the longer it takes to achieve\nyour goal. That said, staging an unrest that would throw the\nnation into chaos doesn't happen overnight. Admittedly killing\nthe kings messenger was an open act of treachery, but you don’t\ncare at the moment. In a sudden fit of rage you let out all your\npent up anger slashing away at the corpse until it was no longer\neven recognizable. As you cooled down abit you can’t but help\nthink that it wasn’t such a bad idea after all, now the king\nprobably won’t even know what happened to the guy. You shrug\nand decide to take care of the bloody mess yourself,\nlest one of your men were to snitch on you.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
