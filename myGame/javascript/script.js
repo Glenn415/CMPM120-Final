@@ -158,7 +158,8 @@ var aD = [
 ["Oh-Oh thank you kind sir!",
 "I knew your reputation wouldn’t fail us!",
 "Thank you so much!"],
-["The king can’t express his gratitude in your help rescuing his reckless son "]
+["The king can’t express his gratitude in your help rescuing his",
+"reckless son."]
 ]; //accept dialogue array of array of strings :D
 var dD = [
 ["Oh. I’m sorry to have bothered you then. I was just really hoping",
@@ -296,7 +297,7 @@ Credits.prototype = {
 		console.log("Credits: create");
 		game.add.sprite(0, 0, "background", "GameOver");
 		game.add.button(590, 520, "btnNext", gotoMenu, this);
-		game.add.text(50,10,"Contributors to the game:\n\nSummer Gadsby: Programmer, Writer\nLisa Moua: Sound\nMuhammad Al-Suwaidi: Writer, Artist\nRoberto G Ortiz: Programmer, Artist\nZuola Guoerluoti: Programmer\nFound the Gameplay music: 'medieval introductions' by\n'Tristan_Lohengrin', on Freesound.org.\nAnd all other music we used from freesound.org",{fill: "#eed7a1"});
+		game.add.text(50,10,"Contributors to the game:\n\nSummer Gadsby: Programmer, Writer\nLisa Moua: Sound\nMuhammad Al-Suwaidi: Writer, Artist\nRoberto G Ortiz: Programmer, Artist\nZuola Guoerluoti: Programmer\nFound the Gameplay music: 'medieval introductions' by\n'Tristan_Lohengrin', on Freesound.org.\nAnd all other music we used from freesound.org and\nopengameart.org",{fill: "#eed7a1"});
 	},
 	update: function(){}
 }
@@ -313,7 +314,7 @@ Tutorial.prototype = {
 	create: function(){
 		console.log("Tutorial: create");
 		game.add.sprite(0, 0, "background", "GameOver");
-		text = game.add.text(5, 0, "Tutorial:\nThere are several interactable objects within the game:\n\nThe quest scroll: This is the first thing that should be clicked on each quest\niteration. It’ll explain the problem and what the person asks of you.\n\nThe stamp: Allows you to accept the given quest.\nPlayers click and drag it onto the scroll to see how it affected them.\n\nThe candle: Allows you to deny the given quest.\nPlayers click and drag it onto the scroll to see how it affected them.\n\nThe knife: Allows you to kill the messenger.\nPlayers click and drag it onto the person to see how it affected them.\n\nHit the next button to go to the game",{font: "23px",fill: "#eed7a1"});
+		text = game.add.text(5, 0, "Tutorial:\nThere are several interactable objects within the game:\n\nThe quest scroll: This is the first thing that should be clicked on each quest\nIt’ll explain the problem and what the person asks of you.\n\nThe stamp: Allows you to accept the given quest. Players click and\ndrag it onto the scroll to see how it affected them.\n\nThe candle: Allows you to deny the given quest. Players click and\ndrag it onto the scroll to see how it affected them.\n\nThe knife: Allows you to kill the messenger. Players click and\ndrag it onto the person to see how it affected them.\n\nPlayers may buy 1 mercenary at a time for 50 gold.",{font: "23px",fill: "#eed7a1"});
 		game.add.button(590, 520, "btnNext",gotoPrologue, this);
 	},                                                                
 
@@ -583,7 +584,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
-			game.add.text(30,50,"The mayors red rimmed eyes glow with hope, it seems that the\nman has gone through a lot of hardships in quick succession.\nIn fact he’d probably be tearing up with joy if he had any tears\nleft from all the sorrow and despair he has endured. You decide\nto give into helping him since he has already suffered so much no\npoint in distressing him any further. The man leaves the room full\nof hope that he has found help amongst the mercenaries.\n------\n With the success of the mission you gained a lot of trust\nfrom the town of Heaton and more people came back your with\nmen wanting to join up with and become part of the\nmercenaries guild.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"The mayors red rimmed eyes glow with hope, it seems that the\nman has gone through a lot of hardships in quick succession.\nIn fact he’d probably be tearing up with joy if he had any tears\nleft from all the sorrow and despair he has endured. You decide\nto give into helping him since he has already suffered so much no\npoint in distressing him any further. The man leaves the room\nfull of hope that he has found help amongst the mercenaries.\n------\n With the success of the mission you gained a lot of trust\nfrom the town of Heaton and more people came back your with\nmen wanting to join up with and become part of the\nmercenaries guild.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
 			men += 6;
@@ -638,7 +639,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 8's.
 		if(cutSceneTracker == false && questCounter == 8){
-			game.add.text(30,50,"The king's messenger breaths a huge sigh of relief, seems that\nhe had doubts as to the king's summons would go so smoothly.\nExcusing himself he rushes off to report back to the king.\nMusing to yourself, wars are very chaotic messy things,\nif you were to play your cards right you could use this war to\nyour advantage. A plan is starting to hatch in your mind, this war\ncould be very useful in achieving your goals indeed. ",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"The king's messenger breaths a huge sigh of relief, seems that\nhe had doubts as to if the king's summons would go so smoothly.\nExcusing himself, he rushes off to report back to the king.\nMusing to yourself, wars are very chaotic messy things.\nIf you were to play your cards right, you could use this war to\nyour advantage. A plan is starting to hatch in your mind, this war\ncould be very useful in achieving your goals indeed. ",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
 			questCheck = false;
@@ -738,7 +739,7 @@ CutSceneDecline.prototype = {
 		}
 		//quest 6's.
 		if(cutSceneTracker == false && questCounter == 6){
-			game.add.text(30,50,"You lounge out towards him frightening the living daylights of the\nnobleman. The man stumbles from leaning to far back and falls to\nthe ground. Picking himself up, he quickly brushes down his\nclothes before dashing out through the door. Heh, servers him\nright the impertinent fool. You think you yourself, Nobles are so\neasily spooked when they think their lives are endangered. All\nthat they are useful for is their wealth and not much else.\nHaving to deal with them is such a bother. You sigh to yourself,\nbut you have to do everything you can on your road to revenge.\nEven if it means associating with snobby noblemen\nwho are so full of themselves.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"You lunge forwards towards him, frightening the living daylights\nout of the nobleman. The man stumbles from leaning too far back\nand falls to the ground. Picking himself up, he quickly brushes\ndown his clothes before dashing out through the door. Heh,\nserves him right, the impertinent fool. You think you yourself,\nNobles are so easily spooked when they think their lives are\nendangered. All that they are useful for is their wealth and\nnot much else. Having to deal with them is such a bother. You\nsigh to yourself, but you have to do everything you can on your\nroad to revenge. Even if it means associating with snobby\nnoblemen who are so full of themselves.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
@@ -830,7 +831,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
-			game.add.text(30,50,"Taking a man’s life is much easier than going through all the\ntrouble accepting and following through on peoples quests and\nmissions you muse. Poking the dead body with your foot,\nyeah this one was saved from the hardships of life for the sweet\nrelief of death that you bestowed upon him. You think to yourself\nthat you can’t afford any kind of relief until you have fulfilled\nyour quest for revenge, only then would you feel ready to accept\nand move on. Yeah you definitely can’t afford to lose sight of\nyour goals just yet. These are the things going around in\nyour head while taking yet another body out to be disposed of.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"Taking a man’s life is much easier than going through all the\ntrouble accepting and following through on peoples quests and\nmissions you muse. Poking the dead body with your foot, yeah\nthis one was saved from the hardships of life for the sweet\nrelief of death that you bestowed upon him. You think to\nyourself that you can’t afford any kind of relief until you have\nfulfilled your quest for revenge, only then would you feel ready\nto accept and move on. Yeah you definitely can’t afford to lose\nsight of your goals just yet. These are the things going around\nin your head while taking yet another body out to be\ndisposed of.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
@@ -880,7 +881,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 8's.
 		if(cutSceneTracker == false && questCounter == 8){
-			game.add.text(30,50,"Right now your only regret, is not being able to bring him back to\nlife only to kill him again. Anyway you don’t have time for regrets,\nyour starting to get restless the longer it takes to achieve\nyour goal. That said, staging an unrest that would throw the\nnation into chaos doesn't happen overnight. Admittedly killing\nthe kings messenger was an open act of treachery, but you don’t\ncare at the moment. In a sudden fit of rage you let out all your\npent up anger slashing away at the corpse until it was no longer\neven recognizable. As you cooled down abit you can’t but help\nthink that it wasn’t such a bad idea after all, now the king\nprobably won’t even know what happened to the guy. You shrug\nand decide to take care of the bloody mess yourself,\nlest one of your men were to snitch on you.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"Right now your only regret is not being able to bring him back to\nlife to kill him again. Anyway, you don’t have time for regrets.\nYou're starting to get restless the longer it takes to achieve\nyour goal. That said, staging an unrest that would throw the\nnation into chaos doesn't happen overnight. Admittedly, killing\nthe kings messenger was an open act of treachery, but you don’t\ncare at the moment. In a sudden fit of rage you let out all your\npent up anger slashing away at the corpse until it was no longer\neven recognizable. As you cooled down a bit, you can’t but help\nthink that it wasn’t such a bad idea after all. Now the king\nprobably won’t even know what happened to the guy. You shrug\nand decide to take care of the bloody mess yourself,\nlest one of your men were to snitch on you.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
