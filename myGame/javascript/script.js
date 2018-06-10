@@ -1,6 +1,6 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO);
 //status variables
-var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 5;
+var text; men = 10, moneyPoints = 50, suspicion = 0, comPoints = 0, noblePoints = 0, questCounter = 0;
 var commoner, noble, selector;
 var playedKill = true;
 var playedDecline = true;
@@ -830,7 +830,7 @@ CutSceneKill.prototype = {
 		}
 		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
-			game.add.text(30,50,"Some more textK",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"Taking a man’s life is much easier than going through\nall the trouble accepting and following through on peoples\nquests and missions you muse. Poking the dead body with your foot,\nyeah this one was saved from the hardships of life for the sweet\nrelief of death that you bestowed upon him. You think to yourself\nthat you can’t afford any kind of relief until you have fulfilled your quest\nfor revenge, only then would you feel ready to accept and move on.\nYeah you definitely can’t afford to lose sight of your goals just yet. These\nare the things going around in your head while taking yet another body out to be disposed of.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			killScene = false;
 			questCheck = false;
