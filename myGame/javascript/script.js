@@ -101,11 +101,11 @@ var storyBase = [
 "pleased if you could come rough up these merchants a bit",
 "to help make our lives easier! We’ll pay generously! Please",
 "come help our poor little town...We've grown desperate."],
-["I am a messenger from the king himself",
+["I am a messenger from the king himself.",
 "By his majesties decree the nation is requesting",
-"The services of the mercenaries guild to supply",
+"the services of the mercenaries guild to supply",
 "much needed troops to bolster the armies numbers",
-"In the war. As you reside in this land of his majesty,",
+"in the war. As you reside in this land of his majesty,",
 "you are hereby required to provide sufficient",
 "reinforcements to the nation's war efforts.The king",
 "graciously offers a generous sum for your cooperation.",
@@ -158,7 +158,8 @@ var aD = [
 ["Oh-Oh thank you kind sir!",
 "I knew your reputation wouldn’t fail us!",
 "Thank you so much!"],
-["The king can’t express his gratitude in your help rescuing his reckless son "]
+["The king can’t express his gratitude in your help rescuing his",
+"reckless son."]
 ]; //accept dialogue array of array of strings :D
 var dD = [
 ["Oh. I’m sorry to have bothered you then. I was just really hoping",
@@ -195,7 +196,8 @@ var kD = [
 ["I hate you."],
 ["You’ll live to regret this."],
 ["You’re no better than the nobles."],
-["The king will find out about this, and when he does you will wish you were never born"]
+["The king will find out about this, and when he does you will",
+"wish you were never born"]
 ]; //kill dialogue
 
 //borrowed from https://stackoverflow.com/questions/31849667/how-to-type-word-by-word-or-line-by-line-in-phaser-js
@@ -583,7 +585,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
-			game.add.text(30,50,"The mayors red rimmed eyes glow with hope, it seems that the\nman has gone through a lot of hardships in quick succession.\nIn fact he’d probably be tearing up with joy if he had any tears\nleft from all the sorrow and despair he has endured. You decide\nto give into helping him since he has already suffered so much no\npoint in distressing him any further. The man leaves the room full\nof hope that he has found help amongst the mercenaries.\n------\n With the success of the mission you gained a lot of trust\nfrom the town of Heaton and more people came back your with\nmen wanting to join up with and become part of the\nmercenaries guild.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"The mayors red rimmed eyes glow with hope, it seems that the\nman has gone through a lot of hardships in quick succession.\nIn fact he’d probably be tearing up with joy if he had any tears\nleft from all the sorrow and despair he has endured. You decide\nto give into helping him since he has already suffered so much,\nno point in distressing him any further. The man leaves the room\nfull of hope that he has found help amongst the mercenaries.\n------\n With the success of the mission you gained a lot of trust\nfrom the town of Heaton and more people came back your with\nmen wanting to join up with and become part of the\nmercenaries guild.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
 			men += 6;
@@ -758,7 +760,7 @@ CutSceneDecline.prototype = {
 		}
 		//quest 8's.
 		if(cutSceneTracker == false && questCounter == 8){
-			game.add.text(30,50,"Some more textD",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"The man glares at you as he leaves. You roll your eyes at him\nonce he's gone. So what if the king is mad at you for this?\nYou're also mad at him for kidnapping and killing your brother.\nYou have no sympathy for him. Your sympathy is reserved for\npeople who didn’t murder your only family.\n----\nYou find out later that they eventually got enough men for\nwhat they wanted. They had to take more of the town’s people\nto do it but, you have no sympathy for anyone involved. They’re\nall silently involved with your brother’s murder. Only fair that\nthey get dragged into the war. Plus, you despise the king for\nmurdering your brother.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			declineScene = false;
 			questCheck = false;
