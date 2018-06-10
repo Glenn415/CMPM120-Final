@@ -1031,7 +1031,7 @@ function newGame(){
 	lineIndex = 0;
 	wordDelay = 140;
 	lineDelay = 400;
-	questCounter = 7;
+	questCounter = 0;
 	playedKill = true;
 	playedDecline = true;
 	playedAccept = true;
