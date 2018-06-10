@@ -583,7 +583,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 3's.
 		if(cutSceneTracker == false && questCounter == 3){
-			game.add.text(30,50,"Some more textA",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"The mayors red rimmed eyes glow with hope, it seems that the\nman has gone through a lot of hardships in quick succession.\nIn fact he’d probably be tearing up with joy if he had any tears\nleft from all the sorrow and despair he has endured. You decide\nto give into helping him since he has already suffered so much no\npoint in distressing him any further. The man leaves the room full\nof hope that he has found help amongst the mercenaries.\n------\n With the success of the mission you gained a lot of trust\nfrom the town of Heaton and more people came back your with\nmen wanting to join up with and become part of the\nmercenaries guild.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
 			men += 6;
