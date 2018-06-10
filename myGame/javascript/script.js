@@ -571,7 +571,7 @@ CutSceneAccept.prototype = {
 		}
 		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
-			game.add.text(30,50,"The man smirks in delight as he reaches over to shnake hands\nwith you concluding the meeting. You can’t help but notice a sheen\nin his eyes... similar to your own, eyes hungry for revenge.\nYou can’t hope but think maybe there is more to the story than\nthe man is letting on. As the man exits the room you lean back\nin your chair, your resolve strengthened, whatever the noble’s\nquarrel with the commoner is merely a trifle next to yours. \n-----\n You find out later in a report that the commoner was\n successfully detained. Unable to pay off his debts\nthe man was sentenced to life enslavement as a labor worker\nfor the noble who hired you.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"The man smirks in delight as he reaches over to shake hands\nwith you concluding the meeting. You can’t help but notice a sheen\nin his eyes... similar to your own, eyes hungry for revenge.\nYou can’t hope but think maybe there is more to the story than\nthe man is letting on. As the man exits the room you lean back\nin your chair, your resolve strengthened, whatever the noble’s\nquarrel with the commoner is merely a trifle next to yours. \n-----\n You find out later in a report that the commoner was\n successfully detained. Unable to pay off his debts\nthe man was sentenced to life enslavement as a labor worker\nfor the noble who hired you.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			acceptScene = false;
 			men += 0;
@@ -701,7 +701,7 @@ CutSceneDecline.prototype = {
 		}
 		//quest 2's.
 		if(cutSceneTracker == false && questCounter == 2){
-			game.add.text(30,50,"",{font: "25px Comic Sans MS", fill: "#eed7a1"});
+			game.add.text(30,50,"The man frowns in disappointment, “It would seem that the\nmercenaries aren’t as formidable as my sources would have me\nthink. To shirk away from a simple task... all I want is a simple\ncapture of a single person. Is that too much to ask?” He retorts \nfuriously. Well good day to you sir he hrmphs, and rushes out\n and slams the door shut behind him. You glare at the space he\nwas at a moment ago, thinking to yourself of what a prat\nthe man was. So you were only too glad to see him leave.\n----\n You later find out that the noble still hasn’t found someone\nwilling to go after his man. You can’t help but take satisfaction\nin the nobles frustrations at his failed attempts to find someone\nfor his mission.",{font: "25px Comic Sans MS", fill: "#eed7a1"});
 			cutSceneTracker = true;
 			declineScene = false;
 		}
