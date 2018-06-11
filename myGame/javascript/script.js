@@ -206,6 +206,7 @@ var wordIndex = 0;
 var lineIndex = 0;
 var wordDelay = 140;
 var lineDelay = 400;
+//end
 var questStatus = true;
 var haveRead = false;
 
@@ -445,6 +446,7 @@ GamePlay.prototype = {
 		if(game.input.activePointer.leftButton.isDown && scroll.input.pointerOver()){
 			game.state.start('Read');
 		}
+		//end
 		
 		// Game over conditions
 		if(comPoints >= 100 || noblePoints >=100){
@@ -1414,6 +1416,7 @@ function nextWord() {
 
 	}
 }
+//end
 
 // Helper function for game button to go to GamePlay state
 function gotoGame(){
@@ -1486,5 +1489,3 @@ function moveNobleIn(){
 	noble.y = 240;
 	scroll.y = 400;
 }
-
-
